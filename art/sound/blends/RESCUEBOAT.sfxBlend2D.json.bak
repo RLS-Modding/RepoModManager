@@ -1,0 +1,43 @@
+{
+    "header" : {
+        "version" : 1
+    },
+    "eventName" : "event:>Engine>default",
+    "samples" : 
+    [
+        [
+            
+            ["art/sound/engine/RESCUEBOAT/engine_idle.wav", 250],
+			["art/sound/engine/RESCUEBOAT/engine_idle.wav", 500],
+			["art/sound/engine/RESCUEBOAT/engine_idle.wav", 700],
+			["art/sound/engine/RESCUEBOAT/engine_idle.wav", 1000],
+			["art/sound/engine/RESCUEBOAT/engine_1.wav", 1600],
+			["art/sound/engine/RESCUEBOAT/engine_2.wav", 2400],
+			["art/sound/engine/RESCUEBOAT/engine_3.wav", 3200],
+			["art/sound/engine/RESCUEBOAT/engine_4.wav", 4000],
+			["art/sound/engine/RESCUEBOAT/engine_5.wav", 4800],
+			["art/sound/engine/RESCUEBOAT/engine_5.wav", 5600],
+			["art/sound/engine/RESCUEBOAT/engine_6.wav", 6400],
+			["art/sound/engine/RESCUEBOAT/engine_7.wav", 7200],
+			["art/sound/engine/RESCUEBOAT/engine_7.wav", 8000],
+			["art/sound/engine/RESCUEBOAT/engine_7.wav", 9000],
+			],
+			[
+			["art/sound/engine/RESCUEBOAT/engine_idle.wav", 250],
+			["art/sound/engine/RESCUEBOAT/engine_idle.wav", 500],
+			["art/sound/engine/RESCUEBOAT/engine_idle.wav", 700],
+			["art/sound/engine/RESCUEBOAT/engine_idle.wav", 1000],
+			["art/sound/engine/RESCUEBOAT/engine_1.wav", 1600],
+			["art/sound/engine/RESCUEBOAT/engine_2.wav", 2400],
+			["art/sound/engine/RESCUEBOAT/engine_3.wav", 3200],
+			["art/sound/engine/RESCUEBOAT/engine_4.wav", 4000],
+			["art/sound/engine/RESCUEBOAT/engine_5.wav", 4800],
+			["art/sound/engine/RESCUEBOAT/engine_5.wav", 5600],
+			["art/sound/engine/RESCUEBOAT/engine_6.wav", 6400],
+			["art/sound/engine/RESCUEBOAT/engine_7.wav", 7200],
+			["art/sound/engine/RESCUEBOAT/engine_7.wav", 8000],
+			["art/sound/engine/RESCUEBOAT/engine_7.wav", 9000],
+            
+        ]
+    ]
+}

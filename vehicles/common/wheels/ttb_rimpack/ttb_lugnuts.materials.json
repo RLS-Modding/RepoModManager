@@ -1,0 +1,1261 @@
+{
+  "ttb_rimpack_lugnuts_a": {
+    "name": "ttb_rimpack_lugnuts_a",
+    "mapTo": "ttb_rimpack_lugnuts_a",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_a_black": {
+    "name": "ttb_rimpack_lugnuts_a_black",
+    "mapTo": "ttb_rimpack_lugnuts_a_black",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorFactor": [
+          0.482353002,
+          0.482353002,
+          0.482353002,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": true
+      },
+      {
+        "baseColorFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "baseColorFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "baseColorFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_a_blue": {
+    "name": "ttb_rimpack_lugnuts_a_blue",
+    "mapTo": "ttb_rimpack_lugnuts_a_blue",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorFactor": [
+          0,
+          0.766143024,
+          0.952941,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "clearCoatFactor": 1,
+        "clearCoatRoughnessFactor": 0.174999997,
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": true
+      },
+      {
+        "baseColorFactor": null,
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "baseColorFactor": null,
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "baseColorFactor": null,
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_a_bronze": {
+    "name": "ttb_rimpack_lugnuts_a_bronze",
+    "mapTo": "ttb_rimpack_lugnuts_a_bronze",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorFactor": [
+          0.725489974,
+          0.560783982,
+          0.415686011,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": true
+      },
+      {
+        "baseColorFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "baseColorFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "baseColorFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_a_copper": {
+    "name": "ttb_rimpack_lugnuts_a_copper",
+    "mapTo": "ttb_rimpack_lugnuts_a_copper",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorFactor": [
+          0.854902029,
+          0.541176021,
+          0.403921992,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": true
+      },
+      {
+        "baseColorFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "baseColorFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "baseColorFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_a_gold": {
+    "name": "ttb_rimpack_lugnuts_a_gold",
+    "mapTo": "ttb_rimpack_lugnuts_a_gold",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorFactor": [
+          0.858824015,
+          0.701960981,
+          0.521569014,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": true
+      },
+      {
+        "baseColorFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "baseColorFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "baseColorFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_a_primary": {
+    "name": "ttb_rimpack_lugnuts_a_primary",
+    "mapTo": "ttb_rimpack_lugnuts_a_primary",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "clearCoatFactor": 1,
+        "clearCoatRoughnessFactor": 0.0359999985,
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": true
+      },
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "colorPaletteMap": "/vehicles/common/nullcolormaskR.png",
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "activeLayers": 2,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_a_red": {
+    "name": "ttb_rimpack_lugnuts_a_red",
+    "mapTo": "ttb_rimpack_lugnuts_a_red",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorFactor": [
+          0.788076997,
+          0.228363007,
+          0.228363007,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "clearCoatFactor": 1,
+        "clearCoatRoughnessFactor": 0.174999997,
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": true
+      },
+      {
+        "baseColorFactor": null,
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "baseColorFactor": null,
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "baseColorFactor": null,
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_a_secondary": {
+    "name": "ttb_rimpack_lugnuts_a_secondary",
+    "mapTo": "ttb_rimpack_lugnuts_a_secondary",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": true
+      },
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "colorPaletteMap": "/vehicles/common/nullcolormaskG.png",
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "activeLayers": 2,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_a_tertiary": {
+    "name": "ttb_rimpack_lugnuts_a_tertiary",
+    "mapTo": "ttb_rimpack_lugnuts_a_tertiary",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": true
+      },
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "colorPaletteMap": "/vehicles/common/nullcolormask.png",
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "activeLayers": 2,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_a_white": {
+    "name": "ttb_rimpack_lugnuts_a_white",
+    "mapTo": "ttb_rimpack_lugnuts_a_white",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b.color.png",
+        "clearCoatFactor": 1,
+        "clearCoatRoughnessFactor": 0.174999997,
+        "metallicFactor": 0.508000016,
+        "metallicMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_m.data.png",
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_n.normal.png",
+        "roughnessFactor": 0.526000023,
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_r.data.png",
+        "vertColor": true
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "roughnessFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "roughnessFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "roughnessFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_b": {
+    "name": "ttb_rimpack_lugnuts_b",
+    "mapTo": "ttb_rimpack_lugnuts_b",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_b_black": {
+    "name": "ttb_rimpack_lugnuts_b_black",
+    "mapTo": "ttb_rimpack_lugnuts_b_black",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_ao.data.png",
+        "baseColorFactor": [
+          0.482353002,
+          0.482353002,
+          0.482353002,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_b_blue": {
+    "name": "ttb_rimpack_lugnuts_b_blue",
+    "mapTo": "ttb_rimpack_lugnuts_b_blue",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_ao.data.png",
+        "baseColorFactor": [
+          0,
+          0.766143024,
+          0.952941,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_b_bronze": {
+    "name": "ttb_rimpack_lugnuts_b_bronze",
+    "mapTo": "ttb_rimpack_lugnuts_b_bronze",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_ao.data.png",
+        "baseColorFactor": [
+          0.725489974,
+          0.560783982,
+          0.415686011,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_b_copper": {
+    "name": "ttb_rimpack_lugnuts_b_copper",
+    "mapTo": "ttb_rimpack_lugnuts_b_copper",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_ao.data.png",
+        "baseColorFactor": [
+          0.854902029,
+          0.541176021,
+          0.403921992,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_b_gold": {
+    "name": "ttb_rimpack_lugnuts_b_gold",
+    "mapTo": "ttb_rimpack_lugnuts_b_gold",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_ao.data.png",
+        "baseColorFactor": [
+          0.858824015,
+          0.701960981,
+          0.521569014,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_b_primary": {
+    "name": "ttb_rimpack_lugnuts_b_primary",
+    "mapTo": "ttb_rimpack_lugnuts_b_primary",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_b.color.png",
+        "clearCoatFactor": 1,
+        "clearCoatRoughnessFactor": 0.0790000036,
+        "colorPaletteMap": "/vehicles/common/nullcolormaskR.color.dds",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_r.data.png",
+        "vertColor": true
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_b_secondary": {
+    "name": "ttb_rimpack_lugnuts_b_secondary",
+    "mapTo": "ttb_rimpack_lugnuts_b_secondary",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_b.color.png",
+        "clearCoatFactor": 1,
+        "clearCoatRoughnessFactor": 0.0790000036,
+        "colorPaletteMap": "/vehicles/common/nullcolormaskG.dds",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_r.data.png",
+        "vertColor": true
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_b_tertiary": {
+    "name": "ttb_rimpack_lugnuts_b_tertiary",
+    "mapTo": "ttb_rimpack_lugnuts_b_tertiary",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_b.color.png",
+        "clearCoatFactor": 1,
+        "clearCoatRoughnessFactor": 0.0790000036,
+        "colorPaletteMap": "/vehicles/common/nullcolormask.dds",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_r.data.png",
+        "vertColor": true
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_b_red": {
+    "name": "ttb_rimpack_lugnuts_b_red",
+    "mapTo": "ttb_rimpack_lugnuts_b_red",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_ao.data.png",
+        "baseColorFactor": [
+          0.788076997,
+          0.228363007,
+          0.228363007,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_b_white": {
+    "name": "ttb_rimpack_lugnuts_b_white",
+    "mapTo": "ttb_rimpack_lugnuts_b_white",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_b.color.png",
+        "clearCoatFactor": 1,
+        "clearCoatRoughnessFactor": 0.174999997,
+        "metallicFactor": 0.508000016,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_n.normal.png",
+        "roughnessFactor": 0.526000023,
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_b_r.data.png",
+        "vertColor": true
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "roughnessFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "roughnessFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "roughnessFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_c": {
+    "name": "ttb_rimpack_lugnuts_c",
+    "mapTo": "ttb_rimpack_lugnuts_c",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_c_black": {
+    "name": "ttb_rimpack_lugnuts_c_black",
+    "mapTo": "ttb_rimpack_lugnuts_c_black",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_ao.data.png",
+        "baseColorFactor": [
+          0.482353002,
+          0.482353002,
+          0.482353002,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_c_blue": {
+    "name": "ttb_rimpack_lugnuts_c_blue",
+    "mapTo": "ttb_rimpack_lugnuts_c_blue",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_ao.data.png",
+        "baseColorFactor": [
+          0,
+          0.766143024,
+          0.952941,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_c_bronze": {
+    "name": "ttb_rimpack_lugnuts_c_bronze",
+    "mapTo": "ttb_rimpack_lugnuts_c_bronze",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_ao.data.png",
+        "baseColorFactor": [
+          0.725489974,
+          0.560783982,
+          0.415686011,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_c_copper": {
+    "name": "ttb_rimpack_lugnuts_c_copper",
+    "mapTo": "ttb_rimpack_lugnuts_c_copper",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_ao.data.png",
+        "baseColorFactor": [
+          0.854902029,
+          0.541176021,
+          0.403921992,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_c_gold": {
+    "name": "ttb_rimpack_lugnuts_c_gold",
+    "mapTo": "ttb_rimpack_lugnuts_c_gold",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_ao.data.png",
+        "baseColorFactor": [
+          0.858824015,
+          0.701960981,
+          0.521569014,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_c_primary": {
+    "name": "ttb_rimpack_lugnuts_c_primary",
+    "mapTo": "ttb_rimpack_lugnuts_c_primary",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_b.color.png",
+        "clearCoatFactor": 1,
+        "clearCoatRoughnessFactor": 0.0790000036,
+        "colorPaletteMap": "/vehicles/common/nullcolormaskR.color.dds",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_r.data.png",
+        "vertColor": true
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_c_secondary": {
+    "name": "ttb_rimpack_lugnuts_c_secondary",
+    "mapTo": "ttb_rimpack_lugnuts_c_secondary",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_b.color.png",
+        "clearCoatFactor": 1,
+        "clearCoatRoughnessFactor": 0.0790000036,
+        "colorPaletteMap": "/vehicles/common/nullcolormaskG.dds",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_r.data.png",
+        "vertColor": true
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_c_tertiary": {
+    "name": "ttb_rimpack_lugnuts_c_tertiary",
+    "mapTo": "ttb_rimpack_lugnuts_c_tertiary",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_b.color.png",
+        "clearCoatFactor": 1,
+        "clearCoatRoughnessFactor": 0.0790000036,
+        "colorPaletteMap": "/vehicles/common/nullcolormask.dds",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_r.data.png",
+        "vertColor": true
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_c_red": {
+    "name": "ttb_rimpack_lugnuts_c_red",
+    "mapTo": "ttb_rimpack_lugnuts_c_red",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_ao.data.png",
+        "baseColorFactor": [
+          0.788076997,
+          0.228363007,
+          0.228363007,
+          1
+        ],
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_b.color.png",
+        "metallicFactor": 1,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_n.normal.png",
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_r.data.png",
+        "vertColor": true
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      },
+      {
+        "metallicFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "ttb_rimpack_lugnuts_c_white": {
+    "name": "ttb_rimpack_lugnuts_c_white",
+    "mapTo": "ttb_rimpack_lugnuts_c_white",
+    "class": "Material",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_ao.data.png",
+        "baseColorMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_b.color.png",
+        "clearCoatFactor": 1,
+        "clearCoatRoughnessFactor": 0.174999997,
+        "metallicFactor": 0.508000016,
+        "normalMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_n.normal.png",
+        "roughnessFactor": 0.526000023,
+        "roughnessMap": "/vehicles/common/wheels/ttb_rimpack/ttb_rimpack_lugnuts_c_r.data.png",
+        "vertColor": true
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "roughnessFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "roughnessFactor": null,
+        "vertColor": null
+      },
+      {
+        "clearCoatFactor": null,
+        "clearCoatRoughnessFactor": null,
+        "metallicFactor": null,
+        "roughnessFactor": null,
+        "vertColor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  }
+}

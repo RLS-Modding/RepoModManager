@@ -1,0 +1,2498 @@
+{
+/*    "ttb_rimpack_wheel_05a_15x6_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"15x6 Okudai RR01 Front Wheels (Silver - TTBRWP)",
+            "value":1200,
+        },
+        "slotType" : "wheel_F_5",
+    
+        "slots": [
+            ["type", "default", "description"],
+            ["tire_F_15x6_altb","tire_F_175_70_15_altb_rally", "Front Tires"],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_wheel_05a_15x6", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_05a_15x6", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_5nuts", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":  0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_5nuts", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_05_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.473, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_05_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.473, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ],
+        "nodes": [
+            ["id", "posX", "posY", "posZ"],
+            {"collision":true},
+            {"selfCollision":true},
+            //front wheels
+            {"nodeWeight":5.0},
+            {"nodeMaterial":"|NM_METAL"},
+            {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+            {"frictionCoef":0.5},
+            {"group":"wheelhub_FR"},
+            ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FR"},
+            ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+            {"group":""},
+        ],
+        "beams": [
+            ["id1:", "id2:"],
+            {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+            {"breakGroup":""},
+            {"beamDeform":78500,"beamStrength":434000},
+            {"beamSpring":1501000,"beamDamp":25},
+            //front wheel
+            ["fw1r","fw1rr"],
+            ["fw1l","fw1ll"],
+            {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        ],
+        "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+    
+            //general settings
+            {"hubRadius":0.205},
+            {"wheelOffset":-0.025},
+            {"hubWidth":0.185},
+            {"numRays":16},
+    
+            //hub options
+            {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+            {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+            {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+            {"hubNodeWeight":0.5},
+            {"hubNodeMaterial":"|NM_METAL"},
+            {"hubFrictionCoef":0.5},
+            {"hubBeamDeform":43600, "hubBeamStrength":78000},
+        ],
+    },
+    "ttb_rimpack_wheel_05b_15x6_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"15x6 Okudai RR01 Front Wheels (Black - TTBRWP)",
+            "value":1200,
+        },
+        "slotType" : "wheel_F_5",
+    
+        "slots": [
+            ["type", "default", "description"],
+            ["tire_F_15x6_altb","tire_F_175_70_15_altb_rally", "Front Tires"],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_wheel_05b_15x6", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_05b_15x6", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_5nuts", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":  0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_5nuts", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_05_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.473, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_05_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.473, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ],
+        "nodes": [
+            ["id", "posX", "posY", "posZ"],
+            {"collision":true},
+            {"selfCollision":true},
+            //front wheels
+            {"nodeWeight":5.0},
+            {"nodeMaterial":"|NM_METAL"},
+            {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+            {"frictionCoef":0.5},
+            {"group":"wheelhub_FR"},
+            ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FR"},
+            ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+            {"group":""},
+        ],
+        "beams": [
+            ["id1:", "id2:"],
+            {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+            {"breakGroup":""},
+            {"beamDeform":78500,"beamStrength":434000},
+            {"beamSpring":1501000,"beamDamp":25},
+            //front wheel
+            ["fw1r","fw1rr"],
+            ["fw1l","fw1ll"],
+            {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        ],
+        "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+    
+            //general settings
+            {"hubRadius":0.205},
+            {"wheelOffset":-0.025},
+            {"hubWidth":0.185},
+            {"numRays":16},
+    
+            //hub options
+            {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+            {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+            {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+            {"hubNodeWeight":0.5},
+            {"hubNodeMaterial":"|NM_METAL"},
+            {"hubFrictionCoef":0.5},
+            {"hubBeamDeform":43600, "hubBeamStrength":78000},
+        ],
+    },
+    "ttb_rimpack_wheel_05c_15x6_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"15x6 Okudai RR01 Front Wheels (Copper - TTBRWP)",
+            "value":1200,
+        },
+        "slotType" : "wheel_F_5",
+    
+        "slots": [
+            ["type", "default", "description"],
+            ["tire_F_15x6_altb","tire_F_175_70_15_altb_rally", "Front Tires"],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_wheel_05c_15x6", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_05c_15x6", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_5nuts", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":  0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_5nuts", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_05_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.473, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_05_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.473, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ],
+        "nodes": [
+            ["id", "posX", "posY", "posZ"],
+            {"collision":true},
+            {"selfCollision":true},
+            //front wheels
+            {"nodeWeight":5.0},
+            {"nodeMaterial":"|NM_METAL"},
+            {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+            {"frictionCoef":0.5},
+            {"group":"wheelhub_FR"},
+            ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FR"},
+            ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+            {"group":""},
+        ],
+        "beams": [
+            ["id1:", "id2:"],
+            {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+            {"breakGroup":""},
+            {"beamDeform":78500,"beamStrength":434000},
+            {"beamSpring":1501000,"beamDamp":25},
+            //front wheel
+            ["fw1r","fw1rr"],
+            ["fw1l","fw1ll"],
+            {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        ],
+        "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+    
+            //general settings
+            {"hubRadius":0.205},
+            {"wheelOffset":-0.025},
+            {"hubWidth":0.185},
+            {"numRays":16},
+    
+            //hub options
+            {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+            {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+            {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+            {"hubNodeWeight":0.5},
+            {"hubNodeMaterial":"|NM_METAL"},
+            {"hubFrictionCoef":0.5},
+            {"hubBeamDeform":43600, "hubBeamStrength":78000},
+        ],
+    },
+    "ttb_rimpack_wheel_05d_15x6_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"15x6 Okudai RR01 Front Wheels (Bronze - TTBRWP)",
+            "value":1200,
+        },
+        "slotType" : "wheel_F_5",
+    
+        "slots": [
+            ["type", "default", "description"],
+            ["tire_F_15x6_altb","tire_F_175_70_15_altb_rally", "Front Tires"],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_wheel_05d_15x6", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_05d_15x6", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_5nuts", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":  0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_5nuts", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_05_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.473, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_05_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.473, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ],
+        "nodes": [
+            ["id", "posX", "posY", "posZ"],
+            {"collision":true},
+            {"selfCollision":true},
+            //front wheels
+            {"nodeWeight":5.0},
+            {"nodeMaterial":"|NM_METAL"},
+            {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+            {"frictionCoef":0.5},
+            {"group":"wheelhub_FR"},
+            ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FR"},
+            ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+            {"group":""},
+        ],
+        "beams": [
+            ["id1:", "id2:"],
+            {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+            {"breakGroup":""},
+            {"beamDeform":78500,"beamStrength":434000},
+            {"beamSpring":1501000,"beamDamp":25},
+            //front wheel
+            ["fw1r","fw1rr"],
+            ["fw1l","fw1ll"],
+            {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        ],
+        "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+    
+            //general settings
+            {"hubRadius":0.205},
+            {"wheelOffset":-0.025},
+            {"hubWidth":0.185},
+            {"numRays":16},
+    
+            //hub options
+            {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+            {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+            {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+            {"hubNodeWeight":0.5},
+            {"hubNodeMaterial":"|NM_METAL"},
+            {"hubFrictionCoef":0.5},
+            {"hubBeamDeform":43600, "hubBeamStrength":78000},
+        ],
+    },*/
+/*"ttb_rimpack_wheel_05a_16x8_F": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"16x8 Okudai RR01 Front Wheels (Silver - TTBRWP)",
+        "value":1200,
+    },
+    "slotType" : "wheel_F_5",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["tire_F_16x8","tire_F_225_45_16_sport", "Front Tires"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_05a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_05a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_valve_stem_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_5nuts", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":  0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_valve_stem_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_5nuts", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_05_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_05_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+    ],
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"collision":true},
+        {"selfCollision":true},
+        //front wheels
+        {"nodeWeight":5.0},
+        {"nodeMaterial":"|NM_METAL"},
+        {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+        {"frictionCoef":0.5},
+        {"group":"wheelhub_FR"},
+        ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+        {"group":"wheelhub_FR"},
+        ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+        {"group":"wheelhub_FL"},
+        ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+        {"group":"wheelhub_FL"},
+        ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+        {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+        {"group":""},
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"breakGroup":""},
+        {"beamDeform":78500,"beamStrength":434000},
+        {"beamSpring":1501000,"beamDamp":25},
+        //front wheel
+        ["fw1r","fw1rr"],
+        ["fw1l","fw1ll"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+
+        //general settings
+        {"hubRadius":0.215},
+        {"wheelOffset":-0.015},
+        {"hubWidth":0.235},
+        {"numRays":16},
+
+        //hub options
+        {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+        {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+        {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+        {"hubNodeWeight":0.5},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.5},
+        {"hubBeamDeform":43600, "hubBeamStrength":78000},
+    ],
+},
+"ttb_rimpack_wheel_05b_16x8_F": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"16x8 Okudai RR01 Front Wheels (Black - TTBRWP)",
+        "value":1200,
+    },
+    "slotType" : "wheel_F_5",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["tire_F_16x8","tire_F_225_45_16_sport", "Front Tires"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_05b_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_05b_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_valve_stem_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_5nuts", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":  0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_valve_stem_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_5nuts", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_05_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_05_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+    ],
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"collision":true},
+        {"selfCollision":true},
+        //front wheels
+        {"nodeWeight":5.0},
+        {"nodeMaterial":"|NM_METAL"},
+        {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+        {"frictionCoef":0.5},
+        {"group":"wheelhub_FR"},
+        ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+        {"group":"wheelhub_FR"},
+        ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+        {"group":"wheelhub_FL"},
+        ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+        {"group":"wheelhub_FL"},
+        ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+        {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+        {"group":""},
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"breakGroup":""},
+        {"beamDeform":78500,"beamStrength":434000},
+        {"beamSpring":1501000,"beamDamp":25},
+        //front wheel
+        ["fw1r","fw1rr"],
+        ["fw1l","fw1ll"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+
+        //general settings
+        {"hubRadius":0.215},
+        {"wheelOffset":-0.015},
+        {"hubWidth":0.235},
+        {"numRays":16},
+
+        //hub options
+        {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+        {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+        {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+        {"hubNodeWeight":0.5},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.5},
+        {"hubBeamDeform":43600, "hubBeamStrength":78000},
+    ],
+},
+"ttb_rimpack_wheel_05c_16x8_F": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"16x8 Okudai RR01 Front Wheels (Copper - TTBRWP)",
+        "value":1200,
+    },
+    "slotType" : "wheel_F_5",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["tire_F_16x8","tire_F_225_45_16_sport", "Front Tires"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_05c_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_05c_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_valve_stem_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_5nuts", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":  0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_valve_stem_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_5nuts", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_05_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_05_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+    ],
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"collision":true},
+        {"selfCollision":true},
+        //front wheels
+        {"nodeWeight":5.0},
+        {"nodeMaterial":"|NM_METAL"},
+        {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+        {"frictionCoef":0.5},
+        {"group":"wheelhub_FR"},
+        ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+        {"group":"wheelhub_FR"},
+        ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+        {"group":"wheelhub_FL"},
+        ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+        {"group":"wheelhub_FL"},
+        ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+        {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+        {"group":""},
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"breakGroup":""},
+        {"beamDeform":78500,"beamStrength":434000},
+        {"beamSpring":1501000,"beamDamp":25},
+        //front wheel
+        ["fw1r","fw1rr"],
+        ["fw1l","fw1ll"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+
+        //general settings
+        {"hubRadius":0.215},
+        {"wheelOffset":-0.015},
+        {"hubWidth":0.235},
+        {"numRays":16},
+
+        //hub options
+        {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+        {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+        {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+        {"hubNodeWeight":0.5},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.5},
+        {"hubBeamDeform":43600, "hubBeamStrength":78000},
+    ],
+},
+"ttb_rimpack_wheel_05d_16x8_F": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"16x8 Okudai RR01 Front Wheels (Bronze - TTBRWP)",
+        "value":1200,
+    },
+    "slotType" : "wheel_F_5",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["tire_F_16x8","tire_F_225_45_16_sport", "Front Tires"],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_05d_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_05d_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_valve_stem_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_5nuts", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x":  0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_valve_stem_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":-0.012}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_5nuts", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_05_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_05_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+    ],
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"collision":true},
+        {"selfCollision":true},
+        //front wheels
+        {"nodeWeight":5.0},
+        {"nodeMaterial":"|NM_METAL"},
+        {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+        {"frictionCoef":0.5},
+        {"group":"wheelhub_FR"},
+        ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+        {"group":"wheelhub_FR"},
+        ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+        {"group":"wheelhub_FL"},
+        ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+        {"group":"wheelhub_FL"},
+        ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+        {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+        {"group":""},
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"breakGroup":""},
+        {"beamDeform":78500,"beamStrength":434000},
+        {"beamSpring":1501000,"beamDamp":25},
+        //front wheel
+        ["fw1r","fw1rr"],
+        ["fw1l","fw1ll"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+
+        //general settings
+        {"hubRadius":0.215},
+        {"wheelOffset":-0.015},
+        {"hubWidth":0.235},
+        {"numRays":16},
+
+        //hub options
+        {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+        {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+        {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+        {"hubNodeWeight":0.5},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.5},
+        {"hubBeamDeform":43600, "hubBeamStrength":78000},
+    ],
+},*/
+"ttb_rimpack_wheel_06_F": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Okudai ProStreet Front Wheels [TTBRWP]",
+        "value":610,
+    },
+    "slotType" : "wheel_F_5",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["ttb_rimpack_wheel_06_size_F","ttb_rimpack_wheel_size_06_17x8_F", "Wheel Size", {"coreSlot":true}],
+    ],
+},
+    "ttb_rimpack_wheel_size_06_15x7_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"15x7",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_06_size_F",
+
+        "slots": [
+            ["type", "default", "description"],
+            ["tire_F_15x7","tire_F_205_50_15_sport", "Front Tires"],
+            ["ttb_rimpack_wheel_06_15x7_F","ttb_rimpack_wheel_06a_15x7_F", "Wheel Color", {"coreSlot":true}],
+            ["ttb_rimpack_wheel_06_15x7_F_lugnuts","ttb_rimpack_wheel_06_15x7_F_lugnuts_a", "Lug Nuts", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.472, "y":0.0, "z":0.022}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.472, "y":0.0, "z":0.022}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ],
+        "nodes": [
+            ["id", "posX", "posY", "posZ"],
+            {"collision":true},
+            {"selfCollision":true},
+            //front wheels
+            {"nodeWeight":5.0},
+            {"nodeMaterial":"|NM_METAL"},
+            {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+            {"frictionCoef":0.5},
+            {"group":"wheelhub_FR"},
+            ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FR"},
+            ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+            {"group":""},
+        ],
+        "beams": [
+            ["id1:", "id2:"],
+            {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+            {"breakGroup":""},
+            {"beamDeform":78500,"beamStrength":434000},
+            {"beamSpring":1501000,"beamDamp":25},
+            //front wheel
+            ["fw1r","fw1rr"],
+            ["fw1l","fw1ll"],
+            {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        ],
+        "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+
+            //general settings
+            {"hubRadius":0.205},
+            {"wheelOffset":-0.015},
+            {"hubWidth":0.195},
+            {"numRays":16},
+
+            //hub options
+            {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+            {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+            {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+            {"hubNodeWeight":0.5},
+            {"hubNodeMaterial":"|NM_METAL"},
+            {"hubFrictionCoef":0.5},
+            {"hubBeamDeform":43600, "hubBeamStrength":78000},
+        ],
+    },
+        "ttb_rimpack_wheel_06a_15x7_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Silver",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_15x7_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}}],
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}}],
+            ],
+        },
+        "ttb_rimpack_wheel_06b_15x7_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Black",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_15x7_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06c_15x7_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Copper",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_15x7_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06d_15x7_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Gold",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_15x7_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06e_15x7_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Bronze",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_15x7_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06f_15x7_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet White",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_15x7_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.48, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+            ],
+        },
+            "ttb_rimpack_wheel_06_15x7_F_lugnuts_a": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Silver Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x7_F_lugnuts_b": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Black Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x7_F_lugnuts_c": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Copper Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x7_F_lugnuts_d": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Bronze Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x7_F_lugnuts_e": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Blue Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x7_F_lugnuts_f": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Red Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x7_F_lugnuts_g": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Secondary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x7_F_lugnuts_h": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Tertiary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.459, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+    "ttb_rimpack_wheel_size_06_15x8_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"15x8",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_06_size_F",
+
+        "slots": [
+            ["type", "default", "description"],
+            ["tire_F_15x8","tire_F_225_50_15_sport", "Front Tires"],
+            ["ttb_rimpack_wheel_06_15x8_F","ttb_rimpack_wheel_06a_15x8_F", "Wheel Color", {"coreSlot":true}],
+            ["ttb_rimpack_wheel_06_15x8_F_lugnuts","ttb_rimpack_wheel_06_15x8_F_lugnuts_a", "Lug Nuts", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.518, "y":0.0, "z":0.022}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.518, "y":0.0, "z":0.022}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ],
+        "nodes": [
+            ["id", "posX", "posY", "posZ"],
+            {"collision":true},
+            {"selfCollision":true},
+            //front wheels
+            {"nodeWeight":5.0},
+            {"nodeMaterial":"|NM_METAL"},
+            {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+            {"frictionCoef":0.5},
+            {"group":"wheelhub_FR"},
+            ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FR"},
+            ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+            {"group":""},
+        ],
+        "beams": [
+            ["id1:", "id2:"],
+            {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+            {"breakGroup":""},
+            {"beamDeform":78500,"beamStrength":434000},
+            {"beamSpring":1501000,"beamDamp":25},
+            //front wheel
+            ["fw1r","fw1rr"],
+            ["fw1l","fw1ll"],
+            {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        ],
+        "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+
+            //general settings
+            {"hubRadius":0.20},
+            {"wheelOffset":-0.055},
+            {"hubWidth":0.225},
+            {"numRays":16},
+
+            //hub options
+            {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+            {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+            {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+            {"hubNodeWeight":0.5},
+            {"hubNodeMaterial":"|NM_METAL"},
+            {"hubFrictionCoef":0.5},
+            {"hubBeamDeform":43600, "hubBeamStrength":78000},
+        ],
+    },
+        "ttb_rimpack_wheel_06a_15x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Silver",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_15x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ],
+        },
+        "ttb_rimpack_wheel_06b_15x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Black",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_15x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06c_15x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Copper",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_15x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06d_15x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Gold",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_15x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06e_15x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Bronze",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_15x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06f_15x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet White",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_15x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+                ["ttb_rimpack_wheel_06a_15x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.518, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+            ],
+        },
+            "ttb_rimpack_wheel_06_15x8_F_lugnuts_a": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Silver Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x8_F_lugnuts_b": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Black Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x8_F_lugnuts_c": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Copper Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x8_F_lugnuts_d": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Bronze Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x8_F_lugnuts_e": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Blue Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x8_F_lugnuts_f": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Red Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x8_F_lugnuts_g": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Secondary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_15x8_F_lugnuts_h": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Tertiary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_15x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.5035, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+    "ttb_rimpack_wheel_size_06_16x7_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"16x7",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_06_size_F",
+
+        "slots": [
+            ["type", "default", "description"],
+            ["tire_F_16x7","tire_F_205_50_16_sport", "Front Tires"],
+            ["ttb_rimpack_wheel_06_16x7_F","ttb_rimpack_wheel_06a_16x7_F", "Wheel Color", {"coreSlot":true}],
+            ["ttb_rimpack_wheel_06_16x7_F_lugnuts","ttb_rimpack_wheel_06_16x7_F_lugnuts_a", "Lug Nuts", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.470, "y":0.0, "z":0.01}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.470, "y":0.0, "z":0.01}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ],
+        "nodes": [
+            ["id", "posX", "posY", "posZ"],
+            {"collision":true},
+            {"selfCollision":true},
+            //front wheels
+            {"nodeWeight":5.0},
+            {"nodeMaterial":"|NM_METAL"},
+            {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+            {"frictionCoef":0.5},
+            {"group":"wheelhub_FR"},
+            ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FR"},
+            ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+            {"group":""},
+        ],
+        "beams": [
+            ["id1:", "id2:"],
+            {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+            {"breakGroup":""},
+            {"beamDeform":78500,"beamStrength":434000},
+            {"beamSpring":1501000,"beamDamp":25},
+            //front wheel
+            ["fw1r","fw1rr"],
+            ["fw1l","fw1ll"],
+            {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        ],
+        "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+
+            //general settings
+            {"hubRadius":0.215},
+            {"wheelOffset":-0.015},
+            {"hubWidth":0.205},
+            {"numRays":16},
+
+            //hub options
+            {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+            {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+            {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+            {"hubNodeWeight":0.5},
+            {"hubNodeMaterial":"|NM_METAL"},
+            {"hubFrictionCoef":0.5},
+            {"hubBeamDeform":43600, "hubBeamStrength":78000},
+        ],
+    },
+        "ttb_rimpack_wheel_06a_16x7_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Silver",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_16x7_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}}],
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}}],
+            ],
+        },
+        "ttb_rimpack_wheel_06b_16x7_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Black",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_16x7_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06c_16x7_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Copper",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_16x7_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06d_16x7_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Gold",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_16x7_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06e_16x7_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Bronze",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_16x7_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06f_16x7_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet White",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_16x7_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":0.89, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+            ],
+        },
+            "ttb_rimpack_wheel_06_16x7_F_lugnuts_a": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Silver Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x7_F_lugnuts_b": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Black Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x7_F_lugnuts_c": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Copper Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x7_F_lugnuts_d": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Bronze Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x7_F_lugnuts_e": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Blue Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x7_F_lugnuts_f": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Red Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x7_F_lugnuts_g": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Secondary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x7_F_lugnuts_h": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Tertiary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x7_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.458, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+    "ttb_rimpack_wheel_size_06_16x8_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"16x8",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_06_size_F",
+
+        "slots": [
+            ["type", "default", "description"],
+            ["tire_F_16x8","tire_F_225_50_16_sport", "Front Tires"],
+            ["ttb_rimpack_wheel_06_16x8_F","ttb_rimpack_wheel_06a_16x8_F", "Wheel Color", {"coreSlot":true}],
+            ["ttb_rimpack_wheel_06_16x8_F_lugnuts","ttb_rimpack_wheel_06_16x8_F_lugnuts_a", "Lug Nuts", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.01}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.01}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ],
+        "nodes": [
+            ["id", "posX", "posY", "posZ"],
+            {"collision":true},
+            {"selfCollision":true},
+            //front wheels
+            {"nodeWeight":5.0},
+            {"nodeMaterial":"|NM_METAL"},
+            {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+            {"frictionCoef":0.5},
+            {"group":"wheelhub_FR"},
+            ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FR"},
+            ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+            {"group":""},
+        ],
+        "beams": [
+            ["id1:", "id2:"],
+            {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+            {"breakGroup":""},
+            {"beamDeform":78500,"beamStrength":434000},
+            {"beamSpring":1501000,"beamDamp":25},
+            //front wheel
+            ["fw1r","fw1rr"],
+            ["fw1l","fw1ll"],
+            {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        ],
+        "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+
+            //general settings
+            {"hubRadius":0.215},
+            {"wheelOffset":-0.015},
+            {"hubWidth":0.225},
+            {"numRays":16},
+
+            //hub options
+            {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+            {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+            {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+            {"hubNodeWeight":0.5},
+            {"hubNodeMaterial":"|NM_METAL"},
+            {"hubFrictionCoef":0.5},
+            {"hubBeamDeform":43600, "hubBeamStrength":78000},
+        ],
+    },
+        "ttb_rimpack_wheel_06a_16x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Silver",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_16x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ],
+        },
+        "ttb_rimpack_wheel_06b_16x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Black",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_16x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06c_16x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Copper",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_16x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06d_16x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Gold",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_16x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06e_16x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Bronze",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_16x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06f_16x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet White",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_16x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+                ["ttb_rimpack_wheel_06a_16x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.479, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+            ],
+        },
+            "ttb_rimpack_wheel_06_16x8_F_lugnuts_a": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Silver Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x8_F_lugnuts_b": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Black Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x8_F_lugnuts_c": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Copper Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x8_F_lugnuts_d": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Bronze Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x8_F_lugnuts_e": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Blue Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x8_F_lugnuts_f": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Red Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x8_F_lugnuts_g": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Secondary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_16x8_F_lugnuts_h": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Tertiary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_16x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.464, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+    "ttb_rimpack_wheel_size_06_17x8_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"17x8",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_06_size_F",
+
+        "slots": [
+            ["type", "default", "description"],
+            ["tire_F_17x8","tire_F_225_45_17_sport", "Front Tires"],
+            ["ttb_rimpack_wheel_06_17x8_F","ttb_rimpack_wheel_06a_17x8_F", "Wheel Color", {"coreSlot":true}],
+            ["ttb_rimpack_wheel_06_17x8_F_lugnuts","ttb_rimpack_wheel_06_17x8_F_lugnuts_a", "Lug Nuts", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ],
+        "nodes": [
+            ["id", "posX", "posY", "posZ"],
+            {"collision":true},
+            {"selfCollision":true},
+            //front wheels
+            {"nodeWeight":5.0},
+            {"nodeMaterial":"|NM_METAL"},
+            {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+            {"frictionCoef":0.5},
+            {"group":"wheelhub_FR"},
+            ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FR"},
+            ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+            {"group":""},
+        ],
+        "beams": [
+            ["id1:", "id2:"],
+            {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+            {"breakGroup":""},
+            {"beamDeform":78500,"beamStrength":434000},
+            {"beamSpring":1501000,"beamDamp":25},
+            //front wheel
+            ["fw1r","fw1rr"],
+            ["fw1l","fw1ll"],
+            {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        ],
+        "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+
+            //general settings
+            {"hubRadius":0.225},
+            {"wheelOffset":-0.035},
+            {"hubWidth":0.225},
+            {"numRays":16},
+
+            //hub options
+            {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+            {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+            {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+            {"hubNodeWeight":0.5},
+            {"hubNodeMaterial":"|NM_METAL"},
+            {"hubFrictionCoef":0.5},
+            {"hubBeamDeform":43600, "hubBeamStrength":78000},
+        ],
+    },
+        "ttb_rimpack_wheel_06a_17x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Silver",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+            ],
+        },
+        "ttb_rimpack_wheel_06b_17x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Black",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06c_17x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Copper",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06d_17x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Gold",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06e_17x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Bronze",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06f_17x8_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet White",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x8_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.5, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+            ],
+        },
+            "ttb_rimpack_wheel_06_17x8_F_lugnuts_a": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Silver Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x8_F_lugnuts_b": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Black Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x8_F_lugnuts_c": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Copper Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x8_F_lugnuts_d": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Bronze Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x8_F_lugnuts_e": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Blue Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x8_F_lugnuts_f": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Red Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x8_F_lugnuts_g": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Secondary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x8_F_lugnuts_h": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Tertiary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x8_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.4855, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+    "ttb_rimpack_wheel_size_06_17x9_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"17x9",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_06_size_F",
+
+        "slots": [
+            ["type", "default", "description"],
+            ["tire_F_17x9","tire_F_245_40_17_sport", "Front Tires"],
+            ["ttb_rimpack_wheel_06_17x9_F","ttb_rimpack_wheel_06a_17x9_F", "Wheel Color", {"coreSlot":true}],
+            ["ttb_rimpack_wheel_06_17x9_F_lugnuts","ttb_rimpack_wheel_06_17x9_F_lugnuts_a", "Lug Nuts", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.12, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.12, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.508, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.508, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ],
+        "nodes": [
+            ["id", "posX", "posY", "posZ"],
+            {"collision":true},
+            {"selfCollision":true},
+            //front wheels
+            {"nodeWeight":5.0},
+            {"nodeMaterial":"|NM_METAL"},
+            {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+            {"frictionCoef":0.5},
+            {"group":"wheelhub_FR"},
+            ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FR"},
+            ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+            {"group":""},
+        ],
+        "beams": [
+            ["id1:", "id2:"],
+            {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+            {"breakGroup":""},
+            {"beamDeform":78500,"beamStrength":434000},
+            {"beamSpring":1501000,"beamDamp":25},
+            //front wheel
+            ["fw1r","fw1rr"],
+            ["fw1l","fw1ll"],
+            {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        ],
+        "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+
+            //general settings
+            {"hubRadius":0.225},
+            {"wheelOffset":-0.035},
+            {"hubWidth":0.245},
+            {"numRays":16},
+
+            //hub options
+            {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+            {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+            {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+            {"hubNodeWeight":0.5},
+            {"hubNodeMaterial":"|NM_METAL"},
+            {"hubFrictionCoef":0.5},
+            {"hubBeamDeform":43600, "hubBeamStrength":78000},
+        ],
+    },
+        "ttb_rimpack_wheel_06a_17x9_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Silver",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x9_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.12, "y":1, "z":1}}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.12, "y":1, "z":1}}],
+            ],
+        },
+        "ttb_rimpack_wheel_06b_17x9_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Black",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x9_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.12, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.12, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06c_17x9_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Copper",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x9_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.12, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.12, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06d_17x9_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Gold",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x9_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.12, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.12, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06e_17x9_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Bronze",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x9_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.12, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.12, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06f_17x9_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet White",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x9_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.12, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.12, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+            ],
+        },
+            "ttb_rimpack_wheel_06_17x9_F_lugnuts_a": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Silver Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x9_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x9_F_lugnuts_b": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Black Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x9_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x9_F_lugnuts_c": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Copper Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x9_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x9_F_lugnuts_d": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Bronze Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x9_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x9_F_lugnuts_e": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Blue Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x9_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x9_F_lugnuts_f": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Red Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x9_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x9_F_lugnuts_g": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Secondary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x9_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x9_F_lugnuts_h": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Tertiary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x9_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.491, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+    "ttb_rimpack_wheel_size_06_17x10_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"17x10",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_06_size_F",
+
+        "slots": [
+            ["type", "default", "description"],
+            ["tire_F_17x10","tire_F_265_40_17_sport", "Front Tires"],
+            ["ttb_rimpack_wheel_06_17x10_F","ttb_rimpack_wheel_06a_17x10_F", "Wheel Color", {"coreSlot":true}],
+            ["ttb_rimpack_wheel_06_17x10_F_lugnuts","ttb_rimpack_wheel_06_17x10_F_lugnuts_a", "Lug Nuts", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.24, "y":1, "z":1}}],
+            ["ttb_rimpack_wheel_06_centercap", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.24, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.519, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+            ["ttb_rimpack_valve_stem_wheel_06", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.519, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+        ],
+        "nodes": [
+            ["id", "posX", "posY", "posZ"],
+            {"collision":true},
+            {"selfCollision":true},
+            //front wheels
+            {"nodeWeight":5.0},
+            {"nodeMaterial":"|NM_METAL"},
+            {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+            {"frictionCoef":0.5},
+            {"group":"wheelhub_FR"},
+            ["fw1r", -0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FR"},
+            ["fw1rr", -0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1l", 0.33, 0.0, 0.0, {"staticCollision":false}],
+            {"group":"wheelhub_FL"},
+            ["fw1ll", 0.60, 0.0, 0.0, {"staticCollision":false}],
+            {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+            {"group":""},
+        ],
+        "beams": [
+            ["id1:", "id2:"],
+            {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+            {"breakGroup":""},
+            {"beamDeform":78500,"beamStrength":434000},
+            {"beamSpring":1501000,"beamDamp":25},
+            //front wheel
+            ["fw1r","fw1rr"],
+            ["fw1l","fw1ll"],
+            {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        ],
+        "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+
+            //general settings
+            {"hubRadius":0.225},
+            {"wheelOffset":-0.035},
+            {"hubWidth":0.265},
+            {"numRays":16},
+
+            //hub options
+            {"hubTreadBeamSpring":950900, "hubTreadBeamDamp":10},
+            {"hubPeripheryBeamSpring":950900, "hubPeripheryBeamDamp":10},
+            {"hubSideBeamSpring":1351000, "hubSideBeamDamp":10},
+            {"hubNodeWeight":0.5},
+            {"hubNodeMaterial":"|NM_METAL"},
+            {"hubFrictionCoef":0.5},
+            {"hubBeamDeform":43600, "hubBeamStrength":78000},
+        ],
+    },
+        "ttb_rimpack_wheel_06a_17x10_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Silver",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x10_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.24, "y":1, "z":1}}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.24, "y":1, "z":1}}],
+            ],
+        },
+        "ttb_rimpack_wheel_06b_17x10_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Black",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x10_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.24, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.24, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_black"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06c_17x10_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Copper",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x10_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.24, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.24, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_copper"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06d_17x10_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Gold",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x10_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.24, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.24, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_gold"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06e_17x10_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet Bronze",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x10_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.24, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.24, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_bronze"]]}],
+            ],
+        },
+        "ttb_rimpack_wheel_06f_17x10_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"ProStreet White",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_06_17x10_F",
+            "flexbodies": [
+                ["mesh", "[group]:", "nonFlexMaterials"],
+                //alloy wheels
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x":-0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1.24, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+                ["ttb_rimpack_wheel_06a_17x8", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.499, "y":0.0, "z":0.0}, "rot":{"x":0, "y":0, "z":0},   "scale":{"x":1.24, "y":1, "z":1}, "materialOverride":[["ttb_rimpack_wheel_06","ttb_rimpack_wheel_06_white"]]}],
+            ],
+        },
+            "ttb_rimpack_wheel_06_17x10_F_lugnuts_a": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Silver Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x10_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_a", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x10_F_lugnuts_b": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Black Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x10_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_b", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x10_F_lugnuts_c": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Copper Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x10_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_c", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x10_F_lugnuts_d": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Bronze Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x10_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_d", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x10_F_lugnuts_e": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Blue Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x10_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_e", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x10_F_lugnuts_f": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Red Lug Nuts",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x10_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_f", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x10_F_lugnuts_g": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Secondary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x10_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_g", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+            "ttb_rimpack_wheel_06_17x10_F_lugnuts_h": {
+                "information":{
+                    "authors":"TheTalkingBath",
+                    "name":"Colorable Lug Nuts (Tertiary)",
+                    "value":0,
+                },
+                "slotType" : "ttb_rimpack_wheel_06_17x10_F_lugnuts",
+                "flexbodies": [
+                    ["mesh", "[group]:", "nonFlexMaterials"],
+                    //alloy wheels
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": 0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":0},   "scale":{"x":1, "y":1, "z":1}}],
+                    ["ttb_rimpack_lugnuts_h", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": -0.498, "y":0.0, "z":0.0}, "rot":{"x":36, "y":0, "z":180},   "scale":{"x":1, "y":1, "z":1}}],
+                ],
+            },
+}

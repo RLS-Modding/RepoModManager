@@ -1,0 +1,276 @@
+{
+//19x8
+/*"ttb_rimpack_wheel_14a_19x8_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"19x8 TIMS Emotion ST1 Rear Wheels",
+        "value":1200,
+    },
+    "slotType" : "wheel_R_5",
+
+    "slots": [
+        ["type", "default", "description"],
+        ["tire_R_19x8","tire_R_225_35_19_sport", "Rear Tires"],
+        ["wheel_14a_rim_R","wheel_14a_rim_R", "Rim Color", {"coreSlot":true}],
+        ["wheel_14a_barrel_R","wheel_14a_rim_barrel_R", "Barrel Color", {"coreSlot":true}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_valve_stem_l",          ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":0.000}, "rot":{"x":3, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_5nuts",                 ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.430, "y":0.0, "z":  0.0}, "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_valve_stem_l",          ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":0.000}, "rot":{"x":3, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_5nuts",                 ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.430, "y":0.0, "z":  0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14_centercap",    ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14_centercap",    ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0}, "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"collision":true},
+        {"selfCollision":true},
+        //rear wheels
+        {"nodeWeight":5.0},
+        {"nodeMaterial":"|NM_METAL"},
+        {"chemEnergy":200,"burnRate":0.5,"flashPoint":300,"smokePoint":200,"selfIgnition":0,"specHeat":1},
+        {"frictionCoef":0.5},
+        {"group":"wheelhub_RR"},
+        ["rw1r", -0.33, 0, 0],
+        {"group":"wheelhub_RR"},
+        ["rw1rr", -0.60, 0, 0],
+        {"group":"wheelhub_RL"},
+        ["rw1l", 0.33, 0, 0],
+        {"group":"wheelhub_RL"},
+        ["rw1ll", 0.60, 0, 0],
+        {"chemEnergy":false,"burnRate":false,"flashPoint":false,"smokePoint":false,"selfIgnition":false,"specHeat":false},
+        {"group":""},
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"breakGroup":""},
+        {"beamDeform":78500,"beamStrength":434000},
+        {"beamSpring":1501000,"beamDamp":25},
+        //rear wheel
+        ["rw1r","rw1rr"],
+        ["rw1l","rw1ll"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        {"disableMeshBreaking":false,"disableHubMeshBreaking":false,"enableHubcaps":false,"hasTire":false},
+
+        //general settings
+        {"hubRadius":0.255},
+        {"wheelOffset":-0.01},
+        {"hubWidth":0.225},
+        {"numRays":16},
+
+        //hub options
+        {"hubTreadBeamSpring":990900, "hubTreadBeamDamp":10},
+        {"hubPeripheryBeamSpring":990900, "hubPeripheryBeamDamp":10},
+        {"hubSideBeamSpring":1651000, "hubSideBeamDamp":10},
+        {"hubNodeWeight":0.45},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.5},
+        {"hubBeamDeform":43600, "hubBeamStrength":78000},
+    ],
+},
+//-----------------------------------------------------------------------------------------------BARRELS-----------------------------------------------------------------------------------------------
+"wheel_14a_rim_barrel_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Silver Barrel",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_barrel_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14a_barrel_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14a_barrel_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+"wheel_14b_rim_barrel_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Black Barrel",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_barrel_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14b_barrel_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14b_barrel_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+"wheel_14c_rim_barrel_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Copper Barrel",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_barrel_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14c_barrel_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14c_barrel_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+"wheel_14d_rim_barrel_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Gold Barrel",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_barrel_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14d_barrel_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14d_barrel_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+"wheel_14e_rim_barrel_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Bronze Barrel",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_barrel_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14e_barrel_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14e_barrel_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+"wheel_14f_rim_barrel_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Red Barrel",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_barrel_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14f_barrel_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14f_barrel_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+"wheel_14g_rim_barrel_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Blue Barrel",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_barrel_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14g_barrel_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14g_barrel_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+//-----------------------------------------------------------------------------------------------RIMS-----------------------------------------------------------------------------------------------
+"wheel_14a_rim_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Silver Rim",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_rim_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14a_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14a_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+"wheel_14b_rim_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Black Rim",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_rim_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14b_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14b_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+"wheel_14c_rim_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Copper Rim",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_rim_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14c_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14c_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+"wheel_14d_rim_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Gold Rim",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_rim_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14d_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14d_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+"wheel_14e_rim_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Bronze Rim",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_rim_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14e_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14e_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+"wheel_14f_rim_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Red Rim",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_rim_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14f_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14f_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},
+"wheel_14g_rim_R": {
+    "information":{
+        "authors":"TheTalkingBath",
+        "name":"Blue Rim",
+        "value":1200,
+    },
+    "slotType" : "wheel_14a_rim_R",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //alloy wheels
+        ["ttb_rimpack_wheel_14g_19x8", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x":-0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+        ["ttb_rimpack_wheel_14g_19x8", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": 0.475, "y":0.0, "z":  0.0},   "rot":{"x":0, "y":0, "z":  0}, "scale":{"x":1, "y":1, "z":1}}],
+    ],
+},*/
+}

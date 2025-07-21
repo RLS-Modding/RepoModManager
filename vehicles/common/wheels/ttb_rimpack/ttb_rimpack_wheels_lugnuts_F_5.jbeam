@@ -1,0 +1,486 @@
+{
+    "ttb_rimpack_wheel_lugnuts_a_5lug_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"Style 1 Lug Nuts (Long)",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_lugnuts_5lug_F",
+        "slots": [
+            ["type", "default", "description"],
+            ["ttb_rimpack_wheel_lugnuts_a_color_F","ttb_rimpack_wheel_lugnuts_a_color_a_F", "Lug Nuts Color", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_lugnuts_a", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": "$=$components.lugNutPosX_F", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_F", "y":0, "z":0},   "scale":{"x":"$=$components.wheelScaleX_F", "y":"$=$components.lugNutScale_F", "z":"$=$components.lugNutScale_F"},
+            "materialOverride":[["ttb_rimpack_lugnuts_a","$=$components.lugnuts_a_color_F"]]}],
+            ["ttb_rimpack_lugnuts_a", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": "$=-$components.lugNutPosX_F", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_F", "y":0, "z":180},   "scale":{"x":"$=$components.wheelScaleX_F", "y":"$=$components.lugNutScale_F", "z":"$=$components.lugNutScale_F"},
+            "materialOverride":[["ttb_rimpack_lugnuts_a","$=$components.lugnuts_a_color_F"]]}],
+        ],
+    },
+    "ttb_rimpack_wheel_lugnuts_a_short_5lug_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"Style 1 Lug Nuts (Short)",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_lugnuts_5lug_F",
+        "slots": [
+            ["type", "default", "description"],
+            ["ttb_rimpack_wheel_lugnuts_a_color_F","ttb_rimpack_wheel_lugnuts_a_color_a_F", "Lug Nuts Color", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_lugnuts_a_short", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": "$=$components.lugNutPosX_F", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_F", "y":0, "z":0},   "scale":{"x":"$=$components.wheelScaleX_F", "y":"$=$components.lugNutScale_F", "z":"$=$components.lugNutScale_F"},
+            "materialOverride":[["ttb_rimpack_lugnuts_a","$=$components.lugnuts_a_color_F"]]}],
+            ["ttb_rimpack_lugnuts_a_short", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": "$=-$components.lugNutPosX_F", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_F", "y":0, "z":180},   "scale":{"x":"$=$components.wheelScaleX_F", "y":"$=$components.lugNutScale_F", "z":"$=$components.lugNutScale_F"},
+            "materialOverride":[["ttb_rimpack_lugnuts_a","$=$components.lugnuts_a_color_F"]]}],
+        ],
+    },
+
+        "ttb_rimpack_wheel_lugnuts_a_color_a_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Silver",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_a_color_F",
+            "components":{
+                "lugnuts_a_color_F":"ttb_rimpack_lugnuts_a"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_a_color_b_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Black",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_a_color_F",
+            "components":{
+                "lugnuts_a_color_F":"ttb_rimpack_lugnuts_a_black"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_a_color_c_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Copper",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_a_color_F",
+            "components":{
+                "lugnuts_a_color_F":"ttb_rimpack_lugnuts_a_copper"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_a_color_d_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Gold",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_a_color_F",
+            "components":{
+                "lugnuts_a_color_F":"ttb_rimpack_lugnuts_a_gold"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_a_color_e_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Bronze",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_a_color_F",
+            "components":{
+                "lugnuts_a_color_F":"ttb_rimpack_lugnuts_a_bronze"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_a_color_f_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"White",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_a_color_F",
+            "components":{
+                "lugnuts_a_color_F":"ttb_rimpack_lugnuts_a_white"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_a_color_g_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Blue",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_a_color_F",
+            "components":{
+                "lugnuts_a_color_F":"ttb_rimpack_lugnuts_a_blue"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_a_color_h_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Red",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_a_color_F",
+            "components":{
+                "lugnuts_a_color_F":"ttb_rimpack_lugnuts_a_red"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_a_color_i_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Colorable (Primary)",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_a_color_F",
+            "components":{
+                "lugnuts_a_color_F":"ttb_rimpack_lugnuts_a_primary"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_a_color_j_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Colorable (Secondary)",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_a_color_F",
+            "components":{
+                "lugnuts_a_color_F":"ttb_rimpack_lugnuts_a_secondary"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_a_color_k_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Colorable (Tertiary)",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_a_color_F",
+            "components":{
+                "lugnuts_a_color_F":"ttb_rimpack_lugnuts_a_tertiary"
+            },
+        },
+    "ttb_rimpack_wheel_lugnuts_b_5lug_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"Style 2 Closed Lug Nuts (Long)",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_lugnuts_5lug_F",
+        "slots": [
+            ["type", "default", "description"],
+            ["ttb_rimpack_wheel_lugnuts_b_color_F","ttb_rimpack_wheel_lugnuts_b_color_a_F", "Lug Nuts Color", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_lugnuts_b_new", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": "$=$components.lugNutPosX_F", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_F", "y":0, "z":0},   "scale":{"x":"$=$components.wheelScaleX_F", "y":"$=$components.lugNutScale_F", "z":"$=$components.lugNutScale_F"},
+            "materialOverride":[["ttb_rimpack_lugnuts_b","$=$components.lugnuts_b_color_F"]]}],
+            ["ttb_rimpack_lugnuts_b_new", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": "$=-$components.lugNutPosX_F", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_F", "y":0, "z":180},   "scale":{"x":"$=$components.wheelScaleX_F", "y":"$=$components.lugNutScale_F", "z":"$=$components.lugNutScale_F"},
+            "materialOverride":[["ttb_rimpack_lugnuts_b","$=$components.lugnuts_b_color_F"]]}],
+        ],
+    },
+    "ttb_rimpack_wheel_lugnuts_b_5lug_short_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"Style 2 Closed Lug Nuts (Short)",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_lugnuts_5lug_F",
+        "slots": [
+            ["type", "default", "description"],
+            ["ttb_rimpack_wheel_lugnuts_b_color_F","ttb_rimpack_wheel_lugnuts_b_color_a_F", "Lug Nuts Color", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_lugnuts_b_new_short", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": "$=$components.lugNutPosX_F", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_F", "y":0, "z":0},   "scale":{"x":"$=$components.wheelScaleX_F", "y":"$=$components.lugNutScale_F", "z":"$=$components.lugNutScale_F"},
+            "materialOverride":[["ttb_rimpack_lugnuts_b","$=$components.lugnuts_b_color_F"]]}],
+            ["ttb_rimpack_lugnuts_b_new_short", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": "$=-$components.lugNutPosX_F", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_F", "y":0, "z":180},   "scale":{"x":"$=$components.wheelScaleX_F", "y":"$=$components.lugNutScale_F", "z":"$=$components.lugNutScale_F"},
+            "materialOverride":[["ttb_rimpack_lugnuts_b","$=$components.lugnuts_b_color_F"]]}],
+        ],
+    },
+        "ttb_rimpack_wheel_lugnuts_b_color_a_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Silver",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_b_color_F",
+            "components":{
+                "lugnuts_b_color_F":"ttb_rimpack_lugnuts_b"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_b_color_b_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Black",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_b_color_F",
+            "components":{
+                "lugnuts_b_color_F":"ttb_rimpack_lugnuts_b_black"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_b_color_c_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Copper",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_b_color_F",
+            "components":{
+                "lugnuts_b_color_F":"ttb_rimpack_lugnuts_b_copper"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_b_color_d_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Gold",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_b_color_F",
+            "components":{
+                "lugnuts_b_color_F":"ttb_rimpack_lugnuts_b_gold"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_b_color_e_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Bronze",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_b_color_F",
+            "components":{
+                "lugnuts_b_color_F":"ttb_rimpack_lugnuts_b_bronze"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_b_color_f_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"White",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_b_color_F",
+            "components":{
+                "lugnuts_b_color_F":"ttb_rimpack_lugnuts_b_white"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_b_color_g_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Blue",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_b_color_F",
+            "components":{
+                "lugnuts_b_color_F":"ttb_rimpack_lugnuts_b_blue"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_b_color_h_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Red",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_b_color_F",
+            "components":{
+                "lugnuts_b_color_F":"ttb_rimpack_lugnuts_b_red"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_b_color_i_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Colorable (Primary)",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_b_color_F",
+            "components":{
+                "lugnuts_b_color_F":"ttb_rimpack_lugnuts_b_primary"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_b_color_j_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Colorable (Secondary)",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_b_color_F",
+            "components":{
+                "lugnuts_b_color_F":"ttb_rimpack_lugnuts_b_secondary"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_b_color_k_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Colorable (Tertiary)",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_b_color_F",
+            "components":{
+                "lugnuts_b_color_F":"ttb_rimpack_lugnuts_b_tertiary"
+            },
+        },
+    "ttb_rimpack_wheel_lugnuts_c_5lug_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"Style 2 Open Lug Nuts (Long)",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_lugnuts_5lug_F",
+        "slots": [
+            ["type", "default", "description"],
+            ["ttb_rimpack_wheel_lugnuts_c_color_F","ttb_rimpack_wheel_lugnuts_c_color_a_F", "Lug Nuts Color", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_lugnuts_c_new", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": "$=$components.lugNutPosX_F", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_F", "y":0, "z":0},   "scale":{"x":"$=$components.wheelScaleX_F", "y":"$=$components.lugNutScale_F", "z":"$=$components.lugNutScale_F"},
+            "materialOverride":[["ttb_rimpack_lugnuts_c","$=$components.lugnuts_c_color_F"]]}],
+            ["ttb_rimpack_lugnuts_c_new", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": "$=-$components.lugNutPosX_F", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_F", "y":0, "z":180},   "scale":{"x":"$=$components.wheelScaleX_F", "y":"$=$components.lugNutScale_F", "z":"$=$components.lugNutScale_F"},
+            "materialOverride":[["ttb_rimpack_lugnuts_c","$=$components.lugnuts_c_color_F"]]}],
+        ],
+    },
+    "ttb_rimpack_wheel_lugnuts_c_5lug_short_F": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"Style 2 Open Lug Nuts (Short)",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_lugnuts_5lug_F",
+        "slots": [
+            ["type", "default", "description"],
+            ["ttb_rimpack_wheel_lugnuts_c_color_F","ttb_rimpack_wheel_lugnuts_c_color_a_F", "Lug Nuts Color", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_lugnuts_c_new_short", ["wheel_FL","wheelhub_FL"], [], {"pos":{"x": "$=$components.lugNutPosX_F", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_F", "y":0, "z":0},   "scale":{"x":"$=$components.wheelScaleX_F", "y":"$=$components.lugNutScale_F", "z":"$=$components.lugNutScale_F"},
+            "materialOverride":[["ttb_rimpack_lugnuts_c","$=$components.lugnuts_c_color_F"]]}],
+            ["ttb_rimpack_lugnuts_c_new_short", ["wheel_FR","wheelhub_FR"], [], {"pos":{"x": "$=-$components.lugNutPosX_F", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_F", "y":0, "z":180},   "scale":{"x":"$=$components.wheelScaleX_F", "y":"$=$components.lugNutScale_F", "z":"$=$components.lugNutScale_F"},
+            "materialOverride":[["ttb_rimpack_lugnuts_c","$=$components.lugnuts_c_color_F"]]}],
+        ],
+    },
+        "ttb_rimpack_wheel_lugnuts_c_color_a_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Silver",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_c_color_F",
+            "components":{
+                "lugnuts_c_color_F":"ttb_rimpack_lugnuts_c"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_c_color_b_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Black",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_c_color_F",
+            "components":{
+                "lugnuts_c_color_F":"ttb_rimpack_lugnuts_c_black"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_c_color_c_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Copper",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_c_color_F",
+            "components":{
+                "lugnuts_c_color_F":"ttb_rimpack_lugnuts_c_copper"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_c_color_d_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Gold",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_c_color_F",
+            "components":{
+                "lugnuts_c_color_F":"ttb_rimpack_lugnuts_c_gold"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_c_color_e_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Bronze",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_c_color_F",
+            "components":{
+                "lugnuts_c_color_F":"ttb_rimpack_lugnuts_c_bronze"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_c_color_f_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"White",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_c_color_F",
+            "components":{
+                "lugnuts_c_color_F":"ttb_rimpack_lugnuts_c_white"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_c_color_g_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Blue",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_c_color_F",
+            "components":{
+                "lugnuts_c_color_F":"ttb_rimpack_lugnuts_c_blue"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_c_color_h_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Red",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_c_color_F",
+            "components":{
+                "lugnuts_c_color_F":"ttb_rimpack_lugnuts_c_red"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_c_color_i_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Colorable (Primary)",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_c_color_F",
+            "components":{
+                "lugnuts_c_color_F":"ttb_rimpack_lugnuts_c_primary"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_c_color_j_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Colorable (Secondary)",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_c_color_F",
+            "components":{
+                "lugnuts_c_color_F":"ttb_rimpack_lugnuts_c_secondary"
+            },
+        },
+        "ttb_rimpack_wheel_lugnuts_c_color_k_F": {
+            "information":{
+                "authors":"TheTalkingBath",
+                "name":"Colorable (Tertiary)",
+                "value":0,
+            },
+            "slotType" : "ttb_rimpack_wheel_lugnuts_c_color_F",
+            "components":{
+                "lugnuts_c_color_F":"ttb_rimpack_lugnuts_c_tertiary"
+            },
+        },
+}

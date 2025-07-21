@@ -1,0 +1,122 @@
+{
+    "ttb_rimpack_wheel_lugnuts_a_4lug_R": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"Style 1 Lug Nuts (Long)",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_lugnuts_4lug_R",
+        "slots": [
+            ["type", "default", "description"],
+            ["ttb_rimpack_wheel_lugnuts_a_color_R","ttb_rimpack_wheel_lugnuts_a_color_a_R", "Lug Nuts Color", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_lugnuts_4lug_a", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": "$=$components.lugNutPosX_R", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_R", "y":0, "z":0},   "scale":{"x":"$=$components.wheelScaleX_R", "y":"$=$components.lugNutScale_R", "z":"$=$components.lugNutScale_R"},
+            "materialOverride":[["ttb_rimpack_lugnuts_a","$=$components.lugnuts_a_color_R"]]}],
+            ["ttb_rimpack_lugnuts_4lug_a", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x": "$=-$components.lugNutPosX_R", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_R", "y":0, "z":180},   "scale":{"x":"$=$components.wheelScaleX_R", "y":"$=$components.lugNutScale_R", "z":"$=$components.lugNutScale_R"},
+            "materialOverride":[["ttb_rimpack_lugnuts_a","$=$components.lugnuts_a_color_R"]]}],
+        ],
+    },
+    "ttb_rimpack_wheel_lugnuts_a_short_4lug_R": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"Style 1 Lug Nuts (Short)",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_lugnuts_4lug_R",
+        "slots": [
+            ["type", "default", "description"],
+            ["ttb_rimpack_wheel_lugnuts_a_color_R","ttb_rimpack_wheel_lugnuts_a_color_a_R", "Lug Nuts Color", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_lugnuts_4lug_a_short", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": "$=$components.lugNutPosX_R", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_R", "y":0, "z":0},   "scale":{"x":"$=$components.wheelScaleX_R", "y":"$=$components.lugNutScale_R", "z":"$=$components.lugNutScale_R"},
+            "materialOverride":[["ttb_rimpack_lugnuts_a","$=$components.lugnuts_a_color_R"]]}],
+            ["ttb_rimpack_lugnuts_4lug_a_short", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x": "$=-$components.lugNutPosX_R", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_R", "y":0, "z":180},   "scale":{"x":"$=$components.wheelScaleX_R", "y":"$=$components.lugNutScale_R", "z":"$=$components.lugNutScale_R"},
+            "materialOverride":[["ttb_rimpack_lugnuts_a","$=$components.lugnuts_a_color_R"]]}],
+        ],
+    },
+    "ttb_rimpack_wheel_lugnuts_b_4lug_R": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"Style 2 Closed Lug Nuts (Long)",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_lugnuts_4lug_R",
+        "slots": [
+            ["type", "default", "description"],
+            ["ttb_rimpack_wheel_lugnuts_b_color_R","ttb_rimpack_wheel_lugnuts_b_color_a_R", "Lug Nuts Color", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_lugnuts_4lug_b", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": "$=$components.lugNutPosX_R", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_R", "y":0, "z":0},   "scale":{"x":"$=$components.wheelScaleX_R", "y":"$=$components.lugNutScale_R", "z":"$=$components.lugNutScale_R"},
+            "materialOverride":[["ttb_rimpack_lugnuts_b","$=$components.lugnuts_b_color_R"]]}],
+            ["ttb_rimpack_lugnuts_4lug_b", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x": "$=-$components.lugNutPosX_R", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_R", "y":0, "z":180},   "scale":{"x":"$=$components.wheelScaleX_R", "y":"$=$components.lugNutScale_R", "z":"$=$components.lugNutScale_R"},
+            "materialOverride":[["ttb_rimpack_lugnuts_b","$=$components.lugnuts_b_color_R"]]}],
+        ],
+    },
+    "ttb_rimpack_wheel_lugnuts_b_4lug_short_R": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"Style 2 Closed Lug Nuts (Short)",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_lugnuts_4lug_R",
+        "slots": [
+            ["type", "default", "description"],
+            ["ttb_rimpack_wheel_lugnuts_b_color_R","ttb_rimpack_wheel_lugnuts_b_color_a_R", "Lug Nuts Color", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_lugnuts_4lug_b_short", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": "$=$components.lugNutPosX_R", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_R", "y":0, "z":0},   "scale":{"x":"$=$components.wheelScaleX_R", "y":"$=$components.lugNutScale_R", "z":"$=$components.lugNutScale_R"},
+            "materialOverride":[["ttb_rimpack_lugnuts_b","$=$components.lugnuts_b_color_R"]]}],
+            ["ttb_rimpack_lugnuts_4lug_b_short", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x": "$=-$components.lugNutPosX_R", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_R", "y":0, "z":180},   "scale":{"x":"$=$components.wheelScaleX_R", "y":"$=$components.lugNutScale_R", "z":"$=$components.lugNutScale_R"},
+            "materialOverride":[["ttb_rimpack_lugnuts_b","$=$components.lugnuts_b_color_R"]]}],
+        ],
+    },
+    "ttb_rimpack_wheel_lugnuts_c_4lug_R": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"Style 2 Open Lug Nuts (Long)",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_lugnuts_4lug_R",
+        "slots": [
+            ["type", "default", "description"],
+            ["ttb_rimpack_wheel_lugnuts_c_color_R","ttb_rimpack_wheel_lugnuts_c_color_a_R", "Lug Nuts Color", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_lugnuts_4lug_c", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": "$=$components.lugNutPosX_R", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_R", "y":0, "z":0},   "scale":{"x":"$=$components.wheelScaleX_R", "y":"$=$components.lugNutScale_R", "z":"$=$components.lugNutScale_R"},
+            "materialOverride":[["ttb_rimpack_lugnuts_c","$=$components.lugnuts_c_color_R"]]}],
+            ["ttb_rimpack_lugnuts_4lug_c", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x": "$=-$components.lugNutPosX_R", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_R", "y":0, "z":180},   "scale":{"x":"$=$components.wheelScaleX_R", "y":"$=$components.lugNutScale_R", "z":"$=$components.lugNutScale_R"},
+            "materialOverride":[["ttb_rimpack_lugnuts_c","$=$components.lugnuts_c_color_R"]]}],
+        ],
+    },
+    "ttb_rimpack_wheel_lugnuts_c_4lug_short_R": {
+        "information":{
+            "authors":"TheTalkingBath",
+            "name":"Style 2 Open Lug Nuts (Short)",
+            "value":0,
+        },
+        "slotType" : "ttb_rimpack_wheel_lugnuts_4lug_R",
+        "slots": [
+            ["type", "default", "description"],
+            ["ttb_rimpack_wheel_lugnuts_c_color_R","ttb_rimpack_wheel_lugnuts_c_color_a_R", "Lug Nuts Color", {"coreSlot":true}],
+        ],
+        "flexbodies": [
+            ["mesh", "[group]:", "nonFlexMaterials"],
+            //alloy wheels
+            ["ttb_rimpack_lugnuts_4lug_c_short", ["wheel_RL","wheelhub_RL"], [], {"pos":{"x": "$=$components.lugNutPosX_R", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_R", "y":0, "z":0},   "scale":{"x":"$=$components.wheelScaleX_R", "y":"$=$components.lugNutScale_R", "z":"$=$components.lugNutScale_R"},
+            "materialOverride":[["ttb_rimpack_lugnuts_c","$=$components.lugnuts_c_color_R"]]}],
+            ["ttb_rimpack_lugnuts_4lug_c_short", ["wheel_RR","wheelhub_RR"], [], {"pos":{"x": "$=-$components.lugNutPosX_R", "y":0.0, "z":0.0}, "rot":{"x":"$=-$components.lugNutRotX_R", "y":0, "z":180},   "scale":{"x":"$=$components.wheelScaleX_R", "y":"$=$components.lugNutScale_R", "z":"$=$components.lugNutScale_R"},
+            "materialOverride":[["ttb_rimpack_lugnuts_c","$=$components.lugnuts_c_color_R"]]}],
+        ],
+    },
+}

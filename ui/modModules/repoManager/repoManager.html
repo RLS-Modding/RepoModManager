@@ -1,0 +1,183 @@
+<link rel="stylesheet" type="text/css" href="/ui/modModules/repoManager/repoManager.css" />
+
+<div class="repomanager-container">
+  <div class="repomanager-header">
+    <h2>Repo Manager</h2>
+    <p>Manage your dependency packs and mods</p>
+    
+    <!-- Bulk action buttons in header -->
+    <div class="header-buttons">
+      <button class="header-install-btn" ng-click="installAllPacks()">
+        <span>Install All Packs</span>
+        <small>Subscribe to all dependency packs</small>
+      </button>
+      <button class="header-uninstall-btn" ng-click="uninstallAllPacks()">
+        <span>Uninstall All Packs</span>
+        <small>Disable all dependency packs</small>
+      </button>
+    </div>
+  </div>
+
+  <div class="repomanager-content" ng-if="loading">
+    <div class="loading-spinner">
+      <p>Loading mod packs...</p>
+    </div>
+  </div>
+
+  <div class="repomanager-content" ng-if="!loading">
+    <!-- Scrollable Collections Grid -->
+    <div class="collections-grid-container">
+      <div class="collections-grid">
+        <div class="collection-card" ng-repeat="pack in dependencies" ng-class="{'disabled': !enabledPacks[pack.id], 'downloading': packProgress[pack.id] && packProgress[pack.id].downloading}">
+          <div class="card-image-container">
+            <img ng-src="{{pack.imagePath}}" alt="{{pack.name}}" class="pack-image" 
+                 onerror="this.src='/ui/modModules/repoManager/icons/repoManagerIcon.svg'">
+            <div class="pack-status" ng-class="{'enabled': enabledPacks[pack.id], 'disabled': !enabledPacks[pack.id], 'downloading': packProgress[pack.id] && packProgress[pack.id].downloading}">
+              <span ng-if="packProgress[pack.id] && packProgress[pack.id].downloading">DOWNLOADING</span>
+              <span ng-if="!(packProgress[pack.id] && packProgress[pack.id].downloading) && enabledPacks[pack.id]">ENABLED</span>
+              <span ng-if="!(packProgress[pack.id] && packProgress[pack.id].downloading) && !enabledPacks[pack.id]">DISABLED</span>
+            </div>
+            
+            <!-- Progress Bar Overlay -->
+            <div class="progress-overlay" ng-if="packProgress[pack.id] && (packProgress[pack.id].downloading || packProgress[pack.id].progress < 100)">
+              <div class="progress-bar">
+                <div class="progress-fill" ng-style="{'width': packProgress[pack.id].progress + '%'}"></div>
+              </div>
+              <div class="progress-text">
+                {{packProgress[pack.id].progress}}% ({{packProgress[pack.id].completedMods}}/{{packProgress[pack.id].totalMods}})
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-content">
+            <div class="pack-header">
+              <h3>{{ pack.name }}</h3>
+              <div class="mod-count-container">
+                <span class="mod-count" ng-if="!packStatuses[pack.packName]">{{ pack.count }} mods</span>
+                <span class="mod-count active" ng-if="packStatuses[pack.packName] && packStatuses[pack.packName].activeCount > 0">
+                  {{ packStatuses[pack.packName].activeCount }}/{{ packStatuses[pack.packName].totalCount }} active
+                </span>
+                <span class="mod-count inactive" ng-if="packStatuses[pack.packName] && packStatuses[pack.packName].activeCount === 0">
+                  0/{{ packStatuses[pack.packName].totalCount }} active
+                </span>
+              </div>
+            </div>
+            
+            <div class="pack-description">
+              <p>{{pack.description}}</p>
+            </div>
+            
+            <div class="pack-actions">
+              <button ng-click="togglePack(pack)" 
+                      class="toggle-btn" 
+                      ng-class="{'enable-btn': !enabledPacks[pack.id], 'disable-btn': enabledPacks[pack.id], 'downloading-btn': packProgress[pack.id] && packProgress[pack.id].downloading}"
+                      ng-disabled="packProgress[pack.id] && packProgress[pack.id].downloading">
+                <span ng-if="packProgress[pack.id] && packProgress[pack.id].downloading">Downloading...</span>
+                <span ng-if="!(packProgress[pack.id] && packProgress[pack.id].downloading) && enabledPacks[pack.id]">Disable Pack</span>
+                <span ng-if="!(packProgress[pack.id] && packProgress[pack.id].downloading) && !enabledPacks[pack.id]">Enable Pack</span>
+              </button>
+              <button class="details-btn" ng-click="getPackDetails(pack.id)">Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repomanager-buttons">
+    <button ng-click="goBack()">Back to Main Menu</button>
+  </div>
+</div>
+
+<!-- Pack Details Modal -->
+<div class="pack-details-modal" ng-show="showDetailsModal">
+  <div class="modal-backdrop" ng-click="closePackDetails()"></div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>{{ selectedPack.name }} - Mod Details</h2>
+      <button class="close-btn" ng-click="closePackDetails()">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="pack-info">
+        <p><strong>Description:</strong> {{ selectedPack.description }}</p>
+        <p><strong>Total Mods:</strong> {{ selectedPack.count }}</p>
+        <p><strong>Showing:</strong> Page {{ currentPage }} of {{ totalPages }}</p>
+      </div>
+      
+      <div class="loading-mods" ng-show="loadingPackDetails">
+        <p>Loading mod details... ({{ loadedModsCount }}/{{ modsPerPage }})</p>
+        <div class="loading-spinner"></div>
+      </div>
+      
+      <!-- Pagination Controls -->
+      <div class="pagination-controls" ng-show="!loadingPackDetails && totalPages > 1">
+        <button class="page-btn" ng-click="previousPage()" ng-disabled="currentPage === 1">
+          ← Previous
+        </button>
+        
+        <div class="page-numbers">
+          <span ng-repeat="page in [] | range:1:totalPages" 
+                class="page-number" 
+                ng-class="{active: page === currentPage}"
+                ng-click="goToPage(page)">
+            {{ page }}
+          </span>
+        </div>
+        
+        <button class="page-btn" ng-click="nextPage()" ng-disabled="currentPage === totalPages">
+          Next →
+        </button>
+      </div>
+      
+      <div class="mods-grid" ng-show="!loadingPackDetails">
+        <div class="mod-card" ng-repeat="mod in packModDetails">
+            <div class="mod-image">
+                <img ng-src="{{ mod.icon || '/ui/modModules/repoManager/icons/default-mod.png' }}" 
+                 alt="{{ mod.title }}" 
+                 onerror="this.src='/ui/modModules/repoManager/icons/default-mod.png'; this.onerror=null; console.log('Image failed to load:', this.getAttribute('ng-src'));"
+                 onload="console.log('Image loaded successfully:', this.src)">
+          </div>
+          
+          <div class="mod-info">
+            <div class="mod-header">
+              <h4>{{ mod.title }}</h4>
+              <div class="mod-stats">
+                <span class="filesize">{{ mod.filesize_display }}</span>
+                <span class="downloads">{{ mod.downTxt }} <i class="icon-download"></i></span>
+              </div>
+            </div>
+            
+            <p class="mod-description">{{ mod.tag_line }}</p>
+            
+            <div class="mod-meta">
+              <span class="author">By: {{ mod.author || 'Unknown' }}</span>
+              <div class="rating" ng-if="mod.rating_avg > 0">
+                <span class="stars">★</span>
+                <span>{{ mod.rating_avg }}</span>
+              </div>
+            </div>
+            
+            <div class="mod-actions">
+              <button class="mod-action-btn view-btn" ng-click="openModInRepo(mod)">
+                View in Repo
+              </button>
+              
+              <button class="mod-action-btn subscribe-btn" 
+                      ng-if="!mod.sub && !mod.subscribed" 
+                      ng-click="subscribeToMod(mod)">
+                Subscribe
+              </button>
+              
+              <button class="mod-action-btn unsubscribe-btn" 
+                      ng-if="mod.sub || mod.subscribed" 
+                      ng-click="unsubscribeFromMod(mod)">
+                Unsubscribe
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -852,6 +852,89 @@ local function subscribeToAllRequiredMods()
     end
 end
 
+local function getPackModIds(packName)
+    local packPath = "/dependencies/" .. packName
+    local reqModsPath = packPath .. "/requiredMods.json"
+    
+    if not FS:directoryExists(packPath) then
+        log("W", "Required Mods", "Pack directory not found: " .. packPath)
+        return {}
+    end
+    
+    if not FS:fileExists(reqModsPath) then
+        log("W", "Required Mods", "requiredMods.json not found in pack: " .. packName)
+        return {}
+    end
+    
+    return parseRequiredModsFile(reqModsPath)
+end
+
+local function subscribeToPack(packName)
+    local packModIds = getPackModIds(packName)
+    dump(packModIds)
+    
+    if #packModIds == 0 then
+        log("W", "Required Mods", "No mods found in pack: " .. packName)
+        return
+    end
+    
+    log("I", "Required Mods", "Subscribing to pack: " .. packName .. " with " .. #packModIds .. " mods")
+    
+    local modsToActivate = {}
+    local modsToSubscribe = {}
+    
+    for _, modId in ipairs(packModIds) do
+        if isModAlreadyActive(modId) then
+            goto continue
+        end
+        
+        local modName = core_modmanager.getModNameFromID(modId)
+        if modName then
+            table.insert(modsToActivate, modName)
+        else
+            table.insert(modsToSubscribe, modId)
+        end
+        
+        ::continue::
+    end
+    
+    if #modsToActivate > 0 then
+        log("I", "Required Mods", "Activating " .. #modsToActivate .. " locally available mods from pack: " .. packName)
+        batchActivateMods(modsToActivate)
+    end
+
+    if #modsToSubscribe > 0 then
+        log("I", "Required Mods", "Downloading " .. #modsToSubscribe .. " mods from pack: " .. packName)
+        subscriptionQueue = modsToSubscribe
+        startSubscriptionManager()
+    end
+end
+
+local function deactivatePack(packName)
+    local packModIds = getPackModIds(packName)
+    
+    if #packModIds == 0 then
+        log("W", "Required Mods", "No mods found in pack: " .. packName)
+        return
+    end
+    
+    log("I", "Required Mods", "Deactivating pack: " .. packName .. " with " .. #packModIds .. " mods")
+    
+    local activePackMods = {}
+    for _, modId in ipairs(packModIds) do
+        if isModAlreadyActive(modId) then
+            table.insert(activePackMods, modId)
+        end
+    end
+    
+    if #activePackMods > 0 then
+        log("I", "Required Mods", "Deactivating " .. #activePackMods .. " active mods from pack: " .. packName)
+        batchDeactivateMods(activePackMods)
+    else
+        log("I", "Required Mods", "No active mods found in pack: " .. packName)
+    end
+end
+
 local updateInterval = 10
 local lastUpdateTime = 0
 
@@ -883,7 +966,7 @@ local function onUpdate(dt)
 end
 
 local function onExtensionLoaded()
-    subscribeToAllRequiredMods()
+    --subscribeToAllRequiredMods()
 end
 
 local function onModActivated(modData)
@@ -913,22 +996,26 @@ local function onModActivated(modData)
     end
 end
 
+local function disableAllMods()
+    local activeDependencies = {}
+    for modId, _ in pairs(ourDependencyIds) do
+        if isModAlreadyActive(modId) then
+            table.insert(activeDependencies, modId)
+        end
+    end
+    
+    if #activeDependencies > 0 then
+        batchDeactivateMods(activeDependencies)
+    end
+end
+
 local function onModDeactivated(modData)
     if not modData or not modData.modname then
         return
     end
     
     if ourParentMod and modData.modname == ourParentMod then
-        local activeDependencies = {}
-        for modId, _ in pairs(ourDependencyIds) do
-            if isModAlreadyActive(modId) then
-                table.insert(activeDependencies, modId)
-            end
-        end
-        
-        if #activeDependencies > 0 then
-            batchDeactivateMods(activeDependencies)
-        end
+        disableAllMods()
         
         ourParentMod = nil
     end
@@ -941,6 +1028,7 @@ M.batchActivateMods = batchActivateMods
 M.batchDeactivateMods = batchDeactivateMods
 M.getAllRequiredModIds = collectAllRequiredMods
 M.subscribeToAllMods = subscribeToAllRequiredMods
+M.disableAllMods = disableAllMods
 M.getParentMod = function() return ourParentMod end
 M.onExtensionLoaded = onExtensionLoaded
 M.onUpdate = onUpdate
@@ -981,5 +1069,10 @@ M.cancelRetries = function()
 end
 
 M.mountLocallyAvailableMods = mountLocallyAvailableMods
+
+-- Export pack-specific functions
+M.getPackModIds = getPackModIds
+M.subscribeToPack = subscribeToPack
+M.deactivatePack = deactivatePack
 
 return M

@@ -6,7 +6,7 @@ local ourDependencyIds = {}
 local subscriptionQueue = {}
 local activeSubscriptions = {}
 local completedSubscriptions = {}
-local maxConcurrentSubscriptions = 3
+local maxConcurrentSubscriptions = tonumber(settings.getValue('modNumParallelDownload', 3))
 local isSubscribing = false
 
 local progressQueue = {}
@@ -792,6 +792,7 @@ function startNextSubscription()
         startTime = os.time()
     })
     
+    maxConcurrentSubscriptions = tonumber(settings.getValue('modNumParallelDownload', 3))
     subscribeToMod(nextModId)
 end
 

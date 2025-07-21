@@ -1,9 +1,0 @@
-1. place "RRpbrPaint" assets folder collection into (parentmodname).zip/vehicles/common
-(this is the same step regardless of which materials are being used, keep collection here for running in-game)
-
-2. Import "REFRRpbrPaint.dae" into your workspace to receive materials for project to be assigned
-
-profit
-
-
-By: Revolution Racecraft

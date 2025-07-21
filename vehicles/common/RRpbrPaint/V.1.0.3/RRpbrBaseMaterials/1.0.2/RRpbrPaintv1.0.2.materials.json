@@ -1,0 +1,155 @@
+{
+  "RRpbrTertiaryGlow": {
+    "name": "RRpbrTertiaryGlow",
+    "mapTo": "RRpbrTertiaryGlow",
+    "class": "Material",
+    "persistentId": "d49f82f8-0bc1-4466-8c31-c1c9a880ac66",
+    "Stages": [
+      {
+        "colorMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_bcolor.dds",
+        "diffuseColor": [
+          1,
+          0.999989986,
+          0.999989986,
+          1
+        ],
+        "emissive": true,
+        "emissiveFactor": [
+          1,
+          0.999989986,
+          0.999989986
+        ],
+        "glow": true,
+        "glowFactor": [
+          1,
+          0.999989986,
+          0.999989986
+        ],
+        "instanceEmissive": true,
+        "normalMap": "vehicles/common/RRpbrPaint/RR_Paint_PBR_n.dds",
+        "specular": [
+          1,
+          0.999989986,
+          0.999989986,
+          1
+        ]
+      },
+      {
+        "clearCoatFactor": 1,
+        "clearCoatMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_ccdata.dds",
+        "colorPaletteMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_skin_metallic_uv3color.dds",
+        "colorPaletteMapUseUV": 1,
+        "emissive": true,
+        "emissiveFactor": [
+          1,
+          0.999989986,
+          0.999989986
+        ],
+        "glow": true,
+        "instanceDiffuse": true,
+        "instanceEmissive": true,
+        "opacityMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_skin_odata.dds"
+      },
+      {
+        "emissive": true,
+        "glow": true
+      },
+      {}
+    ],
+    "activeLayers": 2,
+    "doubleSided": true,
+    "dynamicCubemap": true,
+    "materialTag0": "beamng",
+    "materialTag1": "vehicle",
+    "subSurfacaae0": "0"
+  },
+    "RRpbrWhiteGlow": {
+    "name": "RRpbrWhiteGlow",
+    "mapTo": "RRpbrWhiteGlow",
+    "class": "Material",
+    "persistentId": "3445ecb7-195f-41dd-b6d6-ffc50994973d",
+    "Stages": [
+      {
+        "colorMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_bcolor.dds",
+        "diffuseColor": [
+          1,
+          0.999989986,
+          0.999989986,
+          1
+        ],
+        "emissive": true,
+        "emissiveFactor": [
+          1,
+          0.999989986,
+          0.999989986
+        ],
+        "glow": true,
+        "glowFactor": [
+          1,
+          0.999989986,
+          0.999989986
+        ],
+        "instanceEmissive": true,
+        "normalMap": "vehicles/common/RRpbrPaint/RR_Paint_PBR_n.dds",
+        "specular": [
+          1,
+          0.999989986,
+          0.999989986,
+          1
+        ]
+      },
+      {
+        "clearCoatFactor": 1,
+        "clearCoatMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_ccdata.dds",
+        "colorPaletteMapUseUV": 1,
+        "emissive": true,
+        "emissiveFactor": [
+          1,
+          1,
+          1
+        ],
+        "glow": true,
+        "glowFactor": [
+          0.647,
+          0.647,
+          0.647,
+        ],
+        "instanceEmissive": true,
+        "opacityMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_skin_odata.dds",
+        "specular": [
+          1,
+          0.999989986,
+          0.999989986,
+          1
+        ]
+      },
+      {
+        "emissive": true,
+        "emissiveFactor": [
+          9.99999997e-07,
+          9.99999997e-07,
+          9.99999997e-07
+        ],
+        "glow": true,
+        "glowFactor": [
+          1,
+          0.999989986,
+          0.999989986
+        ],
+        "specular": [
+          1,
+          0.999989986,
+          0.999989986,
+          1
+        ]
+      },
+      {}
+    ],
+    "activeLayers": 2,
+    "doubleSided": true,
+    "dynamicCubemap": true,
+    "materialTag0": "beamng",
+    "materialTag1": "vehicle",
+    "subSurfacaae0": "0"
+  },
+}

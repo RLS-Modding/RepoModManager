@@ -1,0 +1,1 @@
+DISCLAIMER - THIS IS A COMMON ASSET - Do not alter any files in RRpbrPaint Directory or you will cause conflicts! All "piggyback" resources not by Revolution Racecraft need to be written outside of RRpbrPaint directory to avoid any conflicts

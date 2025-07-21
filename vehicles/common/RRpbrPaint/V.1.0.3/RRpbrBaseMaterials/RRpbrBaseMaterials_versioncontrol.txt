@@ -1,0 +1,18 @@
+1.0.0 - 07/27/2021
+-Created version control structure
+-Fixed console errors with material map locations
+
+1.0.1 - 07/27/2021
+-Added Matte Red & Matte White materials to 1.0.1 JSON file and .dae REF
+
+1.0.2 - 07/27/2021
+-Added Tertiary Glow materials
+-Added White Glow materials
+
+1.0.3 - 07/29/2021
+-Added Dark red static material
+-Version control folder nesting
+-added gloss white
+-skin system added to skin section
+
+By: Revolution Racecraft

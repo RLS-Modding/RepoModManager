@@ -885,6 +885,7 @@ local function subscribeToPack(packName)
     local modsToSubscribe = {}
     
     for _, modId in ipairs(packModIds) do
+        ourDependencyIds[modId] = true
         if isModAlreadyActive(modId) then
             goto continue
         end
@@ -923,6 +924,7 @@ local function deactivatePack(packName)
     
     local activePackMods = {}
     for _, modId in ipairs(packModIds) do
+        ourDependencyIds[modId] = nil
         if isModAlreadyActive(modId) then
             table.insert(activePackMods, modId)
         end

@@ -9,6 +9,7 @@ angular.module('beamng.stuff')
   $scope.packProgress = {}; // Track download progress for each pack
   $scope.packStatuses = {}; // Track active mod counts for each pack
   $scope.downloadedMods = {}; // Track downloaded but not yet active mods by pack
+  $scope.progressLocks = {}; // Prevent conflicting progress updates
   
   // Load enabled packs state from localStorage or default to all enabled
   $scope.loadEnabledState = function() {
@@ -29,13 +30,26 @@ angular.module('beamng.stuff')
     const savedDownloaded = localStorage.getItem('repoManager_downloadedMods');
     
     if (savedProgress) {
-      $scope.packProgress = JSON.parse(savedProgress);
-      console.log('Restored pack progress from localStorage:', $scope.packProgress);
+      try {
+        $scope.packProgress = JSON.parse(savedProgress);
+        console.log('Restored pack progress from localStorage:', $scope.packProgress);
+        
+        // Validate and fix any corrupted progress data
+        $scope.validateProgress();
+      } catch (e) {
+        console.log('Failed to parse saved progress, resetting:', e);
+        $scope.packProgress = {};
+      }
     }
     
     if (savedDownloaded) {
-      $scope.downloadedMods = JSON.parse(savedDownloaded);
-      console.log('Restored downloaded mods from localStorage:', $scope.downloadedMods);
+      try {
+        $scope.downloadedMods = JSON.parse(savedDownloaded);
+        console.log('Restored downloaded mods from localStorage:', $scope.downloadedMods);
+      } catch (e) {
+        console.log('Failed to parse saved downloaded mods, resetting:', e);
+        $scope.downloadedMods = {};
+      }
     }
   };
   
@@ -43,6 +57,157 @@ angular.module('beamng.stuff')
   $scope.saveProgressState = function() {
     localStorage.setItem('repoManager_packProgress', JSON.stringify($scope.packProgress));
     localStorage.setItem('repoManager_downloadedMods', JSON.stringify($scope.downloadedMods));
+  };
+  
+  // Safe progress update function to prevent erratic jumps and NaN values
+  $scope.updatePackProgress = function(packId, newProgress, source, forceUpdate) {
+    if (!$scope.packProgress[packId]) {
+      return false;
+    }
+    
+    // Validate the new progress value - prevent NaN and invalid values
+    if (isNaN(newProgress) || !isFinite(newProgress) || newProgress < 0) {
+      console.log('Blocked invalid progress value for pack', packId, ':', newProgress, '(source:', source + ')');
+      return false;
+    }
+    
+    const currentProgress = $scope.packProgress[packId].progress || 0;
+    const progressChange = newProgress - currentProgress;
+    
+    // Prevent backwards progress jumps (unless forced or very small correction)
+    if (!forceUpdate && progressChange < -2) {
+      console.log('Blocked backwards progress jump for pack', packId, 
+                 'from', currentProgress + '% to', newProgress + '% (source:', source + ')');
+      return false;
+    }
+    
+    // Prevent extreme forward jumps that seem unrealistic
+    if (!forceUpdate && progressChange > 25) {
+      console.log('Blocked extreme progress jump for pack', packId, 
+                 'from', currentProgress + '% to', newProgress + '% (source:', source + ')');
+      return false;
+    }
+    
+    // Special check: Don't allow 100% unless we're really complete
+    if (newProgress >= 100 && source !== 'completion' && !forceUpdate) {
+      const pack = $scope.packProgress[packId];
+      const activeMods = pack.completedMods || 0;
+      const totalMods = pack.totalMods || 1;
+      
+      if (activeMods < totalMods) {
+        console.log('WARNING: Blocking premature 100% for pack', packId,
+                   'Active:', activeMods, 'Total:', totalMods,
+                   'Actual progress:', Math.floor((activeMods / totalMods) * 100) + '%');
+        // Set to actual calculated progress instead
+        newProgress = Math.floor((activeMods / totalMods) * 100);
+      }
+    }
+    
+    // Apply the update with additional safety
+    const safeProgress = Math.min(Math.max(newProgress, 0), 100);
+    $scope.packProgress[packId].progress = safeProgress;
+    $scope.packProgress[packId].lastUpdateSource = source;
+    $scope.packProgress[packId].lastUpdateTime = Date.now();
+    
+    console.log('Progress updated for pack', packId, ':', currentProgress + '% →', safeProgress + '% (source:', source + ')');
+    return true;
+  };
+  
+  // Debounced save function to prevent excessive localStorage writes
+  $scope.debouncedSave = (function() {
+    let timeout;
+    return function() {
+      clearTimeout(timeout);
+      timeout = setTimeout(function() {
+        $scope.saveProgressState();
+      }, 500); // Save after 500ms of no updates
+    };
+  })();
+  
+  // Safe division function to prevent NaN
+  $scope.safeDivision = function(numerator, denominator, defaultValue) {
+    if (!denominator || denominator === 0 || isNaN(denominator) || isNaN(numerator)) {
+      return defaultValue || 0;
+    }
+    const result = numerator / denominator;
+    return isFinite(result) ? result : (defaultValue || 0);
+  };
+  
+  // Safe percentage calculation
+  $scope.safePercentage = function(completed, total, defaultValue) {
+    if (!total || total === 0) {
+      return defaultValue || 0;
+    }
+    const percentage = Math.floor((completed / total) * 100);
+    return isFinite(percentage) ? Math.max(0, Math.min(percentage, 100)) : (defaultValue || 0);
+  };
+  
+  // Standardized progress calculation function
+  $scope.calculatePackProgress = function(activeMods, pendingMods, totalMods, debugInfo) {
+    if (!totalMods || totalMods === 0) {
+      if (debugInfo) {
+        console.log('Progress calc:', debugInfo, '- No total mods, returning 0');
+      }
+      return 0;
+    }
+    
+    // Ensure all values are valid numbers
+    activeMods = Math.max(0, activeMods || 0);
+    pendingMods = Math.max(0, pendingMods || 0);
+    totalMods = Math.max(1, totalMods || 1);
+    
+    // Formula: (active mods * 100 + pending mods * 95) / total mods
+    const numerator = (activeMods * 100) + (pendingMods * 95);
+    const rawProgress = $scope.safeDivision(numerator, totalMods, 0);
+    const progress = Math.floor(rawProgress);
+    
+    // Never allow 100% unless all mods are active (not just pending)
+    let finalProgress = progress;
+    if (progress >= 100 && activeMods < totalMods) {
+      finalProgress = 99; // Cap at 99% if not all mods are active
+      if (debugInfo) {
+        console.log('Capping progress at 99% because not all mods are active');
+      }
+    }
+    
+    finalProgress = Math.max(0, Math.min(finalProgress, 100));
+    
+    if (debugInfo) {
+      console.log('Progress calc:', debugInfo, 
+                 '- Active:', activeMods, 
+                 'Pending:', pendingMods, 
+                 'Total:', totalMods,
+                 'Formula: (' + activeMods + '×100 + ' + pendingMods + '×95) ÷ ' + totalMods,
+                 'Raw:', rawProgress.toFixed(2) + '%',
+                 'Final:', finalProgress + '%');
+    }
+    
+    return finalProgress;
+  };
+  
+  // Validate and fix progress values to prevent NaN display
+  $scope.validateProgress = function() {
+    Object.keys($scope.packProgress).forEach(function(packId) {
+      const progress = $scope.packProgress[packId];
+      if (progress) {
+        // Fix NaN or invalid progress values
+        if (isNaN(progress.progress) || !isFinite(progress.progress)) {
+          console.log('Fixed NaN progress for pack', packId, 'was:', progress.progress);
+          progress.progress = 0;
+        }
+        
+        // Fix invalid completed/total mod counts
+        if (isNaN(progress.completedMods) || progress.completedMods < 0) {
+          progress.completedMods = 0;
+        }
+        if (isNaN(progress.totalMods) || progress.totalMods < 1) {
+          progress.totalMods = 1;
+        }
+        
+        // Ensure progress is within valid range
+        progress.progress = Math.max(0, Math.min(progress.progress, 100));
+      }
+    });
   };
   
   // Load dependencies using the Lua module
@@ -79,7 +244,7 @@ angular.module('beamng.stuff')
                     // Check if pack is actually complete now
                     if (status.active >= status.total && status.total > 0) {
                       $scope.packProgress[packId].downloading = false;
-                      $scope.packProgress[packId].progress = 100;
+                      $scope.updatePackProgress(packId, 100, 'backendSync', true); // Force completion from backend
                       $scope.packProgress[packId].activeDownloads = 0;
                       
                       // Clear downloaded mods for this pack
@@ -94,19 +259,29 @@ angular.module('beamng.stuff')
                         $scope.$apply(function() {
                           if ($scope.packProgress[packId] && !$scope.packProgress[packId].downloading) {
                             delete $scope.packProgress[packId];
+                            delete $scope.progressLocks[packId];
                             $scope.saveProgressState();
                           }
                         });
                       }, 3000);
                     } else {
-                      // Still in progress, calculate current progress
+                      // Still in progress, calculate current progress but be gentle about updates
                       const downloadedPending = $scope.downloadedMods[packId] ? $scope.downloadedMods[packId].length : 0;
-                      const progressValue = Math.floor(((status.active * 100) + (downloadedPending * 95)) / status.total);
-                      $scope.packProgress[packId].progress = Math.min(progressValue, 100);
                       
-                      console.log('Restored progress for pack:', pack.packName, 
-                                 'Active:', status.active, 'Pending:', downloadedPending, 
-                                 'Progress:', $scope.packProgress[packId].progress + '%');
+                      // Calculate progress using standardized function
+                      const progressValue = $scope.calculatePackProgress(status.active, downloadedPending, status.total);
+                      
+                      // Only update if it's a significant improvement or we don't have recent progress
+                      const timeSinceLastUpdate = Date.now() - ($scope.packProgress[packId].lastUpdateTime || 0);
+                      if (timeSinceLastUpdate > 5000 || progressValue > ($scope.packProgress[packId].progress || 0) + 5) {
+                        $scope.updatePackProgress(packId, progressValue, 'backendSync', false);
+                        
+                        console.log('Restored progress for pack:', pack.packName, 
+                                   'Active:', status.active, 'Pending:', downloadedPending, 
+                                   'Progress:', $scope.packProgress[packId].progress + '%');
+                      } else {
+                        console.log('Skipped backend sync progress update to avoid conflicts for pack:', pack.packName);
+                      }
                     }
                     
                     $scope.saveProgressState();
@@ -128,6 +303,7 @@ angular.module('beamng.stuff')
             if ($scope.downloadedMods[packId]) {
               delete $scope.downloadedMods[packId];
             }
+            delete $scope.progressLocks[packId];
             hasChanges = true;
           }
         });
@@ -158,6 +334,12 @@ angular.module('beamng.stuff')
         // Get current completed mods count from our existing data
         const currentCompletedMods = $scope.packProgress[pack.id].completedMods || 0;
         
+        // Validate pack has mods to prevent NaN calculations
+        if (!pack.modIds || pack.modIds.length === 0) {
+          console.log('Skipping progress calculation for pack with no mods:', pack.packName);
+          return;
+        }
+        
         // Initialize downloaded mods tracking for this pack if not exists
         if (!$scope.downloadedMods[pack.id]) {
           $scope.downloadedMods[pack.id] = [];
@@ -184,17 +366,20 @@ angular.module('beamng.stuff')
           }
         });
         
-        // Calculate progress: completed(100%) + downloaded pending(95%) + downloading(actual%) + not started(0%)
-        const completedModsProgress = currentCompletedMods * 100;
-        const downloadedPendingProgress = $scope.downloadedMods[pack.id].length * 95; // 95% for downloaded but not active
+        // Calculate progress using standardized function with download progress bonus
+        const downloadedPending = $scope.downloadedMods[pack.id].length;
+        let baseProgress = $scope.calculatePackProgress(currentCompletedMods, downloadedPending, pack.modIds.length, 'downloadStates-' + pack.packName);
+        
+        // Add bonus for actively downloading mods (partial progress)
         const downloadingModsProgress = Object.values(downloadProgress).reduce((sum, percent) => sum + percent, 0);
+        const downloadBonus = Math.floor($scope.safeDivision(downloadingModsProgress, pack.modIds.length, 0));
         
-        totalProgress = completedModsProgress + downloadedPendingProgress + downloadingModsProgress;
-        let overallProgress = Math.floor(totalProgress / pack.modIds.length);
+        let overallProgress = baseProgress + downloadBonus;
         
-        // Ensure progress doesn't exceed 100% and is at least the completion percentage
-        const minProgress = Math.floor((currentCompletedMods / pack.modIds.length) * 100);
-        overallProgress = Math.max(minProgress, Math.min(overallProgress, 100));
+        // Ensure progress doesn't exceed 100% and is at least the base progress
+        overallProgress = Math.max(baseProgress, Math.min(overallProgress, 100));
+        
+        console.log('Download progress for', pack.packName, '- Base:', baseProgress + '%, Bonus:', downloadBonus + '%, Final:', overallProgress + '%');
         
         // Log detailed progress breakdown
         if (activeDownloads > 0 || $scope.downloadedMods[pack.id].length > 0) {
@@ -207,15 +392,19 @@ angular.module('beamng.stuff')
         
         // Update pack progress with weighted calculation only if we have active downloads
         if (activeDownloads > 0) {
-          $scope.packProgress[pack.id].progress = overallProgress;
-          $scope.packProgress[pack.id].activeDownloads = activeDownloads;
-          $scope.packProgress[pack.id].downloadDetails = downloadProgress;
+          // Use safe progress update to prevent erratic jumps
+          const updated = $scope.updatePackProgress(pack.id, overallProgress, 'downloadStates', false);
           
-          console.log('Pack', pack.packName, 'weighted progress:', overallProgress + '%', 
-                     '(completed:', currentCompletedMods + ', downloading:', activeDownloads + ')');
-          
-          // Save progress state
-          $scope.saveProgressState();
+          if (updated) {
+            $scope.packProgress[pack.id].activeDownloads = activeDownloads;
+            $scope.packProgress[pack.id].downloadDetails = downloadProgress;
+            
+            console.log('Pack', pack.packName, 'weighted progress:', overallProgress + '%', 
+                       '(completed:', currentCompletedMods + ', downloading:', activeDownloads + ')');
+            
+            // Use debounced save to prevent excessive writes
+            $scope.debouncedSave();
+          }
         }
         
         // Refresh pack progress to get accurate completion status
@@ -266,22 +455,30 @@ angular.module('beamng.stuff')
             console.log('Pack progress updated via UpdateQueueState:', pack.packName, 
                        completedMods + '/' + totalMods, '(' + $scope.packProgress[pack.id].progress + '%)');
             
-            // Check if pack is now complete
+            // Check if pack is now complete - but don't force 100% unless truly complete
             if (completedMods >= totalMods) {
-              $scope.packProgress[pack.id].downloading = false;
-              $scope.packProgress[pack.id].progress = 100;
-              $scope.packProgress[pack.id].activeDownloads = 0;
+              // Double-check using our standard calculation
+              const actualProgress = $scope.calculatePackProgress(completedMods, 0, totalMods, 'UpdateQueueState-completion');
               
-              console.log('Pack completed via UpdateQueueState:', pack.packName);
-              
-              // Clear progress after delay
-              setTimeout(function() {
-                $scope.$apply(function() {
-                  if ($scope.packProgress[pack.id] && !$scope.packProgress[pack.id].downloading) {
-                    delete $scope.packProgress[pack.id];
-                  }
-                });
-              }, 3000);
+              if (actualProgress >= 100) {
+                $scope.packProgress[pack.id].downloading = false;
+                $scope.packProgress[pack.id].progress = 100;
+                $scope.packProgress[pack.id].activeDownloads = 0;
+                
+                console.log('Pack completed via UpdateQueueState:', pack.packName, completedMods + '/' + totalMods);
+                
+                // Clear progress after delay
+                setTimeout(function() {
+                  $scope.$apply(function() {
+                    if ($scope.packProgress[pack.id] && !$scope.packProgress[pack.id].downloading) {
+                      delete $scope.packProgress[pack.id];
+                    }
+                  });
+                }, 3000);
+              } else {
+                console.log('WARNING: UpdateQueueState thinks pack is complete but progress is only', 
+                           actualProgress + '%', pack.packName, completedMods + '/' + totalMods);
+              }
             }
             
             // Also refresh pack progress to sync with actual mod status
@@ -326,22 +523,30 @@ angular.module('beamng.stuff')
           const downloadedPending = $scope.downloadedMods[pack.id].length;
           const totalMods = $scope.packProgress[pack.id].totalMods || pack.modIds.length;
           
-          // Calculate progress: completed(100%) + downloaded pending(95%)
-          const progressValue = Math.floor(((completedMods * 100) + (downloadedPending * 95)) / totalMods);
-          $scope.packProgress[pack.id].progress = Math.min(progressValue, 100);
+          // Calculate progress using standardized function
+          const progressValue = $scope.calculatePackProgress(completedMods, downloadedPending, totalMods, 'modDownloaded-' + pack.packName);
           
-          console.log('Pack progress after download completion:', pack.packName, 
-                     'Active:', completedMods, 'Pending:', downloadedPending, 
-                     'Progress:', $scope.packProgress[pack.id].progress + '%');
+          // Use safe progress update for download completion
+          const updated = $scope.updatePackProgress(pack.id, progressValue, 'modDownloaded', false);
           
-          // Check if all mods are downloaded (either active or pending)
-          if ((completedMods + downloadedPending) >= totalMods) {
-            $scope.packProgress[pack.id].progress = 99; // Show 99% while waiting for final activation
-            console.log('All mods downloaded, waiting for activation:', pack.packName);
+          if (updated) {
+            console.log('Pack progress after download completion:', pack.packName, 
+                       'Active:', completedMods, 'Pending:', downloadedPending, 
+                       'Progress:', $scope.packProgress[pack.id].progress + '%');
+            
+            // Check if all mods are downloaded (either active or pending)
+            if ((completedMods + downloadedPending) >= totalMods) {
+              // Only force 99% if we're not already at 100%
+              const currentProgress = $scope.packProgress[pack.id].progress;
+              if (currentProgress < 99) {
+                $scope.updatePackProgress(pack.id, 99, 'allDownloaded', true); // Show 99% while waiting for final activation
+                console.log('All mods downloaded, waiting for activation:', pack.packName);
+              }
+            }
+            
+            // Use debounced save
+            $scope.debouncedSave();
           }
-          
-          // Save progress state after download completion
-          $scope.saveProgressState();
           
           // Refresh pack progress from Lua to sync with actual mod status
           $scope.refreshPackProgress(pack);
@@ -421,7 +626,15 @@ angular.module('beamng.stuff')
           const newActiveMods = data.active;
           
           // Update completed mods count
+          // Update completed mods count
           $scope.packProgress[pack.id].completedMods = newActiveMods;
+          
+          // Check if totalMods has changed and log if it has
+          const oldTotal = $scope.packProgress[pack.id].totalMods;
+          if (oldTotal && oldTotal !== data.total) {
+            console.log('WARNING: Total mods changed for pack', pack.packName, 
+                       'from', oldTotal, 'to', data.total);
+          }
           $scope.packProgress[pack.id].totalMods = data.total;
           
           // If we have new active mods, check if any were in our pending list
@@ -441,33 +654,45 @@ angular.module('beamng.stuff')
           const downloadedPending = $scope.downloadedMods[pack.id].length;
           const hasActiveDownloads = $scope.packProgress[pack.id].activeDownloads > 0;
           
-          // Only update progress percentage if we don't have active downloads with better granular data
+                    // Only update progress percentage if we don't have active downloads with better granular data
           if (!hasActiveDownloads) {
-            // Calculate: active(100%) + pending(95%)
-            const progressValue = Math.floor(((newActiveMods * 100) + (downloadedPending * 95)) / data.total);
-            $scope.packProgress[pack.id].progress = Math.min(progressValue, 100);
+            // Calculate progress using standardized function
+            const progressValue = $scope.calculatePackProgress(newActiveMods, downloadedPending, data.total);
+            
+            // Check if this update is more recent than last download progress update
+            const timeSinceLastUpdate = Date.now() - ($scope.packProgress[pack.id].lastUpdateTime || 0);
+            const shouldUpdate = !$scope.packProgress[pack.id].lastUpdateSource || 
+                               $scope.packProgress[pack.id].lastUpdateSource === 'packUpdate' ||
+                               timeSinceLastUpdate > 2000; // Allow override if 2+ seconds since last update
+            
+            if (shouldUpdate) {
+              $scope.updatePackProgress(pack.id, progressValue, 'packUpdate', false);
+            } else {
+              console.log('Skipped pack progress update to prevent conflict with recent download progress');
+            }
           }
           
-                      console.log('Pack status updated:', data.packName, 
+          console.log('Pack status updated:', data.packName, 
                      'Active:', newActiveMods + '/' + data.total, 
                      'Pending:', downloadedPending,
                      'Progress:', $scope.packProgress[pack.id].progress + '%');
           
-          // Save progress state after activation updates
-          $scope.saveProgressState();
+          // Use debounced save
+          $scope.debouncedSave();
           
-          // Check if pack is complete
-          if (newActiveMods >= data.total && data.total > 0) {
+          // Check if pack is complete - use the same total as progress calculation
+          const packTotalMods = $scope.packProgress[pack.id].totalMods || data.total;
+          if (newActiveMods >= packTotalMods && packTotalMods > 0) {
             $scope.packProgress[pack.id].downloading = false;
-            $scope.packProgress[pack.id].progress = 100;
+            $scope.updatePackProgress(pack.id, 100, 'completion', true); // Force 100% completion
             $scope.packProgress[pack.id].activeDownloads = 0;
             
             // Clear any remaining pending mods
             $scope.downloadedMods[pack.id] = [];
             
-            console.log('Pack completed:', pack.packName);
+            console.log('Pack completed:', pack.packName, newActiveMods + '/' + packTotalMods);
             
-            // Save completion state
+            // Save completion state immediately
             $scope.saveProgressState();
             
             // Clear progress after delay
@@ -476,13 +701,21 @@ angular.module('beamng.stuff')
                 if ($scope.packProgress[pack.id] && !$scope.packProgress[pack.id].downloading) {
                   delete $scope.packProgress[pack.id];
                   delete $scope.downloadedMods[pack.id];
+                  delete $scope.progressLocks[pack.id];
                   $scope.saveProgressState();
                 }
               });
             }, 3000);
-          } else if (data.total > 0) {
+          } else if (packTotalMods > 0) {
             // Keep downloading state if not complete
             $scope.packProgress[pack.id].downloading = true;
+            
+            // Log the mismatch if we're showing 100% but not actually complete
+            if ($scope.packProgress[pack.id].progress >= 100 && newActiveMods < packTotalMods) {
+              console.log('WARNING: Progress shows 100% but pack not complete!', 
+                         pack.packName, 'Active:', newActiveMods, 'Total:', packTotalMods,
+                         'Progress should be:', $scope.calculatePackProgress(newActiveMods, downloadedPending, packTotalMods, 'mismatch-check'));
+            }
           }
         }
       });
@@ -509,8 +742,11 @@ angular.module('beamng.stuff')
     });
   };
   
-  // Periodically refresh progress for downloading packs
+  // Periodically refresh progress for downloading packs and validate progress values
   setInterval(function() {
+    // Validate and fix any NaN values first
+    $scope.validateProgress();
+    
     // Only refresh if we have downloading packs
     const hasDownloadingPacks = Object.keys($scope.packProgress).some(packId => 
       $scope.packProgress[packId] && $scope.packProgress[packId].downloading
@@ -612,20 +848,42 @@ angular.module('beamng.stuff')
     
     if ($scope.enabledPacks[pack.id]) {
       // Pack enabled - initialize progress immediately, then get status and start subscription
+      const safeTotal = Math.max(pack.modIds.length || 0, 1); // Ensure at least 1 to prevent division by zero
       $scope.packProgress[pack.id] = {
         downloading: true,
         progress: 0,
         completedMods: 0,
-        totalMods: pack.modIds.length
+        totalMods: safeTotal
       };
       
       // Get initial status from Lua
       bngApi.engineLua(`extensions.repoManager.getPackStatus('${pack.packName}')`, function(status) {
         $scope.$apply(function() {
           if ($scope.packProgress[pack.id]) {
-            $scope.packProgress[pack.id].progress = status.percentage || 0;
+            // Update with status from backend, but verify consistency
+            const backendTotal = status.total || pack.modIds.length;
+            const currentTotal = $scope.packProgress[pack.id].totalMods;
+            
+            if (currentTotal && currentTotal !== backendTotal) {
+              console.log('Total mods mismatch for pack', pack.packName,
+                         'UI shows:', currentTotal, 'Backend shows:', backendTotal,
+                         'modIds.length:', pack.modIds.length);
+            }
+            
             $scope.packProgress[pack.id].completedMods = status.active || 0;
-            $scope.packProgress[pack.id].totalMods = status.total || pack.modIds.length;
+            $scope.packProgress[pack.id].totalMods = backendTotal;
+            
+            // Calculate progress using our standard function instead of backend percentage
+            const downloadedPending = $scope.downloadedMods[pack.id] ? $scope.downloadedMods[pack.id].length : 0;
+            const calculatedProgress = $scope.calculatePackProgress(status.active, downloadedPending, backendTotal, 'initial-pack-status');
+            $scope.packProgress[pack.id].progress = calculatedProgress;
+            
+            // Log if backend thinks we're at a different percentage
+            if (status.percentage && Math.abs(status.percentage - calculatedProgress) > 5) {
+              console.log('Progress mismatch! Backend says:', status.percentage + '%',
+                         'but we calculated:', calculatedProgress + '%',
+                         'for pack:', pack.packName);
+            }
           }
         });
         
@@ -640,6 +898,7 @@ angular.module('beamng.stuff')
       if ($scope.downloadedMods[pack.id]) {
         delete $scope.downloadedMods[pack.id];
       }
+      delete $scope.progressLocks[pack.id];
       
       // Save state after clearing
       $scope.saveProgressState();
@@ -669,16 +928,18 @@ angular.module('beamng.stuff')
   $scope.installCollection = function(pack) {
     // Install specific pack using subscribeToPack
     if (pack.packName) {
-      // Initialize progress tracking
+      // Initialize progress tracking with safe values
+      const safeTotal = Math.max(pack.modIds.length || 0, 1); // Ensure at least 1 to prevent division by zero
       $scope.packProgress[pack.id] = {
         downloading: true,
         progress: 0,
         completedMods: 0,
-        totalMods: pack.modIds.length
+        totalMods: safeTotal
       };
       
-      // Clear any previous downloaded mods state
+      // Clear any previous downloaded mods state and locks
       $scope.downloadedMods[pack.id] = [];
+      delete $scope.progressLocks[pack.id];
       
       // Save initial progress state
       $scope.saveProgressState();
@@ -703,6 +964,7 @@ angular.module('beamng.stuff')
       if ($scope.downloadedMods[pack.id]) {
         delete $scope.downloadedMods[pack.id];
       }
+      delete $scope.progressLocks[pack.id];
       $scope.enabledPacks[pack.id] = false;
       $scope.saveEnabledState();
       $scope.saveProgressState();
@@ -721,11 +983,12 @@ angular.module('beamng.stuff')
   $scope.installAllPacks = function() {
     // Initialize progress tracking for all packs
     $scope.dependencies.forEach(function(pack) {
+      const safeTotal = Math.max(pack.modIds.length || 0, 1); // Ensure at least 1 to prevent division by zero
       $scope.packProgress[pack.id] = {
         downloading: true,
         progress: 0,
         completedMods: 0,
-        totalMods: pack.modIds.length
+        totalMods: safeTotal
       };
       $scope.downloadedMods[pack.id] = [];
       $scope.enabledPacks[pack.id] = true;
@@ -746,6 +1009,7 @@ angular.module('beamng.stuff')
     // Clear all progress and downloaded mods state
     $scope.packProgress = {};
     $scope.downloadedMods = {};
+    $scope.progressLocks = {};
     
     // Update all packs to disabled state
     $scope.dependencies.forEach(function(pack) {
@@ -993,9 +1257,29 @@ angular.module('beamng.stuff')
   
   // Debug function to check progress state
   $scope.debugProgress = function() {
+    // First validate all progress to catch any NaN values
+    $scope.validateProgress();
+    
     console.log('Current pack progress:', $scope.packProgress);
     console.log('Downloaded pending mods:', $scope.downloadedMods);
+    console.log('Progress locks:', $scope.progressLocks);
     console.log('Enabled packs:', $scope.enabledPacks);
+    
+    // Check for any NaN values
+    let foundNaN = false;
+    Object.keys($scope.packProgress).forEach(packId => {
+      const progress = $scope.packProgress[packId];
+      if (progress) {
+        if (isNaN(progress.progress) || isNaN(progress.completedMods) || isNaN(progress.totalMods)) {
+          console.log('WARNING: Found NaN values in pack', packId, ':', progress);
+          foundNaN = true;
+        }
+      }
+    });
+    
+    if (!foundNaN) {
+      console.log('✅ No NaN values detected in progress data');
+    }
     
     // Show saved state from localStorage
     const savedProgress = localStorage.getItem('repoManager_packProgress');
@@ -1012,12 +1296,47 @@ angular.module('beamng.stuff')
     downloadingPacks.forEach(packId => {
       const progress = $scope.packProgress[packId];
       const pending = $scope.downloadedMods[packId] || [];
-      console.log(`Pack ${packId}: Active: ${progress.completedMods}, Pending: ${pending.length}, Downloading: ${progress.activeDownloads}, Progress: ${progress.progress}%`);
+      console.log(`Pack ${packId}: Active: ${progress.completedMods}, Pending: ${pending.length}, Downloading: ${progress.activeDownloads}, Progress: ${progress.progress}%, Last update: ${progress.lastUpdateSource || 'unknown'} at ${new Date(progress.lastUpdateTime || 0).toLocaleTimeString()}`);
     });
   };
   
   // Add debug function to window for console access
   window.debugRepoProgress = $scope.debugProgress;
+  
+  // Helper function to check specific pack progress calculation
+  window.debugPackProgress = function(packId) {
+    const pack = $scope.dependencies.find(p => p.id === packId);
+    if (!pack) {
+      console.log('Pack not found:', packId);
+      return;
+    }
+    
+    const progress = $scope.packProgress[packId];
+    if (!progress) {
+      console.log('No progress data for pack:', packId);
+      return;
+    }
+    
+    const activeMods = progress.completedMods || 0;
+    const pendingMods = $scope.downloadedMods[packId] ? $scope.downloadedMods[packId].length : 0;
+    const totalMods = progress.totalMods || pack.modIds.length;
+    
+    console.log('=== Pack Progress Debug ===');
+    console.log('Pack:', pack.packName, '(' + packId + ')');
+    console.log('Active mods:', activeMods);
+    console.log('Pending mods:', pendingMods);
+    console.log('Total mods:', totalMods);
+    console.log('Current displayed progress:', progress.progress + '%');
+    
+    const calculatedProgress = $scope.calculatePackProgress(activeMods, pendingMods, totalMods, 'debug-' + pack.packName);
+    console.log('Calculated progress should be:', calculatedProgress + '%');
+    
+    if (progress.progress !== calculatedProgress) {
+      console.log('⚠️  MISMATCH! Displayed:', progress.progress + '%, Expected:', calculatedProgress + '%');
+    } else {
+      console.log('✅ Progress values match');
+    }
+  };
 }])
 
 // Add range filter for pagination

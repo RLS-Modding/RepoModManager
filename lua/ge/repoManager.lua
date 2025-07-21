@@ -240,7 +240,16 @@ local function checkAllPackStatuses()
                 end
             end
             
-            local percentage = totalCount > 0 and math.floor((activeCount / totalCount) * 100) or 0
+            -- Use higher precision for large packs, similar to frontend
+            local percentage
+            if totalCount > 50 then
+                -- Use 1 decimal place for large packs
+                local rawPercentage = totalCount > 0 and (activeCount / totalCount) * 100 or 0
+                percentage = math.min(math.floor(rawPercentage * 10 + 0.5) / 10, 100)
+            else
+                -- Use integer precision for smaller packs
+                percentage = totalCount > 0 and math.floor((activeCount / totalCount) * 100) or 0
+            end
             local isPackActive = activeCount > 0 -- Pack has SOME active mods
             local isPackFullyActive = activeCount == totalCount -- Pack has ALL mods active
             
@@ -356,7 +365,16 @@ local function getPackStatus(packName)
         end
     end
     
-    local percentage = totalCount > 0 and math.floor((activeCount / totalCount) * 100) or 0
+    -- Use higher precision for large packs, similar to frontend
+    local percentage
+    if totalCount > 50 then
+        -- Use 1 decimal place for large packs
+        local rawPercentage = totalCount > 0 and (activeCount / totalCount) * 100 or 0
+        percentage = math.min(math.floor(rawPercentage * 10 + 0.5) / 10, 100)
+    else
+        -- Use integer precision for smaller packs
+        percentage = totalCount > 0 and math.floor((activeCount / totalCount) * 100) or 0
+    end
     
     return {
         active = activeCount,
@@ -397,7 +415,16 @@ local function getPackProgressUpdate(packName)
         end
     end
     
-    local percentage = totalCount > 0 and math.floor((activeCount / totalCount) * 100) or 0
+    -- Use higher precision for large packs, similar to frontend
+    local percentage
+    if totalCount > 50 then
+        -- Use 1 decimal place for large packs
+        local rawPercentage = totalCount > 0 and (activeCount / totalCount) * 100 or 0
+        percentage = math.min(math.floor(rawPercentage * 10 + 0.5) / 10, 100)
+    else
+        -- Use integer precision for smaller packs
+        percentage = totalCount > 0 and math.floor((activeCount / totalCount) * 100) or 0
+    end
     
     return {
         packName = packName,
@@ -454,11 +481,42 @@ local function getCacheInfo()
     }
 end
 
+-- Trigger progress update for a specific pack (used for immediate updates)
+local function triggerPackProgressUpdate(packName)
+    local progress = getPackProgressUpdate(packName)
+    guihooks.trigger('PackProgressUpdate', progress)
+    log('D', 'repoManager', 'Triggered progress update for pack: ' .. packName .. 
+        ' - Active: ' .. progress.active .. '/' .. progress.total .. ' (' .. progress.percentage .. '%)')
+end
+
+M.onModDownloadCompleted = function(downloadData)
+    -- Handle individual mod download completion/failure for pack progress updates
+    local status = downloadData.downloadComplete and 'completed' or 'failed'
+    local errorMsg = downloadData.error and (' - ' .. downloadData.error) or ''
+    log('D', 'repoManager', 'Mod download ' .. status .. ': ' .. (downloadData.modID or 'unknown') .. errorMsg)
+    
+    -- Find packs that contain this mod and trigger immediate progress updates
+    for directory, pData in pairs(packData) do
+        if pData.packName and pData.requiredMods and pData.requiredMods.modIds then
+            for _, modId in ipairs(pData.requiredMods.modIds) do
+                if modId == downloadData.modID then
+                    -- Use helper function for consistent progress updates
+                    -- This will recalculate progress based on current active mods
+                    triggerPackProgressUpdate(pData.packName)
+                    break
+                end
+            end
+        end
+    end
+end
+
 M.loadDependencies = loadDependencies
 M.getPackStatus = getPackStatus
 M.getAllModsStatus = getAllModsStatus
 M.getPackProgressUpdate = getPackProgressUpdate
-M.onModActivated = onModActivated
+M.triggerPackProgressUpdate = triggerPackProgressUpdate
+M.onModActivated = M.onModActivated
+M.onModDownloadCompleted = M.onModDownloadCompleted
 M.requestModWithDelay = requestModWithDelay
 M.requestMultipleMods = requestMultipleMods
 M.checkAllPackStatuses = checkAllPackStatuses

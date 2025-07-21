@@ -44,7 +44,7 @@
                 <div class="progress-fill" ng-style="{'width': packProgress[pack.id].progress + '%'}"></div>
               </div>
               <div class="progress-text">
-                {{packProgress[pack.id].progress}}% ({{packProgress[pack.id].completedMods}}/{{packProgress[pack.id].totalMods}})
+                {{formatProgress(packProgress[pack.id].progress, packProgress[pack.id].totalMods)}}% ({{getEffectiveCompletedMods(pack.id)}}/{{packProgress[pack.id].totalMods}})
               </div>
             </div>
           </div>

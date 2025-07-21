@@ -622,13 +622,28 @@ function startModDownload(modData)
         
         local downloadData = {
             responseData = r.responseData,
-            modID = modData.id
+            modID = modData.id,
+            filename = modData.filename,
+            downloadComplete = true
         }
+        
+        -- Trigger extension hook for repoManager to update pack progress
+        extensions.hook('onModDownloadCompleted', downloadData)
+        
         guihooks.trigger('ModDownloaded', downloadData)
         changeStateUpdateQueue(modData.filename, "downloaded")
         
         if r.responseCode ~= 200 then
             log("E", "Required Mods", "Failed to download: " .. modData.id)
+            
+            -- Trigger extension hook for failed download too
+            local failureData = {
+                modID = modData.id,
+                filename = modData.filename,
+                downloadComplete = false,
+                error = "Download failed: " .. tostring(r.responseCode)
+            }
+            extensions.hook('onModDownloadCompleted', failureData)
             
             guihooks.trigger("toastrMsg", {
                 type = "error", 
@@ -656,6 +671,15 @@ function startModDownload(modData)
             end
         elseif not FS:fileExists(r.outfile) then
             log("E", "Required Mods", "Download file missing: " .. modData.id)
+            
+            -- Trigger extension hook for missing file too
+            local missingData = {
+                modID = modData.id,
+                filename = modData.filename,
+                downloadComplete = false,
+                error = "File missing after download"
+            }
+            extensions.hook('onModDownloadCompleted', missingData)
             
             guihooks.trigger("toastrMsg", {
                 type = "error", 

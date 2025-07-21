@@ -1,0 +1,501 @@
+{
+"racetrailer_loading_ramp": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Loading Ramp",
+        "value":6500,
+    },
+    "slotType" : "racetrailer_reardoors",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["racetrailer_ramp", ["racetrailer_ramp"]],
+         ["racetrailer_rampbars", ["racetrailer_rearframe"]],
+         ["racetrailer_rampextension", ["racetrailer_rampextension"]],
+    ],
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["cargodoorR", "", "cd2","cd2r","cd3", "box", {"x":0.2, "y":0.2, "z":0.2}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.1, "y":0.26, "z":-0.05}, {"deformGroup":"racetrailer_ramphinge_L"}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["cargodoorR", "action0", "toggle_doors"]
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["toggle_doors", "ui.inputActions.racetrailer.toggle_doors.title", "ui.inputActions.racetrailer.toggle_doors.description", {"onUp":"electrics.values.doorR = 1-(electrics.values.doorR or 0); electrics.values.doorL = electrics.values.doorR", "order": 2}]
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         //--CARGO DOOR--
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"group":"racetrailer_ramp"},
+         {"nodeWeight":8},
+         ["cd1rr", -1.23695, 17.28698, 3.39587, {"tag":"ramp_latch"}],
+         ["cd1r", -0.58902, 17.28698, 3.39587],
+         ["cd1", 0.00000, 17.28698, 3.39587],
+         ["cd1l", 0.58902, 17.28698, 3.39587],
+         ["cd1ll", 1.23695, 17.28698, 3.39587, {"tag":"ramp_latch"}],
+
+         ["cd2rr", -1.23695, 17.28698, 1.95497],
+         ["cd2r", -0.58902, 17.28698, 1.95497],
+         ["cd2", 0.00000, 17.28698, 1.95497],
+         ["cd2l", 0.58902, 17.28698, 1.95497],
+         ["cd2ll", 1.23695, 17.28698, 1.95497],
+
+         ["cd3rr", -1.23695, 17.28698, 0.64384],
+         ["cd3r", -0.58902, 17.28698, 0.64384],
+         ["cd3", 0.00000, 17.28698, 0.64384],
+         ["cd3l", 0.58902, 17.28698, 0.64384],
+         ["cd3ll", 1.23695, 17.28698, 0.64384],
+
+         //ramp extensions
+         {"selfCollision":false},
+         {"group":"racetrailer_rampextension"},
+         ["ce1rr", -1.23695, 17.28698, 3.42789],
+         ["ce1r", -0.58902, 17.28698, 3.42789],
+         ["ce1l", 0.58902, 17.28698, 3.42789],
+         ["ce1ll", 1.23695, 17.28698, 3.42789],
+
+         ["ce2rr", -1.23695, 17.28698, 1.42129],
+         ["ce2r", -0.58902, 17.28698, 1.42129],
+         ["ce2l", 0.58902, 17.28698, 1.42129],
+         ["ce2ll", 1.23695, 17.28698, 1.42129],
+
+         ["ce3rr", -1.23695, 17.28698, 0.70788],
+         ["ce3r", -0.58902, 17.28698, 0.70788],
+         ["ce3l", 0.58902, 17.28698, 0.70788],
+         ["ce3ll", 1.23695, 17.28698, 0.70788],
+
+         {"collision":false},
+         {"selfCollision":false},
+         ["ce13r", -0.58902, 17.75832, 1.79486],
+         ["ce13l", 0.58902, 17.75832, 1.79486],
+
+         //hinge nodes
+         {"collision":true},
+         {"selfCollision":false},
+         {"group":"racetrailer_ramp"},
+         ["cdh1rr", -1.23695, 17.33935, 0.59047],
+         ["cdh1r", -0.58902, 17.33935, 0.59047],
+         ["cdh1l", 0.58902, 17.33935, 0.59047],
+         ["cdh1ll", 1.23695, 17.33935, 0.59047],
+
+         //anti sink
+         {"group":""},
+         ["ce1rrr", -1.23695, 17.30443, 3.42789],
+         ["ce1lll", 1.23695, 17.30443, 3.42789],
+
+         //coupler latch
+         {"collision":false},
+         {"selfCollision":false},
+         {"nodeWeight":5},
+         ["cl1rr", -1.23695, 17.28698, 3.39587, {"couplerTag":"ramp_latch","couplerStrength":75000,"couplerRadius":0.05,"couplerStartRadius":0.05}],
+         ["cl1ll", 1.23695, 17.28698, 3.39587, {"couplerTag":"ramp_latch","couplerStrength":75000,"couplerRadius":0.05,"couplerStartRadius":0.05}],
+
+         //rigidifier
+         {"nodeWeight":8},
+         ["cd15r", -0.58902, 16.66725, 1.95497],
+         ["cd15l", 0.58902, 16.66725, 1.95497],
+    ],
+    "rails": {
+        //ramp extension rails
+        "ext_RR":{"links:":["ce1rr","ce2rr","ce3rr"], "broken:":[], "looped":false, "capped":true},
+        "ext_R": {"links:":["ce1r","ce2r","ce3r"],    "broken:":[], "looped":false, "capped":true},
+        "ext_LL":{"links:":["ce1ll","ce2ll","ce3ll"], "broken:":[], "looped":false, "capped":true},
+        "ext_L": {"links:":["ce1l","ce2l","ce3l"],    "broken:":[], "looped":false, "capped":true},
+        //ramp rails
+        "ramp_RR":{"links:":["cd1rr","cd2rr","cd3rr"], "broken:":[], "looped":false, "capped":true},
+        "ramp_R": {"links:":["cd1r","cd2r","cd3r"],    "broken:":[], "looped":false, "capped":true},
+        "ramp_LL":{"links:":["cd1ll","cd2ll","cd3ll"], "broken:":[], "looped":false, "capped":true},
+        "ramp_L": {"links:":["cd1l","cd2l","cd3l"],    "broken:":[], "looped":false, "capped":true},
+    },
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        ["cd1rr", "ext_RR", true, true, 0.0, 5001000, 15000000, 15000000],
+        ["cd1r",  "ext_R",  true, true, 0.0, 5001000, 15000000, 15000000],
+        ["cd1l",  "ext_L",  true, true, 0.0, 5001000, 15000000, 15000000],
+        ["cd1ll", "ext_LL", true, true, 0.0, 5001000, 15000000, 15000000],
+
+        ["ce2rr", "ramp_RR", true, true, 0.0, 5001000, 15000000, 15000000],
+        ["ce2r",  "ramp_R",  true, true, 0.0, 5001000, 15000000, 15000000],
+        ["ce2l",  "ramp_L",  true, true, 0.0, 5001000, 15000000, 15000000],
+        ["ce2ll", "ramp_LL", true, true, 0.0, 5001000, 15000000, 15000000],
+
+        ["ce3rr", "ramp_RR", true, true, 0.0, 5001000, 15000000, 15000000],
+        ["ce3r",  "ramp_R",  true, true, 0.0, 5001000, 15000000, 15000000],
+        ["ce3l",  "ramp_L",  true, true, 0.0, 5001000, 15000000, 15000000],
+        ["ce3ll", "ramp_LL", true, true, 0.0, 5001000, 15000000, 15000000],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":4001000,"beamDamp":200},
+          {"beamDeform":222000,"beamStrength":"FLT_MAX"},
+          //main shape
+          {"deformationTriggerRatio":0.01},
+          {"deformGroup":"taillight_R_break"},
+          ["cd3rr", "cd3r"],
+          ["cd2rr", "cd2r"],
+          ["cd1rr", "cd1r"],
+          ["cd3r", "cd3"],
+          ["cd2r", "cd2"],
+          ["cd1r", "cd1"],
+          {"deformGroup":""},
+
+          ["cd3ll", "cd3l"],
+          ["cd2ll", "cd2l"],
+          ["cd1ll", "cd1l"],
+          ["cd3l", "cd3"],
+
+          ["cd2l", "cd2"],
+          ["cd1l", "cd1"],
+
+          //vertical
+          ["cd1rr", "cd2rr"],
+          ["cd2rr", "cd3rr"],
+          ["cd1r", "cd2r"],
+          ["cd2r", "cd3r"],
+
+          ["cd1ll", "cd2ll"],
+          ["cd2ll", "cd3ll"],
+          ["cd1l", "cd2l"],
+          ["cd2l", "cd3l"],
+
+          ["cd1", "cd2"],
+          ["cd2", "cd3"],
+
+          //cross
+          {"beamDeform":72000,"beamStrength":"FLT_MAX"},
+          ["cd1rr", "cd2r"],
+          ["cd1r", "cd2rr"],
+          ["cd2rr", "cd3r"],
+          ["cd2r", "cd3rr"],
+          ["cd1r", "cd2"],
+          ["cd1", "cd2r"],
+          ["cd2r", "cd3"],
+          ["cd2", "cd3r"],
+
+          ["cd1ll", "cd2l"],
+          ["cd1l", "cd2ll"],
+          ["cd2ll", "cd3l"],
+          ["cd2l", "cd3ll"],
+          ["cd1l", "cd2"],
+          ["cd1", "cd2l"],
+          ["cd2l", "cd3"],
+          ["cd2", "cd3l"],
+
+          {"beamDeform":32000,"beamStrength":"FLT_MAX"},
+          //rigids
+          ["cd1rr", "cd1"],
+          ["cd2rr", "cd2"],
+          ["cd3rr", "cd3"],
+          ["cd1rr", "cd3rr"],
+          ["cd1r", "cd3r"],
+
+          ["cd1ll", "cd1"],
+          ["cd2ll", "cd2"],
+          ["cd3ll", "cd3"],
+          ["cd1ll", "cd3ll"],
+          ["cd1l", "cd3l"],
+
+          ["cd1l", "cd1r"],
+          ["cd2l", "cd2r"],
+          ["cd3l", "cd3r"],
+
+          ["cd1", "cd3"],
+
+          //rigidifier
+          {"beamDeform":25000,"beamStrength":"FLT_MAX"},
+          {"beamSpring":2501000,"beamDamp":150},
+          ["cd1rr", "cd15r"],
+          ["cd2rr", "cd15r"],
+          ["cd3rr", "cd15r"],
+          ["cd1r", "cd15r"],
+          ["cd2r", "cd15r"],
+          ["cd3r", "cd15r"],
+          ["cd1", "cd15r"],
+          ["cd2", "cd15r"],
+          ["cd3", "cd15r"],
+          ["cd1l", "cd15r"],
+          ["cd2l", "cd15r"],
+          ["cd3l", "cd15r"],
+
+          ["cd1ll", "cd15l"],
+          ["cd2ll", "cd15l"],
+          ["cd3ll", "cd15l"],
+          ["cd1l", "cd15l"],
+          ["cd2l", "cd15l"],
+          ["cd3l", "cd15l"],
+          ["cd1", "cd15l"],
+          ["cd2", "cd15l"],
+          ["cd3", "cd15l"],
+          ["cd1r", "cd15l"],
+          ["cd2r", "cd15l"],
+          ["cd3r", "cd15l"],
+
+          //anti sink
+          ["ce1rrr", "ce1rr"],
+          ["ce1rrr", "ce1r"],
+          ["ce1rrr", "ce3rr"],
+          ["ce1rrr", "ce2r"],
+
+          ["ce1lll", "ce1ll"],
+          ["ce1lll", "ce1l"],
+          ["ce1lll", "ce3ll"],
+          ["ce1lll", "ce2l"],
+
+          //coupler latch nodes
+          ["cl1ll", "fra14ll"],
+          ["cl1ll", "fra4ll"],
+          ["cl1ll", "fra14"],
+          ["cl1ll", "fra4"],
+          ["cl1ll", "fra13ll"],
+          ["cl1ll", "fra3ll"],
+
+          ["cl1rr", "fra14rr"],
+          ["cl1rr", "fra4rr"],
+          ["cl1rr", "fra14"],
+          ["cl1rr", "fra4"],
+          ["cl1rr", "fra13rr"],
+          ["cl1rr", "fra3rr"],
+
+          {"beamDeform":50000,"beamStrength":"FLT_MAX"},
+          {"beamSpring":4001000,"beamDamp":250},
+          //attach to hinge
+          ["cd3r", "cdh1r"],
+          ["cd3rr", "cdh1rr"],
+          ["cd3rr", "cdh1r"],
+          ["cd3r", "cdh1rr"],
+          ["cd2rr", "cdh1rr"],
+          ["cd2r", "cdh1r"],
+          ["cd2rr", "cdh1r"],
+          ["cd2r", "cdh1rr"],
+
+          ["cd3l", "cdh1l"],
+          ["cd3ll", "cdh1ll"],
+          ["cd3ll", "cdh1l"],
+          ["cd3l", "cdh1ll"],
+          ["cd2ll", "cdh1ll"],
+          ["cd2l", "cdh1l"],
+          ["cd2ll", "cdh1l"],
+          ["cd2l", "cdh1ll"],
+
+          //ramp extensions
+          //vert
+          ["ce1l", "ce2l"],
+          ["ce1ll", "ce2ll"],
+          ["ce3l", "ce2l"],
+          ["ce3ll", "ce2ll"],
+
+          ["ce1r", "ce2r"],
+          ["ce1rr","ce2rr"],
+          ["ce3r", "ce2r"],
+          ["ce3rr","ce2rr"],
+
+          //width
+          ["ce1l", "ce1ll"],
+          ["ce2l", "ce2ll"],
+          ["ce3l", "ce3ll"],
+
+          ["ce1r", "ce1rr"],
+          ["ce2r", "ce2rr"],
+          ["ce3r", "ce3rr"],
+
+          //cross
+          ["ce1l", "ce2ll"],
+          ["ce2l", "ce1ll"],
+          ["ce3l", "ce2ll"],
+          ["ce2l", "ce3ll"],
+
+          ["ce1r", "ce2rr"],
+          ["ce2r", "ce1rr"],
+          ["ce3r", "ce2rr"],
+          ["ce2r", "ce3rr"],
+
+          //in between
+          ["ce1l", "ce1r"],
+          ["ce2l", "ce2r"],
+          ["ce3l", "ce3r"],
+          ["ce2l", "ce1r"],
+          ["ce1l", "ce2r"],
+          ["ce2l", "ce3r"],
+          ["ce3l", "ce2r"],
+
+          //rigidifier
+          ["ce1rr", "ce13r"],
+          ["ce1r", "ce13r"],
+          ["ce2r", "ce13r"],
+          ["ce2rr", "ce13r"],
+          ["ce3rr", "ce13r"],
+          ["ce3r", "ce13r"],
+          ["ce1l", "ce13r"],
+          ["ce2l", "ce13r"],
+          ["ce3l", "ce13r"],
+
+          ["ce1ll", "ce13l"],
+          ["ce1l", "ce13l"],
+          ["ce2l", "ce13l"],
+          ["ce2ll", "ce13l"],
+          ["ce3ll", "ce13l"],
+          ["ce3l", "ce13l"],
+          ["ce1r", "ce13l"],
+          ["ce2r", "ce13l"],
+          ["ce3r", "ce13l"],
+
+          //--DOOR SUPPORT BEAMS--
+          {"beamType":"|SUPPORT","beamLongBound":12},
+          {"beamSpring":4001000,"beamDamp":250},
+          {"beamDeform":12900,"beamStrength":280000},
+          //["cd1","fra14"],
+          //["cd1","rf1"],
+          //["cd1rr","fra4rr"],
+          //["cd1rr","fra14rr"],
+          //
+          //["cd4","flo1"],
+          //["cd4rr","flo1r"],
+          //
+          //["cd4r","fra2"],
+          //["cd4r","fra2rr"],
+          //["cd1r","fra4"],
+          //["cd1r","fra4rr"],
+          //
+          //["cd1ll","fra4ll"],
+          //["cd1ll","fra14ll"],
+          //
+          //["cd4l","fra2"],
+          //["cd4l","fra2ll"],
+          //["cd1l","fra4"],
+          //["cd1l","fra4ll"],
+
+          //door hinge
+          {"beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamSpring":3001000,"beamDamp":150},
+          {"beamDeform":40000,"beamStrength":80000},
+          {"breakGroup":"racetrailer_ramphinge_L"},
+          ["fra2ll", "cdh1ll"],
+          ["fra12ll", "cdh1ll"],
+          ["fra1ll", "cdh1ll"],
+          ["fra11ll", "cdh1ll"],
+          ["fra1l", "cdh1l"],
+          ["fra2l", "cdh1l"],
+          ["cdh1l", "rg3l"],
+          ["cdh1ll", "fra2l"],
+          ["cdh1l", "fra2ll"],
+          ["cdh1l", "fra1ll"],
+          ["fra1l", "cdh1ll"],
+
+          {"breakGroup":"racetrailer_ramphinge_R"},
+          ["fra2rr", "cdh1rr"],
+          ["fra12rr", "cdh1rr"],
+          ["fra1rr", "cdh1rr"],
+          ["fra11rr", "cdh1rr"],
+          ["fra1r", "cdh1r"],
+          ["fra2r", "cdh1r"],
+          ["cdh1r", "rg3r"],
+          ["cdh1rr", "fra2r"],
+          ["cdh1r", "fra2rr"],
+          ["cdh1r", "fra1rr"],
+          ["fra1r", "cdh1rr"],
+
+          //["fra2ll", "cd4ll"],
+          //["fra12ll", "cd4ll"],
+          //["fra1ll", "cd4ll"],
+          //["fra11ll", "cd4ll"],
+          //["fra1l", "cd4l"],
+          //["fra2l", "cd4l"],
+          //["cd4l", "rg3l"],
+          //["cd4ll", "fra2l"],
+          //["cd4l", "fra2ll"],
+          //["cd4l", "fra1ll"],
+          //["fra1l", "cd4ll"],
+          //
+          //["fra2rr", "cd4rr"],
+          //["fra12rr", "cd4rr"],
+          //["fra1rr", "cd4rr"],
+          //["fra11rr", "cd4rr"],
+          //["fra1r", "cd4r"],
+          //["fra2r", "cd4r"],
+          //["cd4r", "rg3r"],
+          //["cd4rr", "fra2r"],
+          //["cd4r", "fra2rr"],
+          //["cd4r", "fra1rr"],
+          //["fra1r", "cd4rr"],
+          {"breakGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "hydros": [
+            ["id1:","id2:"],
+            {"beamDeform":"FLT_MAX","beamStrength":160000},
+            {"beamSpring":501000,"beamDamp":10000},
+            {"beamPrecompression":1.0},
+            {"breakGroupType":1},
+            {"breakGroup":"racetrailer_ramphinge_R"},
+            ["cd15l","wa31l", {"inputSource":"doorR","inLimit":0,"outLimit":4.48,"inRate":0.5,"outRate":0.5,"inputFactor":1.0}],
+            ["cd15r","wa31r", {"inputSource":"doorR","inLimit":0,"outLimit":4.48,"inRate":0.5,"outRate":0.5,"inputFactor":1.0}],
+            {"breakGroup":""},
+            {"beamSpring":1001000,"beamDamp":5000},
+            ["cd3l","ce1l", {"inputSource":"doorR","inLimit":0,"outLimit":1.67,"inRate":0.1,"outRate":0.1,"inputFactor":1.0}],
+            ["cd3r","ce1r", {"inputSource":"doorR","inLimit":0,"outLimit":1.67,"inRate":0.1,"outRate":0.1,"inputFactor":1.0}],
+            {"beamPrecompression":1.0},
+            {"breakGroupType":0},
+            {"breakGroup":""},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            {"dragCoef":5},
+            {"groundModel":"asphalt"},
+            //ramp
+            ["cd1rr","cd2rr","cd2r"],
+            ["cd1rr","cd2r","cd1r"],
+            ["cd1r","cd2r","cd2"],
+            ["cd1r","cd2","cd1"],
+            ["cd2rr","cd3rr","cd3r"],
+            ["cd2rr","cd3r","cd2r"],
+            ["cd2r","cd3r","cd3"],
+            ["cd2r","cd3","cd2"],
+
+            {"group":"racetrailer_ramp"},
+            ["cd2ll","cd1ll","cd2l"],
+            ["cd1ll","cd1l","cd2l"],
+            ["cd2l","cd1l","cd2"],
+            ["cd1l","cd1","cd2"],
+            ["cd3ll","cd2ll","cd3l"],
+            ["cd2ll","cd2l","cd3l"],
+            ["cd3l","cd2l","cd3"],
+            ["cd2l","cd2","cd3"],
+
+            //ramp extension
+            ["ce1rr", "ce2rr", "ce2r"],
+            ["ce2r", "ce1r", "ce1rr"],
+            ["ce2rr", "ce3rr", "ce3r"],
+            ["ce3r", "ce2r", "ce2rr"],
+
+            ["ce2ll", "ce1ll", "ce2l"],
+            ["ce1l", "ce2l", "ce1ll"],
+            ["ce3ll", "ce2ll", "ce3l"],
+            ["ce2l", "ce3l", "ce2ll"],
+
+            ["ce2r", "ce2l", "ce1l"],
+            ["ce1l", "ce1r", "ce2r"],
+
+            //bridge tri
+            {"breakGroup":"racetrailer_ramphinge_L"},
+            ["fra2r", "cd3r", "fra2rr"],
+            ["cd3rr", "fra2rr", "cd3r"],
+            ["fra2", "cd3", "fra2r"],
+            ["cd3r", "fra2r", "cd3"],
+
+            ["cd3l", "fra2l", "fra2ll"],
+            ["fra2ll", "cd3ll", "cd3l"],
+            ["cd3", "fra2", "fra2l"],
+            ["fra2l", "cd3l", "cd3"],
+
+            ["ce1ll", "ce1lll", "ce1l"],
+            ["ce1rrr", "ce1rr", "ce1r"],
+            {"breakGroup":""},
+    ],
+},
+}

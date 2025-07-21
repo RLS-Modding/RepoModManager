@@ -1,0 +1,325 @@
+{
+  "Default": {
+    "name": "Default",
+    "mapTo": "Default",
+    "class": "Material",
+    "persistentId": "b4677d01-ede3-4b77-b5af-3ebdb0f2d2e1",
+    "Stages": [
+      {
+        "diffuseColor": [
+          0.800000012,
+          0.800000012,
+          0.800000012,
+          1
+        ]
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      }
+    ],
+    "translucentBlendOp": "None"
+  },
+  "EnclosedTrailer": {
+    "name": "EnclosedTrailer",
+    "mapTo": "EnclosedTrailer",
+    "class": "Material",
+    "persistentId": "d22cf132-b827-4f14-9212-0c93ccd6dd4e",
+    "Stages": [
+      {
+        "diffuseColor": [
+          0.800000012,
+          0.800000012,
+          0.800000012,
+          1
+        ]
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      }
+    ],
+    "translucentBlendOp": "None"
+  },
+  "Trailer_DiamondPlate": {
+    "name": "Trailer_DiamondPlate",
+    "mapTo": "Trailer_DiamondPlate",
+    "class": "Material",
+    "persistentId": "1b234d24-e0cd-4f14-919e-4cff8bf04d29",
+    "Stages": [
+      {
+        "baseColorMap": "/vehicles/EnclosedTrailer/textures/Diamond_D",
+        "detailNormalMap": "/vehicles/EnclosedTrailer/textures/Diamond_N.jpg",
+        "detailScale": [
+          1,
+          1
+        ],
+        "metallicFactor": 0.792999983,
+        "normalMap": "/vehicles/EnclosedTrailer/textures/Diamond_N.jpg",
+        "roughnessFactor": 0.736000001,
+        "roughnessMap": "/vehicles/EnclosedTrailer/textures/Diamond_R.jpg"
+      },
+      {
+        "detailScale": null,
+        "metallicFactor": null,
+        "roughnessFactor": null
+      },
+      {
+        "detailScale": null,
+        "metallicFactor": null,
+        "roughnessFactor": null
+      },
+      {
+        "detailScale": null,
+        "metallicFactor": null,
+        "roughnessFactor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "Trailer_Planks": {
+    "name": "Trailer_Planks",
+    "mapTo": "Trailer_Planks",
+    "class": "Material",
+    "persistentId": "778d0001-79ca-42af-b586-33543ea72731",
+    "Stages": [
+      {
+        "colorMap": "/vehicles/EnclosedTrailer/textures/wood_D"
+      },
+      {},
+      {},
+      {}
+    ],
+    "translucentBlendOp": "None"
+  },
+  "Trailer_Plywood": {
+    "name": "Trailer_Plywood",
+    "mapTo": "Trailer_Plywood",
+    "class": "Material",
+    "persistentId": "94c63f53-12eb-4a9d-9e9d-520b2bbf6710",
+    "Stages": [
+      {
+        "colorMap": "/vehicles/EnclosedTrailer/textures/wood_D"
+      },
+      {},
+      {},
+      {}
+    ],
+    "translucentBlendOp": "None"
+  },
+  "Trailer_Screen": {
+    "name": "Trailer_Screen",
+    "mapTo": "Trailer_Screen",
+    "class": "Material",
+    "persistentId": "67b6bf8e-4cf3-484e-b726-bad41445897c",
+    "Stages": [
+      {
+        "colorMap": "/vehicles/EnclosedTrailer/textures/2FastRacing.png",
+        "glow": true,
+        "glowFactor": [
+          0.720688999,
+          0.720688999,
+          0.720688999
+        ]
+      },
+      {
+        "glow": null,
+        "glowFactor": null
+      },
+      {
+        "glow": null,
+        "glowFactor": null
+      },
+      {
+        "glow": null,
+        "glowFactor": null
+      }
+    ],
+    "translucentBlendOp": "None"
+  },
+  "Trailer_floor": {
+    "name": "Trailer_floor",
+    "mapTo": "Trailer_floor",
+    "class": "Material",
+    "persistentId": "c309703a-66a1-4f88-87c1-e9f52d37e128",
+    "Stages": [
+      {
+        "baseColorFactor": [
+          0.238739997,
+          0.238739997,
+          0.238739997,
+          1
+        ],
+        "detailMap": "/vehicles/EnclosedTrailer/textures/Tread_D",
+        "detailNormalMap": "/vehicles/EnclosedTrailer/textures/Tread_N.jpg",
+        "detailScale": [
+          1,
+          1
+        ],
+        "metallicFactor": 0.476000011,
+        "normalMap": "/vehicles/EnclosedTrailer/textures/Tread_N.jpg",
+        "roughnessMap": "/vehicles/EnclosedTrailer/textures/Tread_R.jpg"
+      },
+      {
+        "baseColorFactor": null,
+        "detailScale": null,
+        "metallicFactor": null
+      },
+      {
+        "baseColorFactor": null,
+        "detailScale": null,
+        "metallicFactor": null
+      },
+      {
+        "baseColorFactor": null,
+        "detailScale": null,
+        "metallicFactor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  },
+  "Trailer_light_INT": {
+    "name": "Trailer_light_INT",
+    "mapTo": "Trailer_light_INT",
+    "class": "Material",
+    "persistentId": "ed60cb5c-dea1-4a10-b380-00da0b8087fc",
+    "Stages": [
+      {
+        "diffuseColor": [
+          0.800000012,
+          0.800000012,
+          0.800000012,
+          1
+        ]
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      }
+    ],
+    "translucentBlendOp": "None"
+  },
+  "Trailer_markerlight": {
+    "name": "Trailer_markerlight",
+    "mapTo": "Trailer_markerlight",
+    "class": "Material",
+    "persistentId": "8f8c3ffc-3496-412d-b251-60c07d8ae1fe",
+    "Stages": [
+      {
+        "diffuseColor": [
+          0.800000012,
+          0.800000012,
+          0.800000012,
+          1
+        ]
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      }
+    ],
+    "translucentBlendOp": "None"
+  },
+  "Trailer_taillight_L": {
+    "name": "Trailer_taillight_L",
+    "mapTo": "Trailer_taillight_L",
+    "class": "Material",
+    "persistentId": "30cc33bb-b476-445a-9826-6f148e64b4cc",
+    "Stages": [
+      {
+        "diffuseColor": [
+          1,
+          0.1915932,
+          0.184438094,
+          0.508571386
+        ]
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      }
+    ],
+    "translucent": true
+  },
+  "Trailer_taillight_M": {
+    "name": "Trailer_taillight_M",
+    "mapTo": "Trailer_taillight_M",
+    "class": "Material",
+    "persistentId": "352dc003-32f3-4569-9ead-2d1f2ba1521e",
+    "Stages": [
+      {
+        "diffuseColor": [
+          0.800000012,
+          0.800000012,
+          0.800000012,
+          1
+        ]
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      }
+    ],
+    "translucentBlendOp": "None"
+  },
+  "Trailer_taillight_R": {
+    "name": "Trailer_taillight_R",
+    "mapTo": "Trailer_taillight_R",
+    "class": "Material",
+    "persistentId": "42a13700-77c0-4806-a5c8-75e24b3d8561",
+    "Stages": [
+      {
+        "diffuseColor": [
+          0.800000072,
+          0.131918699,
+          0.140117303,
+          0.257142782
+        ]
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      },
+      {
+        "diffuseColor": null
+      }
+    ],
+    "translucent": true
+  }
+}

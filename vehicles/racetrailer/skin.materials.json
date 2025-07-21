@@ -1,0 +1,51 @@
+{
+  "RRpbrPaintPrimary.skin.2fast": {
+    "name": "RRpbrPaintPrimary.skin.2fast",
+    "mapTo": "RRpbrPaintPrimary.skin.2fast",
+    "class": "Material",
+    "persistentId": "7adadc94-ce3f-4078-a79a-f1132108de9f",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_aodata.dds",
+        "baseColorFactor": [
+          0.999989986,
+          1,
+          0.999989986,
+          1
+        ],
+        "baseColorMap": "/vehicles/racetrailer/racetrailer_skin_2fast.dds",
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_mdata.dds",
+        "normalMap": "vehicles/common/RRpbrPaint/RR_Paint_PBR_n.dds",
+        "roughnessMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_rdata.dds"
+      },
+      {
+        "ambientOcclusionMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_aodata.dds",
+        "baseColorFactor": [
+          0.679157972,
+          0.679150999,
+          0.679150999,
+          1
+        ],
+        "baseColorMap": "/vehicles/racetrailer/racetrailer_skin_2fast.dds",
+        "clearCoatFactor": 1,
+        "clearCoatMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_ccdata.png",
+        "clearCoatRoughnessFactor": 0.0829999968,
+        "colorPaletteMapUseUV": 1,
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_mdata.dds",
+        "metallicMapUseUV": 1,
+        "opacityMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_skin_odata.dds",
+        "roughnessMap": "/vehicles/common/RRpbrPaint/RR_Paint_PBR_rdata.dds"
+      },
+      {},
+      {}
+    ],
+    "activeLayers": 2,
+    "doubleSided": true,
+    "dynamicCubemap": true,
+    "materialTag0": "beamng",
+    "materialTag1": "vehicle",
+    "version": 1.5
+  }
+}

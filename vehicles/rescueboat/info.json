@@ -1,0 +1,14 @@
+{
+    "Name":"Rescue Boat",
+	"Brand":"V.M",
+	"Author":"Fun Physics",
+    "Type":"boat",
+	"Description":"",
+	"default_pc":"default",
+	"Weight":440,
+	"default_color":"White",
+    "colors":{
+        "White": "1 1 1 1.2",
+ 
+    }
+}

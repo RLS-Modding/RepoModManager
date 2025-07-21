@@ -1,0 +1,66 @@
+{
+"racetrailer_brake_F": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Front Brakes",
+        "value":1200,
+    },
+    "slotType" : "racetrailer_brake_F",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["racetrailer_brake_F", ["racetrailer_axle_F"], [],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         //brake drums
+         ["racetrailer_drum_F", ["racetrailer_wheel_FR","racetrailer_wheel_FL"], [],{"pos":{"x":0.0, "y":0.01, "z":0.08}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":10000},
+        {"parkingTorque":10000},
+        {"brakeSpring":250},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.42},
+        {"brakeMass":40.0},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":1.0},
+    ],
+    "engine":{
+        "brakePressureDelay":0.6,
+    },
+},
+"racetrailer_brake_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Rear Brakes",
+        "value":1200,
+    },
+    "slotType" : "racetrailer_brake_R",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["racetrailer_brake_R", ["racetrailer_axle_R"], [],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         //brake drums
+         ["racetrailer_drum_R", ["racetrailer_wheel_RR","racetrailer_wheel_RL"], [],{"pos":{"x":0.0, "y":0.01, "z":0.08}}],
+    ],
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        //brakes
+        {"brakeTorque":10000},
+        {"parkingTorque":10000},
+        {"brakeSpring":250},
+
+        //brake thermals
+        {"enableBrakeThermals":true},
+        {"brakeDiameter":0.42},
+        {"brakeMass":40.0},
+        {"brakeType":"drum"},
+        {"rotorMaterial":"steel"},
+        {"brakeVentingCoef":1.0},
+    ],
+    "engine":{
+        "brakePressureDelay":0.6,
+    },
+},
+}

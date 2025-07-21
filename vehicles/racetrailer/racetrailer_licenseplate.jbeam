@@ -1,0 +1,15 @@
+{
+"racetrailer_licenseplate": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"License Plate",
+        "value":0,
+    },
+    "slotType" : "racetrailer_licenseplate",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["licenseplate", ["racetrailer_ramp"],[],{"pos":{"x":0.78, "y":17.33, "z":1.092}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+         ["racetrailer_licenseplate-frame", ["racetrailer_ramp"]],
+    ],
+},
+}

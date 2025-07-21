@@ -1,0 +1,7 @@
+{
+"Configuration":"Legacy",
+"Description":"Same as the other config but this one has the pre-0.30 kingpin for old mod compatibility",
+"Value":20000,
+"Weight":3579,
+"defaultPaintName1":"Classic Red"
+}

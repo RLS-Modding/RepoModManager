@@ -1,0 +1,17 @@
+{
+  "bindings":[
+    {
+      "action":"tilt_engine_up",
+      "control":"period"
+    },
+    {
+      "action":"tilt_engine_down",
+      "control":"comma"
+    }
+  ],
+  "devicetype":"keyboard",
+  "guid":"{6F1D2B61-D5A0-11CF-BFC7-444553540000}",
+  "name":"Keyboard",
+  "version":1,
+  "vidpid":"6F1D2B61"
+}

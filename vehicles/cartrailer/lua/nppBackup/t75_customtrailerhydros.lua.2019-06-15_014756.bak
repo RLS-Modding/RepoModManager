@@ -1,0 +1,14 @@
+local M = {}
+
+local function init()
+	electrics.values["topramp"] = 0
+end
+
+local function updateGFX(dt)
+	local signalValue = electrics.values["turnsignal"]
+	electrics.values["topramp"] = math.max(0,signalValue)
+end
+
+M.updateGFX = updateGFX
+M.init = init
+return M

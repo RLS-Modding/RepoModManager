@@ -1,0 +1,9 @@
+{
+  "devicetype":"xinput",
+  "guid":"xinput_device_XIDevice",
+  "name":"XBox Controller 1",
+  "version":1,
+  "bindings":[
+    {"control":"upov", "action":"toggle_feet"}
+  ]
+}

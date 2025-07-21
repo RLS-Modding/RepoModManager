@@ -1,0 +1,1116 @@
+{
+"rescueboat": {
+    "information":{
+        "authors":"FunPhysics",
+        "name":"Rescue boat",
+        "value":200,
+    },
+    "slotType" : "main",
+	
+	
+	
+	
+		
+		
+	"refNodes":[
+    ["ref:", "back:", "left:", "up:", "leftCorner:", "rightCorner:"]
+    ["lifeboat_base_l8", "lifeboat_base_l5", "lifeboat_base_l9", "lifeboat_rubber_l18", "lifeboat_base_l12", "lifeboat_base_l11"],
+	
+],	
+	"cameraExternal":{
+    "distance":5,
+    "distanceMin":3,
+    "offset":{"x":0.0, "y":0.2, "z":0.45},
+    "fov":65,
+},
+	
+	
+	"cameraChase":{
+			"distance":4,
+			"distanceMin":3
+			"defaultRotation":{"x":0, "y":-25, "z":0},
+			"offset":{"x":0.4, "y":1, "z":1},
+			"fov":65,
+	
+	},
+	
+	"flexbodies": [
+			["mesh", "[group]:", "nonFlexMaterials"],
+			["lifeboat2_base", ["lifeboat_base_g"]],
+			["lifeboat2_rubber", ["lifeboat_rubber_g"]],
+			["engine", ["engine_g"]],
+			["engine_rotator", ["engine_rotator_g"]],
+			["engine_rotator2", ["engine_rotator2_g"]],
+			["propeller", ["propeller_g"]],
+			
+			
+			
+	],
+			
+			
+			
+			
+	"nodes":[
+            ["id", "posX", "posY", "posZ"],
+            {"collision":true}
+			{"selfCollision":true},
+            {"nodeMaterial":"|NM_PLASTIC"},
+			{"frictionCoef":1},
+            {"nodeWeight":15},	
+
+
+{"group":"lifeboat_base_g"},
+["lifeboat_base_l0",9.649,6.854,14.942],
+["lifeboat_base_l1",8.74,6.854,14.942],
+["lifeboat_base_l2",9.635,6.861,14.673],
+["lifeboat_base_l3",8.754,6.861,14.673],
+["lifeboat_base_l14",9.194,9.662,14.498],
+["lifeboat_base_l5",9.639,7.517,14.697],
+["lifeboat_base_l6",8.75,7.517,14.697],
+["lifeboat_base_l7",9.194,7.548,14.446],
+["lifeboat_base_l8",9.643,8.41,14.731],
+["lifeboat_base_l9",8.746,8.41,14.731],
+["lifeboat_base_l10",9.194,8.426,14.448],
+["lifeboat_base_l11",9.646,9.281,14.764],
+["lifeboat_base_l12",8.742,9.281,14.764],
+["lifeboat_base_l13",9.194,9.298,14.454],
+["lifeboat_base_l15",9.459,9.904,14.815],
+["lifeboat_base_l16",8.93,9.904,14.815],
+["lifeboat_base_l18",9.308,10.168,14.85],
+["lifeboat_base_l19",9.08,10.168,14.85],
+["lifeboat_base_l4",9.194,6.869,14.46],
+["lifeboat_base_hook",9.194,8.09,15.410,  {"tag":"hook","couplerStrength":5000000}],
+["lifeboat_base_l17",9.194,10.055,14.689],
+
+
+
+{"nodeWeight":10},
+{"nodeMaterial":"|NM_METAL"},
+
+
+
+["lifeboat_frame_l2",9.551,6.948,16.055],
+["lifeboat_frame_l3",8.844,6.948,16.055],
+["lifeboat_frame_l4",9.557,7.196,16.055],
+["lifeboat_frame_l5",8.849,7.196,16.055],
+
+
+
+
+{"nodeMaterial":"|NM_RUBBER"},
+
+{"nodeWeight":0.5},	
+
+{"group":"lifeboat_rubber_g"},
+["lifeboat_rubber_l0",9.883,6.228,14.818],
+["lifeboat_rubber_l1",8.502,6.228,14.818],
+["lifeboat_rubber_l2",10.085,6.62,14.99],
+["lifeboat_rubber_l3",9.682,6.62,15.015],
+["lifeboat_rubber_l4",8.703,6.62,15.015],
+["lifeboat_rubber_l5",8.3,6.62,14.99],
+["lifeboat_rubber_l6",10.085,6.632,14.676],
+["lifeboat_rubber_l7",8.3,6.632,14.676],
+["lifeboat_rubber_l8",9.682,6.862,14.664],
+["lifeboat_rubber_l9",8.703,6.862,14.664],
+["lifeboat_rubber_l10",9.682,7.502,15.049],
+["lifeboat_rubber_l11",8.703,7.502,15.049],
+["lifeboat_rubber_l12",10.085,7.503,15.023],
+["lifeboat_rubber_l13",8.3,7.503,15.023],
+["lifeboat_rubber_l14",10.085,7.524,14.71],
+["lifeboat_rubber_l15",8.3,7.524,14.71],
+["lifeboat_rubber_l16",9.682,7.525,14.689],
+["lifeboat_rubber_l17",8.703,7.525,14.689],
+["lifeboat_rubber_l18",9.682,8.384,15.082],
+["lifeboat_rubber_l19",8.703,8.384,15.082],
+["lifeboat_rubber_l20",10.085,8.385,15.057],
+["lifeboat_rubber_l21",8.3,8.385,15.057],
+["lifeboat_rubber_l22",10.085,8.415,14.744],
+["lifeboat_rubber_l23",8.3,8.415,14.744],
+["lifeboat_rubber_l24",9.682,8.416,14.723],
+["lifeboat_rubber_l25",8.703,8.416,14.723],
+["lifeboat_rubber_l26",9.682,9.267,15.116],
+["lifeboat_rubber_l27",8.703,9.267,15.116],
+["lifeboat_rubber_l28",10.085,9.268,15.09],
+["lifeboat_rubber_l29",8.3,9.268,15.09],
+["lifeboat_rubber_l30",10.085,9.307,14.778],
+["lifeboat_rubber_l31",9.682,9.307,14.757],
+["lifeboat_rubber_l32",8.703,9.307,14.757],
+["lifeboat_rubber_l33",8.3,9.307,14.778],
+["lifeboat_rubber_l34",9.495,9.881,15.176],
+["lifeboat_rubber_l35",8.89,9.881,15.176],
+["lifeboat_rubber_l36",9.495,9.922,14.818],
+["lifeboat_rubber_l37",8.89,9.922,14.818],
+["lifeboat_rubber_l38",9.862,10.046,15.174],
+["lifeboat_rubber_l39",8.522,10.046,15.174],
+["lifeboat_rubber_l40",9.862,10.085,14.859],
+["lifeboat_rubber_l41",8.522,10.085,14.859],
+["lifeboat_rubber_l42",9.314,10.093,15.197],
+["lifeboat_rubber_l43",9.07,10.093,15.197],
+["lifeboat_rubber_l44",9.314,10.212,14.863],
+["lifeboat_rubber_l45",9.07,10.212,14.863],
+["lifeboat_rubber_l46",9.434,10.481,15.23],
+["lifeboat_rubber_l47",8.951,10.481,15.23],
+["lifeboat_rubber_l48",9.434,10.516,14.894],
+["lifeboat_rubber_l49",8.951,10.516,14.894],
+
+{"group":""},
+
+
+{"nodeMaterial":"|NM_METAL"},
+
+{"nodeWeight":1.5},
+
+{"group":"engine_g"},
+["engine_l0",9.321,6.389,15.008],
+["engine_l1",9.093,6.389,15.008],
+["engine_l2",9.208,6.391,14.403],
+["engine_l3",9.292,6.441,15.323],
+["engine_l4",9.123,6.441,15.323],
+["engine_l5",9.208,6.551,14.403],
+["engine_l6",9.285,6.552,14.545],
+["engine_l7",9.129,6.552,14.545],
+["engine_l8",9.375,6.66,15.325],
+["engine_l9",9.04,6.66,15.325],
+["engine_l10",9.348,6.718,14.998],
+["engine_l11",9.067,6.718,14.998],
+["engine_l12",9.207,6.798,14.401],
+["engine_l13",9.285,6.799,14.545],
+["engine_l14",9.129,6.799,14.545],
+["engine_l15",9.291,6.865,15.327],
+["engine_l16",9.123,6.865,15.327],
+["engine_l17",9.296,6.921,15.041],
+["engine_l18",9.118,6.921,15.041],
+{"selfCollision":false},
+{"group":"engine_rotator_g"},
+["engine_l19",9.208,6.759,14.662],
+["engine_l20",9.208,6.759,14.998],
+["engine_l21",9.241,6.795,14.662],
+["engine_l22",9.174,6.795,14.662],
+{"selfCollision":true},
+["engine_l23",9.292,6.834,14.966],
+["engine_l24",9.123,6.834,14.966],
+{"group":"engine_rotator2_g"},
+["engine_l25",9.207,6.8,14.662],
+{"selfCollision":false},
+["engine_l26",9.207,6.74,14.964],
+["engine_l27",9.262,6.848,14.672],
+["engine_l28",9.153,6.848,14.672],
+["engine_l29",9.292,6.898,14.963],
+["engine_l30",9.123,6.898,14.963],
+
+{"group":""},
+
+
+
+
+{"nodeWeight":2},
+
+{"group":"propeller_g"},
+["propeller_l0",9.354,6.434,14.383],
+["propeller_l1",9.152,6.434,14.539],
+["propeller_l2",9.118,6.434,14.287],
+["propeller_l3",9.298,6.545,14.287],
+["propeller_l4",9.264,6.545,14.539],
+["propeller_l5",9.062,6.545,14.383],
+{"group":""},
+
+["propeller_l7",9.208,6.49,14.403],
+
+
+
+{"selfCollision":true},
+
+],
+ 
+    "beams":[
+            ["id1:","id2:"],
+            {"beamSpring":6000000,"beamDamp":500},
+			{"beamDeform":40000,"beamStrength":2000000},
+			
+			
+["lifeboat_base_l6","lifeboat_base_l9"],
+["lifeboat_base_l9","lifeboat_base_l12"],
+["lifeboat_base_l12","lifeboat_base_l16"],
+["lifeboat_base_l16","lifeboat_base_l19"],
+["lifeboat_base_l19","lifeboat_base_l18"],
+["lifeboat_base_l18","lifeboat_base_l15"],
+["lifeboat_base_l15","lifeboat_base_l11"],
+["lifeboat_base_l9","lifeboat_base_l8"],
+["lifeboat_base_l6","lifeboat_base_l5"],
+["lifeboat_base_l18","lifeboat_base_l17"],
+["lifeboat_base_l17","lifeboat_base_l14"],
+["lifeboat_base_l14","lifeboat_base_l13"],
+["lifeboat_base_l8","lifeboat_base_l10"],
+["lifeboat_base_l7","lifeboat_base_l5"],
+["lifeboat_base_l7","lifeboat_base_l4"],
+["lifeboat_base_l4","lifeboat_base_l3"],
+["lifeboat_base_l2","lifeboat_base_l5"],
+["lifeboat_base_l1","lifeboat_base_l3"],
+["lifeboat_base_l0","lifeboat_base_l2"],
+["lifeboat_base_l12","lifeboat_base_l15"],
+["lifeboat_base_l12","lifeboat_base_l11"],
+["lifeboat_base_l5","lifeboat_base_l9"],
+["lifeboat_base_l16","lifeboat_base_l15"],
+["lifeboat_base_l8","lifeboat_base_l12"],
+["lifeboat_base_l15","lifeboat_base_l19"],
+["lifeboat_base_l13","lifeboat_base_l9"],
+["lifeboat_base_l6","lifeboat_base_l7"],
+["lifeboat_base_l14","lifeboat_base_l12"],
+["lifeboat_base_l10","lifeboat_base_l9"],
+["lifeboat_base_l17","lifeboat_base_l16"],
+["lifeboat_base_l6","lifeboat_base_l4"],
+["lifeboat_base_l13","lifeboat_base_l12"],
+["lifeboat_base_l9","lifeboat_base_l7"],
+["lifeboat_base_l14","lifeboat_base_l16"],
+["lifeboat_base_l6","lifeboat_base_l3"],
+["lifeboat_base_l17","lifeboat_base_l19"],
+["lifeboat_base_l6","lifeboat_base_l1"],
+["lifeboat_base_l11","lifeboat_base_l8"],
+["lifeboat_base_l15","lifeboat_base_l17"],
+["lifeboat_base_l15","lifeboat_base_l14"],
+["lifeboat_base_l8","lifeboat_base_l5"],
+["lifeboat_base_l11","lifeboat_base_l14"],
+["lifeboat_base_l11","lifeboat_base_l13"],
+["lifeboat_base_l8","lifeboat_base_l13"],
+["lifeboat_base_l7","lifeboat_base_l8"],
+["lifeboat_base_l4","lifeboat_base_l5"],
+["lifeboat_base_l3","lifeboat_base_l5"],
+["lifeboat_base_l13","lifeboat_base_l10"],
+["lifeboat_base_l5","lifeboat_base_l0"],
+["lifeboat_base_l7","lifeboat_base_l10"],
+["lifeboat_base_l4","lifeboat_base_l2"],
+["lifeboat_base_l3","lifeboat_base_l2"],
+["lifeboat_base_l1","lifeboat_base_l2"],
+["lifeboat_base_l0","lifeboat_base_l1"],
+
+["lifeboat_base_hook","lifeboat_base_l9"],
+["lifeboat_base_hook","lifeboat_base_l8"],
+["lifeboat_base_hook","lifeboat_base_l6"],
+
+
+{"beamSpring":5000000,"beamDamp":200},
+{"beamDeform":30000,"beamStrength":2000000},
+
+
+["lifeboat_base_l6","lifeboat_frame_l5"],
+["lifeboat_frame_l5","lifeboat_frame_l3"],
+["lifeboat_frame_l5","lifeboat_frame_l4"],
+["lifeboat_frame_l4","lifeboat_frame_l2"],
+["lifeboat_frame_l2","lifeboat_frame_l3"],
+["lifeboat_frame_l2","lifeboat_frame_l5"],
+
+["lifeboat_base_l5","lifeboat_frame_l5"],
+["lifeboat_frame_l4","lifeboat_base_l5"],
+["lifeboat_frame_l3","lifeboat_base_l1"],
+["lifeboat_base_l1","lifeboat_frame_l2"],
+["lifeboat_base_l0","lifeboat_frame_l2"],
+["lifeboat_base_l9","lifeboat_frame_l4"],
+
+{"beamSpring":5000000,"beamDamp":200},
+{"beamDeform":30000,"beamStrength":2000000},
+
+["lifeboat_base_l8","lifeboat_frame_l4"],
+["lifeboat_base_l9","lifeboat_frame_l5"],
+
+
+{"beamSpring":50000,"beamDamp":150},
+{"beamDeform":500000,"beamStrength":100000},
+
+
+["lifeboat_rubber_l9","lifeboat_rubber_l4"],
+["lifeboat_rubber_l27","lifeboat_rubber_l32"],
+["lifeboat_rubber_l9","lifeboat_rubber_l7"],
+["lifeboat_rubber_l5","lifeboat_rubber_l7"],
+["lifeboat_rubber_l33","lifeboat_rubber_l32"],
+["lifeboat_rubber_l29","lifeboat_rubber_l33"],
+["lifeboat_rubber_l37","lifeboat_rubber_l32"],
+["lifeboat_rubber_l35","lifeboat_rubber_l37"],
+["lifeboat_rubber_l41","lifeboat_rubber_l37"],
+["lifeboat_rubber_l39","lifeboat_rubber_l41"],
+["lifeboat_rubber_l37","lifeboat_rubber_l45"],
+["lifeboat_rubber_l43","lifeboat_rubber_l45"],
+["lifeboat_rubber_l49","lifeboat_rubber_l45"],
+["lifeboat_rubber_l47","lifeboat_rubber_l49"],
+["lifeboat_rubber_l9","lifeboat_rubber_l1"],
+["lifeboat_rubber_l31","lifeboat_rubber_l28"],
+["lifeboat_rubber_l48","lifeboat_rubber_l47"],
+["lifeboat_rubber_l2","lifeboat_rubber_l3"],
+["lifeboat_rubber_l26","lifeboat_rubber_l28"],
+["lifeboat_rubber_l34","lifeboat_rubber_l26"],
+["lifeboat_rubber_l34","lifeboat_rubber_l31"],
+["lifeboat_rubber_l34","lifeboat_rubber_l38"],
+["lifeboat_rubber_l44","lifeboat_rubber_l45"],
+["lifeboat_rubber_l42","lifeboat_rubber_l34"],
+["lifeboat_rubber_l49","lifeboat_rubber_l48"],
+["lifeboat_rubber_l42","lifeboat_rubber_l46"],
+["lifeboat_rubber_l0","lifeboat_rubber_l3"],
+["lifeboat_rubber_l26","lifeboat_rubber_l24"],
+["lifeboat_rubber_l24","lifeboat_rubber_l16"],
+["lifeboat_rubber_l3","lifeboat_rubber_l10"],
+["lifeboat_rubber_l18","lifeboat_rubber_l26"],
+["lifeboat_rubber_l14","lifeboat_rubber_l24"],
+["lifeboat_rubber_l14","lifeboat_rubber_l22"],
+["lifeboat_rubber_l28","lifeboat_rubber_l20"],
+["lifeboat_rubber_l12","lifeboat_rubber_l2"],
+["lifeboat_rubber_l32","lifeboat_rubber_l25"],
+["lifeboat_rubber_l17","lifeboat_rubber_l9"],
+["lifeboat_rubber_l11","lifeboat_rubber_l9"],
+["lifeboat_rubber_l11","lifeboat_rubber_l19"],
+["lifeboat_rubber_l7","lifeboat_rubber_l15"],
+["lifeboat_rubber_l23","lifeboat_rubber_l33"],
+["lifeboat_rubber_l15","lifeboat_rubber_l21"],
+["lifeboat_rubber_l21","lifeboat_rubber_l13"],
+["lifeboat_rubber_l19","lifeboat_rubber_l17"],
+["lifeboat_rubber_l19","lifeboat_rubber_l25"],
+["lifeboat_rubber_l32","lifeboat_rubber_l29"],
+["lifeboat_rubber_l15","lifeboat_rubber_l25"],
+["lifeboat_rubber_l25","lifeboat_rubber_l17"],
+["lifeboat_rubber_l23","lifeboat_rubber_l25"],
+["lifeboat_rubber_l35","lifeboat_rubber_l32"],
+["lifeboat_rubber_l30","lifeboat_rubber_l40"],
+["lifeboat_rubber_l25","lifeboat_rubber_l21"],
+["lifeboat_rubber_l41","lifeboat_rubber_l32"],
+["lifeboat_rubber_l38","lifeboat_rubber_l30"],
+["lifeboat_rubber_l6","lifeboat_rubber_l0"],
+["lifeboat_rubber_l36","lifeboat_rubber_l38"],
+["lifeboat_rubber_l20","lifeboat_rubber_l12"],
+["lifeboat_rubber_l11","lifeboat_rubber_l13"],
+["lifeboat_rubber_l6","lifeboat_rubber_l16"],
+["lifeboat_rubber_l15","lifeboat_rubber_l23"],
+["lifeboat_rubber_l42","lifeboat_rubber_l36"],
+["lifeboat_rubber_l33","lifeboat_rubber_l41"],
+["lifeboat_rubber_l13","lifeboat_rubber_l15"],
+["lifeboat_rubber_l39","lifeboat_rubber_l33"],
+["lifeboat_rubber_l44","lifeboat_rubber_l40"],
+["lifeboat_rubber_l7","lifeboat_rubber_l1"],
+["lifeboat_rubber_l48","lifeboat_rubber_l40"],
+["lifeboat_rubber_l37","lifeboat_rubber_l39"],
+["lifeboat_rubber_l46","lifeboat_rubber_l40"],
+["lifeboat_rubber_l43","lifeboat_rubber_l37"],
+["lifeboat_rubber_l12","lifeboat_rubber_l14"],
+["lifeboat_rubber_l47","lifeboat_rubber_l46"],
+["lifeboat_rubber_l44","lifeboat_rubber_l46"],
+["lifeboat_rubber_l45","lifeboat_rubber_l41"],
+["lifeboat_rubber_l9","lifeboat_rubber_l5"],
+["lifeboat_rubber_l49","lifeboat_rubber_l41"],
+["lifeboat_rubber_l47","lifeboat_rubber_l41"],
+["lifeboat_rubber_l5","lifeboat_rubber_l11"],
+["lifeboat_rubber_l40","lifeboat_rubber_l31"],
+["lifeboat_rubber_l45","lifeboat_rubber_l47"],
+["lifeboat_rubber_l14","lifeboat_rubber_l16"],
+["lifeboat_rubber_l16","lifeboat_rubber_l12"],
+["lifeboat_rubber_l12","lifeboat_rubber_l18"],
+["lifeboat_rubber_l7","lifeboat_rubber_l17"],
+["lifeboat_rubber_l23","lifeboat_rubber_l32"],
+["lifeboat_rubber_l21","lifeboat_rubber_l27"],
+["lifeboat_rubber_l20","lifeboat_rubber_l22"],
+["lifeboat_rubber_l5","lifeboat_rubber_l4"],
+["lifeboat_rubber_l27","lifeboat_rubber_l29"],
+["lifeboat_rubber_l35","lifeboat_rubber_l27"],
+["lifeboat_rubber_l35","lifeboat_rubber_l39"],
+["lifeboat_rubber_l43","lifeboat_rubber_l35"],
+["lifeboat_rubber_l44","lifeboat_rubber_l49"],
+["lifeboat_rubber_l43","lifeboat_rubber_l47"],
+["lifeboat_rubber_l1","lifeboat_rubber_l4"],
+["lifeboat_rubber_l8","lifeboat_rubber_l3"],
+["lifeboat_rubber_l26","lifeboat_rubber_l31"],
+["lifeboat_rubber_l8","lifeboat_rubber_l6"],
+["lifeboat_rubber_l2","lifeboat_rubber_l6"],
+["lifeboat_rubber_l30","lifeboat_rubber_l31"],
+["lifeboat_rubber_l28","lifeboat_rubber_l30"],
+["lifeboat_rubber_l36","lifeboat_rubber_l31"],
+["lifeboat_rubber_l34","lifeboat_rubber_l36"],
+["lifeboat_rubber_l40","lifeboat_rubber_l36"],
+["lifeboat_rubber_l38","lifeboat_rubber_l40"],
+["lifeboat_rubber_l36","lifeboat_rubber_l44"],
+["lifeboat_rubber_l42","lifeboat_rubber_l44"],
+["lifeboat_rubber_l48","lifeboat_rubber_l44"],
+["lifeboat_rubber_l46","lifeboat_rubber_l48"],
+["lifeboat_rubber_l8","lifeboat_rubber_l0"],
+["lifeboat_rubber_l31","lifeboat_rubber_l24"],
+["lifeboat_rubber_l16","lifeboat_rubber_l8"],
+["lifeboat_rubber_l10","lifeboat_rubber_l16"],
+["lifeboat_rubber_l18","lifeboat_rubber_l16"],
+["lifeboat_rubber_l6","lifeboat_rubber_l14"],
+["lifeboat_rubber_l22","lifeboat_rubber_l30"],
+["lifeboat_rubber_l18","lifeboat_rubber_l20"],
+["lifeboat_rubber_l6","lifeboat_rubber_l12"],
+["lifeboat_rubber_l27","lifeboat_rubber_l25"],
+["lifeboat_rubber_l4","lifeboat_rubber_l11"],
+["lifeboat_rubber_l19","lifeboat_rubber_l27"],
+["lifeboat_rubber_l15","lifeboat_rubber_l17"],
+["lifeboat_rubber_l23","lifeboat_rubber_l29"],
+["lifeboat_rubber_l29","lifeboat_rubber_l21"],
+["lifeboat_rubber_l13","lifeboat_rubber_l5"],
+["lifeboat_rubber_l11","lifeboat_rubber_l17"],
+["lifeboat_rubber_l10","lifeboat_rubber_l8"],
+["lifeboat_rubber_l28","lifeboat_rubber_l38"],
+["lifeboat_rubber_l17","lifeboat_rubber_l13"],
+["lifeboat_rubber_l39","lifeboat_rubber_l27"],
+["lifeboat_rubber_l0","lifeboat_rubber_l2"],
+["lifeboat_rubber_l19","lifeboat_rubber_l21"],
+["lifeboat_rubber_l20","lifeboat_rubber_l26"],
+["lifeboat_rubber_l13","lifeboat_rubber_l19"],
+["lifeboat_rubber_l2","lifeboat_rubber_l10"],
+["lifeboat_rubber_l21","lifeboat_rubber_l23"],
+["lifeboat_rubber_l29","lifeboat_rubber_l39"],
+["lifeboat_rubber_l7","lifeboat_rubber_l13"],
+["lifeboat_rubber_l42","lifeboat_rubber_l38"],
+["lifeboat_rubber_l1","lifeboat_rubber_l5"],
+["lifeboat_rubber_l38","lifeboat_rubber_l46"],
+["lifeboat_rubber_l22","lifeboat_rubber_l28"],
+["lifeboat_rubber_l42","lifeboat_rubber_l47"],
+["lifeboat_rubber_l43","lifeboat_rubber_l39"],
+["lifeboat_rubber_l39","lifeboat_rubber_l47"],
+["lifeboat_rubber_l18","lifeboat_rubber_l24"],
+["lifeboat_rubber_l22","lifeboat_rubber_l24"],
+["lifeboat_rubber_l22","lifeboat_rubber_l31"],
+["lifeboat_rubber_l24","lifeboat_rubber_l20"],
+["lifeboat_rubber_l10","lifeboat_rubber_l18"],
+["lifeboat_rubber_l38","lifeboat_rubber_l26"],
+["lifeboat_rubber_l14","lifeboat_rubber_l20"],
+["lifeboat_rubber_l10","lifeboat_rubber_l12"],
+["lifeboat_rubber_l8","lifeboat_rubber_l2"],
+["lifeboat_rubber_l44","lifeboat_rubber_l43"],
+["lifeboat_rubber_l42","lifeboat_rubber_l43"],
+
+
+{"beamSpring":2000000,"beamDamp":150},
+{"beamDeform":2000000,"beamStrength":2000000},
+
+//connections
+
+["lifeboat_base_l2","lifeboat_rubber_l8"],
+["lifeboat_base_l2","lifeboat_rubber_l3"],
+["lifeboat_base_l3","lifeboat_rubber_l3"],
+
+["lifeboat_base_l5","lifeboat_rubber_l16"],
+["lifeboat_base_l5","lifeboat_rubber_l10"],
+["lifeboat_base_l6","lifeboat_rubber_l10"],
+
+["lifeboat_base_l8","lifeboat_rubber_l24"],
+["lifeboat_base_l8","lifeboat_rubber_l18"],
+["lifeboat_base_l9","lifeboat_rubber_l18"],
+
+["lifeboat_base_l11","lifeboat_rubber_l31"],
+["lifeboat_base_l11","lifeboat_rubber_l26"],
+["lifeboat_base_l12","lifeboat_rubber_l26"],
+
+["lifeboat_base_l15","lifeboat_rubber_l36"],
+["lifeboat_base_l15","lifeboat_rubber_l34"],
+["lifeboat_base_l16","lifeboat_rubber_l34"],
+
+["lifeboat_base_l18","lifeboat_rubber_l44"],
+["lifeboat_base_l18","lifeboat_rubber_l42"],
+
+["lifeboat_base_l19","lifeboat_rubber_l45"],
+["lifeboat_base_l19","lifeboat_rubber_l43"],
+
+["lifeboat_base_l16","lifeboat_rubber_l37"],
+["lifeboat_base_l16","lifeboat_rubber_l35"],
+["lifeboat_base_l15","lifeboat_rubber_l35"],
+
+["lifeboat_base_l12","lifeboat_rubber_l32"],
+["lifeboat_base_l12","lifeboat_rubber_l27"],
+["lifeboat_base_l11","lifeboat_rubber_l27"],
+
+["lifeboat_base_l9","lifeboat_rubber_l25"],
+["lifeboat_base_l9","lifeboat_rubber_l19"],
+["lifeboat_base_l8","lifeboat_rubber_l19"],
+
+["lifeboat_base_l6","lifeboat_rubber_l17"],
+["lifeboat_base_l6","lifeboat_rubber_l11"],
+["lifeboat_base_l5","lifeboat_rubber_l11"],
+
+["lifeboat_base_l3","lifeboat_rubber_l9"],
+["lifeboat_base_l3","lifeboat_rubber_l4"],
+["lifeboat_base_l2","lifeboat_rubber_l4"],
+
+
+{"beamSpring":2500000,"beamDamp":50},
+{"beamDeform":50000,"beamStrength":2000000},
+
+
+["engine_l1","engine_l4"],
+["engine_l16","engine_l18"],
+["engine_l1","engine_l0"],
+["engine_l3","engine_l0"],
+["engine_l17","engine_l18"],
+["engine_l16","engine_l15"],
+["engine_l11","engine_l1"],
+["engine_l9","engine_l16"],
+["engine_l10","engine_l17"],
+["engine_l8","engine_l3"],
+["engine_l1","engine_l7"],
+["engine_l7","engine_l6"],
+["engine_l14","engine_l7"],
+["engine_l6","engine_l13"],
+["engine_l2","engine_l7"],
+["engine_l5","engine_l2"],
+["engine_l14","engine_l12"],
+["engine_l11","engine_l20"],
+["engine_l20","engine_l19"],
+["engine_l20","engine_l23"],
+["engine_l20","engine_l24"],
+["engine_l23","engine_l24"],
+["engine_l24","engine_l22"],
+["engine_l19","engine_l22"],
+["engine_l1","engine_l3"],
+["engine_l29","engine_l23"],
+["engine_l23","engine_l21"],
+["engine_l4","engine_l0"],
+
+["engine_l23","engine_l22"],
+["engine_l3","engine_l4"],
+
+["engine_l24","engine_l21"],
+["engine_l23","engine_l27"],
+["engine_l9","engine_l1"],
+["engine_l4","engine_l11"],
+["engine_l24","engine_l28"],
+["engine_l18","engine_l15"],
+["engine_l23","engine_l30"],
+["engine_l4","engine_l9"],
+["engine_l17","engine_l16"],
+["engine_l24","engine_l29"],
+["engine_l18","engine_l11"],
+["engine_l24","engine_l30"],
+["engine_l18","engine_l9"],
+["engine_l4","engine_l8"],
+["engine_l16","engine_l11"],
+["engine_l6","engine_l1"],
+["engine_l18","engine_l10"],
+["engine_l20","engine_l21"],
+["engine_l1","engine_l14"],
+["engine_l27","engine_l28"],
+["engine_l8","engine_l16"],
+["engine_l19","engine_l24"],
+["engine_l0","engine_l10"],
+["engine_l15","engine_l17"],
+["engine_l27","engine_l30"],
+["engine_l3","engine_l9"],
+["engine_l0","engine_l8"],
+["engine_l11","engine_l17"],
+["engine_l27","engine_l26"],
+["engine_l3","engine_l10"],
+["engine_l0","engine_l7"],
+["engine_l25","engine_l27"],
+["engine_l1","engine_l20"],
+["engine_l0","engine_l6"],
+["engine_l29","engine_l30"],
+["engine_l15","engine_l9"],
+["engine_l28","engine_l25"],
+["engine_l17","engine_l8"],
+["engine_l19","engine_l21"],
+["engine_l10","engine_l15"],
+["engine_l0","engine_l13"],
+["engine_l9","engine_l11"],
+["engine_l15","engine_l8"],
+["engine_l30","engine_l26"],
+["engine_l10","engine_l11"],
+["engine_l19","engine_l23"],
+["engine_l7","engine_l11"],
+["engine_l26","engine_l29"],
+["engine_l26","engine_l25"],
+["engine_l9","engine_l8"],
+["engine_l0","engine_l20"],
+["engine_l14","engine_l11"],
+["engine_l8","engine_l10"],
+["engine_l13","engine_l11"],
+["engine_l6","engine_l10"],
+["engine_l10","engine_l14"],
+["engine_l13","engine_l10"],
+["engine_l9","engine_l20"],
+["engine_l10","engine_l20"],
+["engine_l7","engine_l5"],
+["engine_l8","engine_l20"],
+["engine_l6","engine_l2"],
+["engine_l7","engine_l12"],
+["engine_l13","engine_l14"],
+["engine_l6","engine_l5"],
+["engine_l28","engine_l29"],
+["engine_l6","engine_l12"],
+["engine_l7","engine_l19"],
+["engine_l14","engine_l5"],
+["engine_l6","engine_l19"],
+["engine_l5","engine_l13"],
+["engine_l20","engine_l22"],
+["engine_l12","engine_l13"],
+["engine_l14","engine_l19"],
+["engine_l28","engine_l30"],
+["engine_l13","engine_l19"],
+["engine_l5","engine_l12"],
+["engine_l28","engine_l26"],
+["engine_l27","engine_l29"],
+["engine_l21","engine_l22"],
+
+
+//attachments
+
+
+{"breakGroupType":0},
+{"breakGroup":"engine_connections"},
+
+{"beamSpring":2500000,"beamDamp":50},
+{"beamDeform":25000,"beamStrength":20000},
+
+
+["engine_l29","lifeboat_base_l4"],
+["engine_l29","lifeboat_base_l5",{"name":"engine_cut"}],
+["engine_l30","lifeboat_base_l4"],
+["engine_l30","lifeboat_base_l0"],
+["engine_l30","lifeboat_base_l6"],
+["engine_l27","lifeboat_base_l2"],
+["engine_l27","lifeboat_base_l5"],
+["engine_l28","lifeboat_base_l3"],
+["engine_l28","lifeboat_base_l6"],
+
+
+{"breakGroup":""},
+
+{"beamSpring":2000000,"beamDamp":50},
+{"beamDeform":20000000,"beamStrength":100000000},
+
+
+["propeller_l4","propeller_l1"],
+["propeller_l1","propeller_l2"],
+["propeller_l5","propeller_l2"],
+["propeller_l7","propeller_l4"],
+["propeller_l0","propeller_l7"],
+["propeller_l3","propeller_l0"],
+["propeller_l7","engine_l2"],
+["propeller_l7","engine_l5"],
+["propeller_l1","propeller_l5"],
+["propeller_l4","propeller_l2"],
+["propeller_l1","propeller_l7"],
+["propeller_l4","propeller_l5"],
+["propeller_l1","propeller_l0"],
+["propeller_l1","propeller_l3"],
+["propeller_l4","propeller_l0"],
+["propeller_l1","engine_l2"],
+["propeller_l2","propeller_l7"],
+["propeller_l4","propeller_l3"],
+["propeller_l1","engine_l5"],
+["propeller_l2","propeller_l0"],
+["propeller_l4","engine_l2"],
+["propeller_l7","propeller_l5"],
+["propeller_l2","propeller_l3"],
+["propeller_l4","engine_l5"],
+["propeller_l5","propeller_l0"],
+["propeller_l2","engine_l2"],
+["propeller_l5","propeller_l3"],
+["propeller_l2","engine_l5"],
+["propeller_l5","engine_l2"],
+["propeller_l7","propeller_l3"],
+["propeller_l5","engine_l5"],
+["propeller_l0","engine_l2"],
+["propeller_l0","engine_l5"],
+["propeller_l3","engine_l2"],
+["propeller_l3","engine_l5"],
+
+
+			
+			],
+
+			
+	"triangles":[         
+			["id1:","id2:","id3:"],
+			{"dragCoef":3.8},
+			
+			
+{"pressureGroup": "base"},
+{"pressurePSI": 0},			
+			
+			
+["lifeboat_base_l15","lifeboat_base_l12","lifeboat_base_l11"],
+["lifeboat_base_l12","lifeboat_base_l8","lifeboat_base_l11"],
+["lifeboat_base_l9","lifeboat_base_l5","lifeboat_base_l8"],
+["lifeboat_base_l17","lifeboat_base_l15","lifeboat_base_l14"],
+["lifeboat_base_l16","lifeboat_base_l17","lifeboat_base_l14"],
+["lifeboat_base_l9","lifeboat_base_l13","lifeboat_base_l10"],
+["lifeboat_base_l7","lifeboat_base_l9","lifeboat_base_l10"],
+["lifeboat_base_l5","lifeboat_base_l4","lifeboat_base_l7"],
+["lifeboat_base_l8","lifeboat_base_l7","lifeboat_base_l10"],
+["lifeboat_base_l13","lifeboat_base_l8","lifeboat_base_l10"],
+["lifeboat_base_l14","lifeboat_base_l11","lifeboat_base_l13"],
+["lifeboat_base_l12","lifeboat_base_l14","lifeboat_base_l13"],
+["lifeboat_base_l4","lifeboat_base_l2","lifeboat_base_l3"],
+["lifeboat_base_l2","lifeboat_base_l1","lifeboat_base_l3"],
+["lifeboat_base_l4","lifeboat_base_l6","lifeboat_base_l7"],
+["lifeboat_base_l5","lifeboat_base_l3","lifeboat_base_l2"],
+["lifeboat_base_l19","lifeboat_base_l15","lifeboat_base_l18"],
+["lifeboat_base_l15","lifeboat_base_l16","lifeboat_base_l12"],
+["lifeboat_base_l12","lifeboat_base_l9","lifeboat_base_l8"],
+["lifeboat_base_l9","lifeboat_base_l6","lifeboat_base_l5"],
+["lifeboat_base_l17","lifeboat_base_l18","lifeboat_base_l15"],
+["lifeboat_base_l16","lifeboat_base_l19","lifeboat_base_l17"],
+["lifeboat_base_l9","lifeboat_base_l12","lifeboat_base_l13"],
+["lifeboat_base_l7","lifeboat_base_l6","lifeboat_base_l9"],
+["lifeboat_base_l5","lifeboat_base_l2","lifeboat_base_l4"],
+["lifeboat_base_l8","lifeboat_base_l5","lifeboat_base_l7"],
+["lifeboat_base_l13","lifeboat_base_l11","lifeboat_base_l8"],
+["lifeboat_base_l14","lifeboat_base_l15","lifeboat_base_l11"],
+["lifeboat_base_l12","lifeboat_base_l16","lifeboat_base_l14"],
+["lifeboat_base_l2","lifeboat_base_l0","lifeboat_base_l1"],
+["lifeboat_base_l4","lifeboat_base_l3","lifeboat_base_l6"],
+["lifeboat_base_l5","lifeboat_base_l6","lifeboat_base_l3"],
+["lifeboat_base_l19","lifeboat_base_l16","lifeboat_base_l15"],
+["lifeboat_base_l19","lifeboat_base_l18","lifeboat_base_l17"],
+
+{"pressureGroup": "rubber"},
+{"pressurePSI": 2},		
+
+
+["lifeboat_rubber_l25","lifeboat_rubber_l32","lifeboat_rubber_l27"],
+["lifeboat_rubber_l27","lifeboat_rubber_l35","lifeboat_rubber_l39"],
+["lifeboat_rubber_l13","lifeboat_rubber_l15","lifeboat_rubber_l7"],
+["lifeboat_rubber_l4","lifeboat_rubber_l1","lifeboat_rubber_l9"],
+["lifeboat_rubber_l17","lifeboat_rubber_l9","lifeboat_rubber_l7"],
+["lifeboat_rubber_l11","lifeboat_rubber_l13","lifeboat_rubber_l5"],
+["lifeboat_rubber_l41","lifeboat_rubber_l49","lifeboat_rubber_l45"],
+["lifeboat_rubber_l32","lifeboat_rubber_l37","lifeboat_rubber_l35"],
+["lifeboat_rubber_l33","lifeboat_rubber_l29","lifeboat_rubber_l39"],
+["lifeboat_rubber_l32","lifeboat_rubber_l33","lifeboat_rubber_l41"],
+["lifeboat_rubber_l47","lifeboat_rubber_l43","lifeboat_rubber_l42"],
+["lifeboat_rubber_l39","lifeboat_rubber_l35","lifeboat_rubber_l43"],
+["lifeboat_rubber_l37","lifeboat_rubber_l45","lifeboat_rubber_l43"],
+["lifeboat_rubber_l41","lifeboat_rubber_l39","lifeboat_rubber_l47"],
+["lifeboat_rubber_l43","lifeboat_rubber_l45","lifeboat_rubber_l44"],
+["lifeboat_rubber_l47","lifeboat_rubber_l46","lifeboat_rubber_l48"],
+["lifeboat_rubber_l49","lifeboat_rubber_l48","lifeboat_rubber_l44"],
+["lifeboat_rubber_l9","lifeboat_rubber_l1","lifeboat_rubber_l7"],
+["lifeboat_rubber_l5","lifeboat_rubber_l1","lifeboat_rubber_l4"],
+["lifeboat_rubber_l7","lifeboat_rubber_l1","lifeboat_rubber_l5"],
+["lifeboat_rubber_l24","lifeboat_rubber_l26","lifeboat_rubber_l31"],
+["lifeboat_rubber_l26","lifeboat_rubber_l38","lifeboat_rubber_l34"],
+["lifeboat_rubber_l12","lifeboat_rubber_l6","lifeboat_rubber_l14"],
+["lifeboat_rubber_l3","lifeboat_rubber_l8","lifeboat_rubber_l0"],
+["lifeboat_rubber_l16","lifeboat_rubber_l6","lifeboat_rubber_l8"],
+["lifeboat_rubber_l10","lifeboat_rubber_l2","lifeboat_rubber_l12"],
+["lifeboat_rubber_l40","lifeboat_rubber_l44","lifeboat_rubber_l48"],
+["lifeboat_rubber_l31","lifeboat_rubber_l34","lifeboat_rubber_l36"],
+["lifeboat_rubber_l30","lifeboat_rubber_l38","lifeboat_rubber_l28"],
+["lifeboat_rubber_l31","lifeboat_rubber_l40","lifeboat_rubber_l30"],
+["lifeboat_rubber_l38","lifeboat_rubber_l42","lifeboat_rubber_l34"],
+["lifeboat_rubber_l36","lifeboat_rubber_l42","lifeboat_rubber_l44"],
+["lifeboat_rubber_l40","lifeboat_rubber_l46","lifeboat_rubber_l38"],
+["lifeboat_rubber_l8","lifeboat_rubber_l6","lifeboat_rubber_l0"],
+["lifeboat_rubber_l2","lifeboat_rubber_l3","lifeboat_rubber_l0"],
+["lifeboat_rubber_l6","lifeboat_rubber_l2","lifeboat_rubber_l0"],
+["lifeboat_rubber_l26","lifeboat_rubber_l20","lifeboat_rubber_l28"],
+["lifeboat_rubber_l18","lifeboat_rubber_l12","lifeboat_rubber_l20"],
+["lifeboat_rubber_l31","lifeboat_rubber_l22","lifeboat_rubber_l24"],
+["lifeboat_rubber_l24","lifeboat_rubber_l14","lifeboat_rubber_l16"],
+["lifeboat_rubber_l28","lifeboat_rubber_l22","lifeboat_rubber_l30"],
+["lifeboat_rubber_l20","lifeboat_rubber_l14","lifeboat_rubber_l22"],
+["lifeboat_rubber_l8","lifeboat_rubber_l10","lifeboat_rubber_l16"],
+["lifeboat_rubber_l16","lifeboat_rubber_l18","lifeboat_rubber_l24"],
+["lifeboat_rubber_l27","lifeboat_rubber_l29","lifeboat_rubber_l21"],
+["lifeboat_rubber_l19","lifeboat_rubber_l21","lifeboat_rubber_l13"],
+["lifeboat_rubber_l32","lifeboat_rubber_l25","lifeboat_rubber_l23"],
+["lifeboat_rubber_l25","lifeboat_rubber_l17","lifeboat_rubber_l15"],
+["lifeboat_rubber_l29","lifeboat_rubber_l33","lifeboat_rubber_l23"],
+["lifeboat_rubber_l21","lifeboat_rubber_l23","lifeboat_rubber_l15"],
+["lifeboat_rubber_l9","lifeboat_rubber_l17","lifeboat_rubber_l11"],
+["lifeboat_rubber_l17","lifeboat_rubber_l25","lifeboat_rubber_l19"],
+["lifeboat_rubber_l25","lifeboat_rubber_l27","lifeboat_rubber_l19"],
+["lifeboat_rubber_l27","lifeboat_rubber_l39","lifeboat_rubber_l29"],
+["lifeboat_rubber_l13","lifeboat_rubber_l7","lifeboat_rubber_l5"],
+["lifeboat_rubber_l17","lifeboat_rubber_l7","lifeboat_rubber_l15"],
+["lifeboat_rubber_l11","lifeboat_rubber_l5","lifeboat_rubber_l4"],
+["lifeboat_rubber_l41","lifeboat_rubber_l45","lifeboat_rubber_l37"],
+["lifeboat_rubber_l32","lifeboat_rubber_l35","lifeboat_rubber_l27"],
+["lifeboat_rubber_l33","lifeboat_rubber_l39","lifeboat_rubber_l41"],
+["lifeboat_rubber_l32","lifeboat_rubber_l41","lifeboat_rubber_l37"],
+["lifeboat_rubber_l47","lifeboat_rubber_l42","lifeboat_rubber_l46"],
+["lifeboat_rubber_l39","lifeboat_rubber_l43","lifeboat_rubber_l47"],
+["lifeboat_rubber_l37","lifeboat_rubber_l43","lifeboat_rubber_l35"],
+["lifeboat_rubber_l41","lifeboat_rubber_l47","lifeboat_rubber_l49"],
+["lifeboat_rubber_l43","lifeboat_rubber_l44","lifeboat_rubber_l42"],
+["lifeboat_rubber_l47","lifeboat_rubber_l48","lifeboat_rubber_l49"],
+["lifeboat_rubber_l49","lifeboat_rubber_l44","lifeboat_rubber_l45"],
+["lifeboat_rubber_l24","lifeboat_rubber_l18","lifeboat_rubber_l26"],
+["lifeboat_rubber_l26","lifeboat_rubber_l28","lifeboat_rubber_l38"],
+["lifeboat_rubber_l12","lifeboat_rubber_l2","lifeboat_rubber_l6"],
+["lifeboat_rubber_l16","lifeboat_rubber_l14","lifeboat_rubber_l6"],
+["lifeboat_rubber_l10","lifeboat_rubber_l3","lifeboat_rubber_l2"],
+["lifeboat_rubber_l40","lifeboat_rubber_l36","lifeboat_rubber_l44"],
+["lifeboat_rubber_l31","lifeboat_rubber_l26","lifeboat_rubber_l34"],
+["lifeboat_rubber_l30","lifeboat_rubber_l40","lifeboat_rubber_l38"],
+["lifeboat_rubber_l31","lifeboat_rubber_l36","lifeboat_rubber_l40"],
+["lifeboat_rubber_l38","lifeboat_rubber_l46","lifeboat_rubber_l42"],
+["lifeboat_rubber_l36","lifeboat_rubber_l34","lifeboat_rubber_l42"],
+["lifeboat_rubber_l40","lifeboat_rubber_l48","lifeboat_rubber_l46"],
+["lifeboat_rubber_l26","lifeboat_rubber_l18","lifeboat_rubber_l20"],
+["lifeboat_rubber_l18","lifeboat_rubber_l10","lifeboat_rubber_l12"],
+["lifeboat_rubber_l31","lifeboat_rubber_l30","lifeboat_rubber_l22"],
+["lifeboat_rubber_l24","lifeboat_rubber_l22","lifeboat_rubber_l14"],
+["lifeboat_rubber_l28","lifeboat_rubber_l20","lifeboat_rubber_l22"],
+["lifeboat_rubber_l20","lifeboat_rubber_l12","lifeboat_rubber_l14"],
+["lifeboat_rubber_l8","lifeboat_rubber_l3","lifeboat_rubber_l10"],
+["lifeboat_rubber_l16","lifeboat_rubber_l10","lifeboat_rubber_l18"],
+["lifeboat_rubber_l27","lifeboat_rubber_l21","lifeboat_rubber_l19"],
+["lifeboat_rubber_l19","lifeboat_rubber_l13","lifeboat_rubber_l11"],
+["lifeboat_rubber_l32","lifeboat_rubber_l23","lifeboat_rubber_l33"],
+["lifeboat_rubber_l25","lifeboat_rubber_l15","lifeboat_rubber_l23"],
+["lifeboat_rubber_l29","lifeboat_rubber_l23","lifeboat_rubber_l21"],
+["lifeboat_rubber_l21","lifeboat_rubber_l15","lifeboat_rubber_l13"],
+["lifeboat_rubber_l9","lifeboat_rubber_l11","lifeboat_rubber_l4"],
+["lifeboat_rubber_l17","lifeboat_rubber_l19","lifeboat_rubber_l11"],
+
+
+{"pressureGroup": ""},
+
+
+["lifeboat_frame_l5","lifeboat_base_l1","lifeboat_frame_l3"],
+["lifeboat_frame_l5","lifeboat_frame_l2","lifeboat_frame_l4"],
+["lifeboat_frame_l4","lifeboat_frame_l2","lifeboat_base_l0"],
+["lifeboat_base_l0","lifeboat_base_l5","lifeboat_frame_l4"],
+["lifeboat_base_l6","lifeboat_base_l1","lifeboat_frame_l5"],
+["lifeboat_frame_l5","lifeboat_frame_l3","lifeboat_frame_l2"],
+
+
+
+["engine_l11","engine_l16","engine_l18"],
+["engine_l16","engine_l17","engine_l18"],
+["engine_l8","engine_l0","engine_l10"],
+["engine_l3","engine_l1","engine_l0"],
+["engine_l10","engine_l6","engine_l13"],
+["engine_l9","engine_l3","engine_l8"],
+["engine_l16","engine_l8","engine_l15"],
+["engine_l17","engine_l11","engine_l18"],
+["engine_l15","engine_l10","engine_l17"],
+["engine_l1","engine_l9","engine_l11"],
+["engine_l1","engine_l6","engine_l0"],
+["engine_l11","engine_l13","engine_l14"],
+["engine_l11","engine_l7","engine_l1"],
+["engine_l11","engine_l9","engine_l16"],
+["engine_l16","engine_l15","engine_l17"],
+["engine_l8","engine_l3","engine_l0"],
+["engine_l3","engine_l4","engine_l1"],
+["engine_l10","engine_l0","engine_l6"],
+["engine_l9","engine_l4","engine_l3"],
+["engine_l16","engine_l9","engine_l8"],
+["engine_l17","engine_l10","engine_l11"],
+["engine_l15","engine_l8","engine_l10"],
+["engine_l1","engine_l4","engine_l9"],
+["engine_l1","engine_l7","engine_l6"],
+["engine_l11","engine_l10","engine_l13"],
+["engine_l11","engine_l14","engine_l7"],
+
+
+{"dragCoef":15},
+
+["propeller_l1","propeller_l7","propeller_l4"],
+["propeller_l2","propeller_l7","propeller_l5"],
+["propeller_l0","propeller_l7","propeller_l3"],
+
+
+
+],
+			
+			
+	"hydros": [
+     ["id1:","id2:"],
+	 {"beamSpring":2000000,"beamDamp":50},
+	 {"beamDeform":2000000,"beamStrength":10000000},	
+
+
+	  
+	["engine_l0","lifeboat_base_l0", {"inputSource":"steering_input","inLimit":0.6,"outLimit":1.3,"inRate":0.3,"outRate":0.3,"inputFactor":-1.0,"breakGroup":"engine_connections"}],
+	
+	
+	{"beamSpring":300000,"beamDamp":650},
+	{"beamDeform":1000000,"beamStrength":7000},	
+	["engine_l19","engine_l27", {"inputSource":"tilt_engine","inLimit":1,"outLimit":4,"inRate":1,"outRate":1,"inputFactor":1.0}],
+	["engine_l19","engine_l28", {"inputSource":"tilt_engine","inLimit":1,"outLimit":4,"inRate":1,"outRate":1,"inputFactor":1.0}],
+	
+	
+	
+	
+	], 
+	 
+	 
+	 
+	 
+	 "controller": [
+        ["fileName"],
+        ["vehicleController", {}],
+
+
+		
+		
+		],
+		
+		
+		"rotators":[
+		["name","[group]:","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+		{"radius":0.1},
+		
+		{"propulsed":1},
+		{"brakeTorque":500},
+		["propeller", ["propeller_g"], "engine_l2", "engine_l5", 9999, "engine_l6", 1 {"speedo":false}],
+		
+		
+		],
+	
+   
+	"powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["combustionEngine", "mainEngine", "dummy", 0],
+		["torqueConverter", "torqueConverter", "mainEngine", 1],
+		["automaticGearbox", "gearbox", "torqueConverter", 1],
+		["shaft", "propshaft", "gearbox", 1],
+		["shaft", "propeller", "propshaft", 1,{"connectedWheel":"propeller","gearRatio": 1.4}],
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    ],
+	"torqueConverter": {
+
+    "converterStiffness":25,
+	},
+	  
+
+"gearbox": {
+    "gearRatios":[-4, 0, 1]
+    "parkLockTorque":20,
+    "oneWayViscousCoef":8,
+    "friction": 0.1,
+},
+	
+	
+	
+	
+	"mainEngine": {
+			"torque":[
+				["rpm", "torque"]
+				[250, 60],
+				[500, 100],
+				[700, 100],
+				[1000, 100],
+				[1600, 130],
+				[2400, 160],
+				[3200, 200],
+				[4000, 220],
+				[4800, 240],
+				[5600, 260],
+				[6400, 265],
+				[7200, 270],
+				[8000, 280],
+				[9000, 220],
+				
+				
+
+
+			],
+			//rev limiters have some options
+			//"revLimiterType":"rpmDrop", //Default choice. waits for rpm to fall before torque comes back. Can have long delays in high gears. Uses "revLimiterRPMDrop".
+			//"revLimiterType":"timeBased", //Waits for "revLimiterCutTime" time window, but also has "revLimiterMaxRPMDrop" fallback, if the rpm falls too much in the time window.
+			//"revLimiterType:"soft", //Tapers the the torque off in some range of rpm defined by "revLimiterSmoothOvershootRPM"
+			//"hasRevLimiter":false, //Disables rev limiter
+			"revLimiterRPMDrop":500,
+			//engine performance
+			"idleRPM":700
+			"maxRPM":9000, //Max RPM before overrev damage is likely
+			"inertia":0.085714758237396, //(kg*m/s^2)
+			"friction":0.7, //Constant friction torque (Nm)
+			"dynamicFriction":0.051720576862919, //Friction torque that increases with engine speed (Nm/rad/s)
+
+
+
+			"waterDamage": {"[engineGroup]:":["engine_intake"]}, //Engine hydrolocks when nodes in this group go under water
+			"radiator": {"[engineGroup]:":["radiator"]}, //Radiator steam is emitted from nodes in this group
+			"engineBlock": {"[engineGroup]:":["engine_block"]}, //Engine thermal mass is taken from nodes in this group
+			//"fuel": {"[engineGroup]:":["fuel"]},
+			"breakTriggerBeam":"engine_cut", //Engine breaks if beam with this name is broken
+			
+			
+
+			
+			
+			//Exhaust Settings
+			"particulates":0.097499997913837,
+			//Exhaust Sound/back fires
+			"instantAfterFireCoef": 1.1062499843538,
+			"sustainedAfterFireCoef": 1.6593749765307,
+			"instantVolumeCoef":0.75,
+			"sustainedVolumeCoef ":0.75,
+			"shiftVolumeCoef ":2,
+
+			//cooling and oil system,
+			"thermalsEnabled":false,
+			"engineBlockMaterial":"aluminium", //"aluminum", "aluminium", "iron"
+
+
+			//cooling system
+			"radiatorArea":1.5705024127428,
+			"radiatorEffectiveness":20000,
+			"coolantVolume":8.6191147328,
+			"radiatorFanType":"electric",
+			"radiatorFanTemperature":105
+			"radiatorFanMaxAirSpeed":2,
+			"thermostatTemperature":90,
+
+			//oil radiator
+			"oilRadiatorArea":8.6191147328,
+			"oilRadiatorEffectiveness":2000,
+			"oilThermostatTemperature":100,
+			"oilVolume":6.7143360496, //Litres
+
+			//engine durability
+			"cylinderWallTemperatureDamageThreshold":310, //Cylinder temp (C) over which damage starts to occur to rings
+			"headGasketDamageThreshold":1700000, //Durability of headgasket
+			"pistonRingDamageThreshold":1700000, //Durability of headgasket
+			"connectingRodDamageThreshold":2200000, //Durability of connecting rods
+
+			//"energyStorage": "mainTank", //Name of the fuel tank
+			"requiredEnergyType":"gasoline", //Type of fuel required
+			"burnEfficiency": [ //How much fuel energy is converted to work in the cylinders (does not account for engine friction losses)
+				[0.00, 0.13],
+				[0.05, 0.28],
+				[0.40, 0.37],
+				[0.70, 0.45],
+				[1.00, 0.31],
+
+			],
+			"torqueReactionNodes:":["engine_l1", "engine_l4", "engine_l3"]
+		
+		"soundConfig": "soundConfig",
+
+			},
+"soundConfig": {
+    "sampleName": "RESCUEBOAT",
+    "mainGain": -3,
+    "maxLoadMix": 1,
+    "minLoadMix": 0,
+    "onLoadGain":1,
+    "offLoadGain":0.6,
+    "eqLowGain": 0,
+    "eqLowFreq": 100,
+    "eqLowWidth": 0,
+    "eqHighGain": 0,
+    "eqHighFreq": 2000,
+    "eqHighWidth": 0,
+    "lowCutFreq":20,
+    "highCutFreq":8000,
+    "eqFundamentalGain": -15,
+		
+		
+		
+},
+		
+		
+		
+		
+		
+       
+    },
+}

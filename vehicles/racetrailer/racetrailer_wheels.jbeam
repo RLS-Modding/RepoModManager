@@ -1,0 +1,133 @@
+{
+"racetrailer_wheel_F_alt": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Aluminum Front Wheels",
+        "value":1200,
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //inner
+         ["steelwheel_06a_22x10_inner", ["racetrailer_wheel_FR"], [], {"pos":{"x":-0.89, "y":12.61701, "z":0.22649}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+         ["steelwheel_06a_22x10_inner", ["racetrailer_wheel_FL"], [], {"pos":{"x": 0.89, "y":12.61701, "z":0.22649}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+         //outer
+         ["steelwheel_06a_22x10_outer", ["racetrailer_wheel_FR"], [], {"pos":{"x":-1.21275, "y":12.61701, "z":0.22649}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+         ["steelwheel_06a_22x10_outer", ["racetrailer_wheel_FL"], [], {"pos":{"x": 1.21275, "y":12.61701, "z":0.22649}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+     ],
+    "slotType" : "racetrailer_wheel_F",
+    "slots": [
+        ["type", "default", "description"],
+        ["racetrailer_tire_F","racetrailer_tire_F", "Front Tires"],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"group":"racetrailer_wheelhub_FR"},
+         {"nodeWeight":35},
+         //rear hub 1
+         ["bogw1r", -0.84727, 12.61701, 0.22649],
+         ["bogw1rr", -1.10636, 12.61701, 0.22649],
+         {"group":"racetrailer_wheelhub_FL"},
+         ["bogw1l", 0.84727, 12.61701, 0.22649],
+         ["bogw1ll", 1.10636, 12.61701, 0.22649],
+    ],
+    "beams": [
+          ["id1:", "id2:", "options"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamDeform":150000,"beamStrength":"FLT_MAX"},
+          {"beamSpring":3001000,"beamDamp":150},
+          //wheel axis beams
+          ["bogw1r","bogw1rr"],
+          ["bogw1l","bogw1ll"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+    ],
+    "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"enableTireLbeams":true,"disableMeshBreaking":false,"disableHubMeshBreaking":false},
+
+            //general settings
+            {"hubRadius":0.30},
+            {"wheelOffset":-0.1},
+            {"hubWidth":0.6},
+            {"numRays":24},
+
+            //hub options
+            {"hubTreadBeamSpring":4001000, "hubTreadBeamDamp":100},
+            {"hubPeripheryBeamSpring":4001000, "hubPeripheryBeamDamp":100},
+            {"hubSideBeamSpring":4501000, "hubSideBeamDamp":100},
+            {"hubBeamDeform":150000, "hubBeamStrength":440000},
+            {"hubNodeWeight":1.75},
+            {"hubNodeMaterial":"|NM_METAL","hasTire":false},
+            {"hubFrictionCoef":0.5},
+    ],
+},
+"racetrailer_wheel_R_alt": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Aluminum Rear Wheels",
+        "value":1200,
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //inner
+         ["steelwheel_06a_22x10_inner", ["racetrailer_wheel_RR"], [], {"pos":{"x":-0.89, "y":15.61591, "z":0.22649}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+         ["steelwheel_06a_22x10_inner", ["racetrailer_wheel_RL"], [], {"pos":{"x": 0.89, "y":15.61591, "z":0.22649}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+         //outer
+         ["steelwheel_06a_22x10_outer", ["racetrailer_wheel_RR"], [], {"pos":{"x":-1.21275, "y":15.61591, "z":0.22649}, "rot":{"x":0, "y":0, "z":180}, "scale":{"x":1, "y":1, "z":1}}],
+         ["steelwheel_06a_22x10_outer", ["racetrailer_wheel_RL"], [], {"pos":{"x": 1.21275, "y":15.61591, "z":0.22649}, "rot":{"x":0, "y":0, "z":0}, "scale":{"x":1, "y":1, "z":1}}],
+     ],
+    "slotType" : "racetrailer_wheel_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["racetrailer_tire_R","racetrailer_tire_R", "Rear Tires"],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":true},
+         {"collision":true},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"group":"racetrailer_wheelhub_RR"},
+         {"nodeWeight":35},
+         //rear hub 1
+         ["bogw11r", -0.84727, 15.61591, 0.22649],
+         ["bogw11rr", -1.10636, 15.61591, 0.22649],
+         {"group":"racetrailer_wheelhub_RL"},
+         ["bogw11l", 0.84727, 15.61591, 0.22649],
+         ["bogw11ll", 1.10636, 15.61591, 0.22649],
+    ],
+
+    "beams": [
+          ["id1:", "id2:", "options"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+          {"beamDeform":150000,"beamStrength":"FLT_MAX"},
+          {"beamSpring":3001000,"beamDamp":150},
+          //wheel axis beams
+          ["bogw11r","bogw11rr"],
+          ["bogw11l","bogw11ll"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+    ],
+    "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            {"enableTireLbeams":true,"disableMeshBreaking":false,"disableHubMeshBreaking":false},
+
+            //general settings
+            {"hubRadius":0.30},
+            {"wheelOffset":-0.1},
+            {"hubWidth":0.6},
+            {"numRays":24},
+
+            //hub options
+            {"hubTreadBeamSpring":4001000, "hubTreadBeamDamp":100},
+            {"hubPeripheryBeamSpring":4001000, "hubPeripheryBeamDamp":100},
+            {"hubSideBeamSpring":4501000, "hubSideBeamDamp":100},
+            {"hubBeamDeform":150000, "hubBeamStrength":440000},
+            {"hubNodeWeight":1.75},
+            {"hubNodeMaterial":"|NM_METAL","hasTire":false},
+            {"hubFrictionCoef":0.5},
+    ],
+},
+}

@@ -1,0 +1,604 @@
+{
+"EnclosedTrailer_tailgate": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Tailgate",
+        "value":120,
+    },
+    "slotType" : "EnclosedTrailer_tailgate",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["EnclosedTrailer_reardoor", ["EnclosedTrailer_tailgate"]],
+         ["EnclosedTrailer_doorlock_c", ["EnclosedTrailer_tailgate"]],
+         ["EnclosedTrailer_doorlock_bl", ["EnclosedTrailer_lock_l"]],
+         ["EnclosedTrailer_doorlock_dl", ["EnclosedTrailer_handle_l"]],
+         ["EnclosedTrailer_doorlock_br", ["EnclosedTrailer_lock_r"]],
+         ["EnclosedTrailer_doorlock_dr", ["EnclosedTrailer_handle_r"]],
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"rampLCoupler"}],
+        ["advancedCouplerControl", {"name":"rampRCoupler"}],
+        ["advancedCouplerControl", {"name":"liftCoupler"}],
+    ]
+    "rampLCoupler":{
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["ltl",     "lkl1",      15000,                     0.15,                   0.005,                      0.5,                 0.1,                   "rampLCoupler_latch"]
+        ]
+        "groupType": "autoCoupling",
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["lkl1"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Special>trailer_hinges_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Special>trailer_hinges_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 0,
+        "openForceDuration": 0.6,
+        "closeForceMagnitude": 50,
+        "closeForceDuration": 2
+    }
+    "rampRCoupler":{
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["ltr",     "lkr1",      15000,                     0.15,                   0.005,                      0.5,                 0.1,                   "rampRCoupler_latch"]
+        ]
+        "groupType": "autoCoupling",
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["lkr1"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Special>trailer_hinges_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Special>trailer_hinges_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 0,
+        "openForceDuration": 0.6,
+        "closeForceMagnitude": 50,
+        "closeForceDuration": 2
+    }
+    "liftCoupler":{
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["wrrgd",   "tg4",       35000,                     0.05,                   0.005,                      0.5,                 0.1,                   "liftCoupler_latch"]
+        ]
+        "groupType": "autoCoupling",
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["tg4"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Special>trailer_ramp_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Special>trailer_ramp_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 150,
+        "openForceDuration": 5,
+        "closeForceMagnitude": 500,
+        "closeForceDuration": 5
+    }
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["lockL", "", "lkl5","lkl1","lkl4", "box", {"x":0.142, "y":0.041, "z":0.012}, {"x":0, "y":-22, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.254, "y":-0.050, "z":-0.021}],
+        ["lockR", "", "lkr5","lkr1","lkr4", "box", {"x":0.142, "y":0.041, "z":0.012}, {"x":0, "y":-22, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.254, "y":-0.050, "z":-0.020}],
+        ["lift", "", "tg0l","tg0ll","tg1l", "box", {"x":0.14, "y":0.058, "z":0.035}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.44, "y":0.007, "z":-0.041}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["lockL", "action0", "lockL"],
+        ["lockR", "action0", "lockR"],
+        ["lift", "action0", "lift"],
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["lockL", "ui.inputActions.EnclosedTrailer.lockL.title", "ui.inputActions.EnclosedTrailer.lockL.description", {"onUp":"controller.getControllerSafe('rampLCoupler').toggleGroupConditional({{'liftCoupler','autoCoupling','vehicle.advancedCouplerControl.EnclosedTrailerRamp'}})"}],
+        ["lockR", "ui.inputActions.EnclosedTrailer.lockR.title", "ui.inputActions.EnclosedTrailer.lockR.description", {"onUp":"controller.getControllerSafe('rampRCoupler').toggleGroupConditional({{'liftCoupler','autoCoupling','vehicle.advancedCouplerControl.EnclosedTrailerRamp'}})"}],
+        ["lift", "ui.inputActions.EnclosedTrailer.lift.title", "ui.inputActions.EnclosedTrailer.lift.description", {"onUp":"controller.getControllerSafe('liftCoupler').toggleGroupConditional({{'rampLCoupler','attached','vehicle.advancedCouplerControl.EnclosedTrailerLock'},{'rampRCoupler','attached','vehicle.advancedCouplerControl.EnclosedTrailerLock'}})"}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //--TAILGATE--
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":"EnclosedTrailer_tailgate"},
+         {"nodeWeight":2.5},
+         ["tg0rr", -1.07864, 2.25155, 2.66820],
+         ["tg0r", -0.38202, 2.27155, 2.66820],
+         ["tg0l", 0.37329, 2.27155, 2.66820],
+         ["tg0ll", 1.06991, 2.25155, 2.66820],
+
+         ["tg1rr", -1.05513, 2.27155, 1.62996],
+         ["tg1r", -0.37003, 2.29155, 1.62996],
+         ["tg1l", 0.37003, 2.29155, 1.62996],
+         ["tg1ll", 1.05005, 2.27155, 1.62996],
+
+         ["tg2rr", -1.05113, 2.29155, 0.71157],
+         ["tg2r", -0.41117, 2.29155, 0.71157],
+         ["tg2l", 0.40158, 2.29155, 0.71157],
+         ["tg2ll", 1.04959, 2.29155, 0.71157],
+
+         //hinge
+         {"nodeWeight":2.5},
+         ["tg3rr", -0.97131, 2.30155, 0.61508],
+         ["tg3", -0.00479, 2.30155, 0.61508],
+         ["tg3ll", 0.96173, 2.30155, 0.61508],
+
+         //anti sink node
+         ["tg0rrr", -1.04978, 2.32155, 2.66820],
+         ["tg0lll", 1.06991, 2.32155, 2.66820],
+
+         //rigidifier
+         {"selfCollision":false},
+         {"collision":false},
+         ["tg4", 0.00000, 1.81155, 1.57996],
+
+         //lock
+         {"selfCollision":true},
+         {"collision":true},
+         {"group":"EnclosedTrailer_handle_l"},
+         ["lkl1", 0.96443, 2.30655, 1.66996],
+         {"group":"EnclosedTrailer_lock_l"},
+         ["lkl2", 1.20859, 2.29755, 1.76996],
+         ["lkl3", 1.20859, 2.29755, 1.56996],
+         ["lkl4", 1.07624, 2.29973, 1.66996, {"group":["EnclosedTrailer_handle_l","EnclosedTrailer_lock_l"]}],
+         ["lkl5", 1.07624, 2.37155, 1.66996, {"group":["EnclosedTrailer_handle_l","EnclosedTrailer_lock_l"]}],
+
+         {"group":"EnclosedTrailer_handle_r"},
+         ["lkr1", -0.96443, 2.30655, 1.66996,],
+         {"group":"EnclosedTrailer_lock_r"},
+         ["lkr2", -1.20859, 2.29755, 1.76996],
+         ["lkr3", -1.20859, 2.29755, 1.56996],
+         ["lkr4", -1.07624, 2.29973, 1.66996, {"group":["EnclosedTrailer_handle_r","EnclosedTrailer_lock_r"]}],
+         ["lkr5", -1.07624, 2.37155, 1.66996, {"group":["EnclosedTrailer_handle_r","EnclosedTrailer_lock_r"]}],
+
+         {"group":""},
+         {"selfCollision":false},
+         ["ltr", -0.96284, 2.30655, 1.66996],
+         ["ltl", 0.96443, 2.30655, 1.66996],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TAILGATE--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":1501000,"beamDamp":150},
+          {"beamDeform":50000,"beamStrength":"FLT_MAX"},
+          //tailgate main shape
+          ["tg1ll", "tg0ll"],
+          ["tg1rr", "tg0rr"],
+
+          ["tg1ll", "tg2ll"],
+          ["tg1rr", "tg2rr"],
+
+          ["tg1l", "tg0l"],
+          ["tg1r", "tg0r"],
+
+          ["tg1l", "tg2l"],
+          ["tg1r", "tg2r"],
+
+
+          ["tg2ll", "tg2l"],
+          ["tg1ll", "tg1l"],
+          ["tg0ll", "tg0l"],
+
+          ["tg0rr", "tg0r"],
+          ["tg1rr", "tg1r"],
+          ["tg2rr", "tg2r"],
+
+          ["tg0l", "tg0r"],
+          ["tg1l", "tg1r"],
+          ["tg2l", "tg2r"],
+
+          //lock
+          {"beamDeform":175000,"beamStrength":"FLT_MAX"},
+          ["lkl2", "lkl3"],
+          ["lkl4", "lkl1"],
+          ["lkl4", "lkl2"],
+          ["lkl4", "lkl3"],
+          ["lkl5", "lkl1"],
+          ["lkl5", "lkl2"],
+          ["lkl5", "lkl3"],
+          ["lkl5", "lkl4"],
+
+          ["lkr2", "lkr3"],
+          ["lkr4", "lkr1"],
+          ["lkr4", "lkr2"],
+          ["lkr4", "lkr3"],
+          ["lkr5", "lkr1"],
+          ["lkr5", "lkr2"],
+          ["lkr5", "lkr3"],
+          ["lkr5", "lkr4"],
+
+          //attach
+          {"beamSpring":3501000,"beamDamp":150},
+          {"beamDeform":75000,"beamStrength":25000},
+          {"breakGroup":"rampLCoupler_latch"}
+          ["lkl2", "wr3ll"],
+          ["lkl2", "wrrgd"],
+          ["lkl2", "wr2rr"],
+
+          ["lkl3", "wr3ll"],
+          ["lkl3", "wrrgd"],
+          ["lkl3", "wr2rr"],
+
+          {"breakGroup":"rampRCoupler_latch"}
+          ["lkr2", "wr3rr"],
+          ["lkr2", "wrrgd"],
+          ["lkr2", "wr2ll"],
+
+          ["lkr3", "wr3rr"],
+          ["lkr3", "wrrgd"],
+          ["lkr3", "wr2ll"],
+          {"breakGroup":""}
+
+          //ramp latch
+          {"beamSpring":1501000,"beamDamp":150},
+          {"beamDeform":75000,"beamStrength":"FLT_MAX"},
+          ["ltl", "tg4"],
+          ["ltl", "tg1ll"],
+          ["ltl", "tg0ll"],
+
+          ["ltr", "tg4"],
+          ["ltr", "tg1rr"],
+          ["ltr", "tg0rr"],
+
+          //surficial crossing
+          {"beamDeform":25000,"beamStrength":"FLT_MAX"},
+          ["tg1ll", "tg2l"],
+          ["tg2ll", "tg1l"],
+          ["tg1rr", "tg2r"],
+          ["tg2rr", "tg1r"],
+          ["tg1l", "tg2r"],
+          ["tg2l", "tg1r"],
+
+          ["tg1ll", "tg0l"],
+          ["tg0ll", "tg1l"],
+          ["tg1rr", "tg0r"],
+          ["tg0rr", "tg1r"],
+          ["tg1l", "tg0r"],
+          ["tg0l", "tg1r"],
+
+          //rigidifier
+          {"beamDeform":12500,"beamStrength":"FLT_MAX"},
+          ["tg0rr", "tg4"],
+          ["tg0r", "tg4"],
+          ["tg0l", "tg4"],
+          ["tg0ll", "tg4"],
+
+          ["tg1rr", "tg4"],
+          ["tg2rr", "tg4"],
+          ["tg1r", "tg4"],
+          ["tg2r", "tg4"],
+          ["tg1ll", "tg4"],
+          ["tg2ll", "tg4"],
+          ["tg1l", "tg4"],
+          ["tg2l", "tg4"],
+
+          ["tg3rr", "tg4"],
+          ["tg3", "tg4"],
+          ["tg3ll", "tg4"],
+
+          //anti sink node
+          ["tg0rrr", "tg0rr"],
+          ["tg0rrr", "tg0r"],
+          ["tg0rrr", "tg1rr"],
+          ["tg0rrr", "tg1r"],
+          ["tg0rrr", "tg4"],
+
+          ["tg0lll", "tg0ll"],
+          ["tg0lll", "tg0l"],
+          ["tg0lll", "tg1ll"],
+          ["tg0lll", "tg1l"],
+          ["tg0lll", "tg4"],
+
+          //rigids
+          {"beamDeform":4500,"beamStrength":"FLT_MAX"},
+          {"beamSpring":1001000,"beamDamp":150},
+          ["tg2l", "tg2rr"],
+          ["tg2ll", "tg2r"],
+          ["tg1l", "tg1rr"],
+          ["tg1ll", "tg1r"],
+
+          //anti stretch
+          {"beamPrecompression":1, "beamType":"|BOUNDED", "beamLongBound":0.1, "beamShortBound":1.0},
+          {"beamSpring":0,"beamDamp":0,"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
+          {"beamLimitSpring":1001000,"beamLimitDamp":100},
+          ["tg1rr","tg1ll"],
+          ["tg2rr","tg2ll"],
+
+          //hinge
+          {"disableTriangleBreaking":true},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":2001000,"beamDamp":150},
+          {"beamDeform":15000,"beamStrength":"FLT_MAX"},
+          ["tg2ll", "tg3ll"],
+          ["tg3ll", "tg2l"],
+          ["tg2l", "tg3"],
+          ["tg3", "tg2r"],
+          ["tg2r", "tg3rr"],
+          ["tg3rr", "tg2rr"],
+          ["tg3rr", "tg1rr"],
+          ["tg3ll", "tg1ll"],
+          ["tg3", "tg1l"],
+          ["tg3", "tg1r"],
+
+          {"beamDeform":44000,"beamStrength":52000},
+          {"breakGroup":"tailgatehinge_a"},
+          ["tg3", "t21r"],
+          ["tg3rr", "t21rr"],
+          ["tg3rr", "t11rr"],
+          ["tg3rr", "t21r"],
+          ["tg3rr", "t11r"],
+          ["tg3rr", "t22rr"],
+          ["tg3rr", "t12rr"],
+
+          {"breakGroup":"tailgatehinge_b"},
+          ["tg3", "t11r"],
+          ["tg3", "t11l"],
+          ["tg3", "t22l"],
+          ["tg3", "t22r"],
+          ["tg3", "t12r"],
+          ["tg3", "t12l"],
+
+          {"breakGroup":"tailgatehinge_c"},
+          ["tg3", "t21l"],
+          ["tg3ll", "t21ll"],
+          ["tg3ll", "t11ll"],
+          ["tg3ll", "t21l"],
+          ["tg3ll", "t11l"],
+          ["tg3ll", "t22ll"],
+          ["tg3ll", "t12ll"],
+          {"breakGroup":""},
+
+          //--TAILGATE SUPPORT BEAMS--
+          {"beamType":"|SUPPORT","beamLongBound":10},
+          {"beamSpring":2001000,"beamDamp":100},
+          {"beamDeform":10000,"beamStrength":2500000},
+          {"breakGroup":"tailgatehinge_b"},
+          ["tg0l", "t22l"],
+          ["tg0r", "t22r"],
+          ["tg0ll", "t22ll"],
+          ["tg0rr", "t22rr"],
+
+          ["lkl1", "lkl2", {"beamPrecompression":0.43}],
+          ["lkl1", "lkl3", {"beamPrecompression":0.43}],
+
+          ["lkr1", "lkr2", {"beamPrecompression":0.43}],
+          ["lkr1", "lkr3", {"beamPrecompression":0.43}],
+          {"breakGroup":"rampRCoupler_latch"},
+          {"beamLongBound":2},
+          ["lkr4", "t22rr"],
+          ["lkr5", "t22rr", {"beamPrecompression":0.94}],
+          {"breakGroup":"rampLCoupler_latch"},
+          ["lkl4", "t22ll"],
+          ["lkl5", "t22ll", {"beamPrecompression":0.94}],
+          {"beamLongBound":10},
+          {"breakGroup":"tailgatehinge_b"},
+
+          ["tg2l", "t22ll"],
+          ["tg2r", "t22rr"],
+          ["tg2ll", "t22ll"],
+          ["tg2rr", "t22rr"],
+          ["tg2r", "t22r"],
+          ["tg2l", "t22l"],
+          {"breakGroup":""},
+          {"disableTriangleBreaking":false},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //wires
+          {"beamSpring":30,"beamDamp":100},
+          {"beamDeform":"FLT_MAX","beamStrength":25000},
+          {"breakGroup":["wb3","tailgatehinge_b"]},
+          ["tg0ll", "wr3l"],
+          {"breakGroup":["wb8","tailgatehinge_b"]},
+          ["tg0rr", "wr3r"],
+          {"breakGroup":""},
+
+          //flop reducer
+          {"beamSpring":2,"beamDamp":5},
+          {"breakGroup":"rampLCoupler_latch"},
+          ["lkl4", "wr2r", {"beamPrecompression":1.2}],
+          ["lkl4", "wrrgd", {"beamPrecompression":5.2}],
+          ["lkl1", "wr1l"],
+          {"breakGroup":"rampRCoupler_latch"},
+          ["lkr4", "wr2l", {"beamPrecompression":1.2}],
+          ["lkr4", "wrrgd", {"beamPrecompression":5.2}],
+          ["lkr1", "wr1r"],
+          {"breakGroup":""},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //tailgate
+            {"groundModel":"metal"},
+            {"group":"EnclosedTrailer_tailgateouter"},
+            {"dragCoef":6},
+            ["tg0ll", "tg1l", "tg1ll"],
+            ["tg1l", "tg0ll", "tg0l"],
+            ["tg1r", "tg0rr", "tg1rr"],
+            ["tg0rr", "tg1r", "tg0r"],
+            ["tg0l", "tg1r", "tg1l"],
+            ["tg1r", "tg0l", "tg0r"],
+
+            ["tg1ll", "tg2l", "tg2ll"],
+            ["tg2l", "tg1ll", "tg1l"],
+            ["tg2r", "tg1rr", "tg2rr"],
+            ["tg1rr", "tg2r", "tg1r"],
+            ["tg1l", "tg2r", "tg2l"],
+            ["tg2r", "tg1l", "tg1r"],
+
+            //top
+            ["tg0r", "tg0rrr", "tg0rr"],
+            ["tg0lll", "tg0l", "tg0ll"],
+            ["tg0lll", "tg0rrr", "tg0r"],
+            ["tg0lll", "tg0r", "tg0l"],
+
+            //side
+            {"dragCoef":0},
+            {"breakGroup":"tailgatehinge_a"},
+            ["tg0lll", "tg1ll", "t11ll"],
+            ["tg0lll", "tg0ll", "tg1ll"],
+            ["tg1ll", "tg2ll", "t11ll"],
+
+            ["tg0lll", "t11ll", "tg1l"],
+
+            {"breakGroup":"tailgatehinge_c"},
+            ["tg0rrr", "t11rr", "tg1rr"],
+            ["tg0rrr", "tg1rr", "tg0rr"],
+            ["tg2rr", "tg1rr", "t11rr"],
+
+            ["tg0rrr", "tg1r", "t11rr"],
+            {"breakGroup":""},
+            {"dragCoef":0},
+    ],
+},
+"EnclosedTrailer_door": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Side Door",
+        "value":120,
+    },
+    "slotType" : "EnclosedTrailer_door",
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["EnclosedTrailer_sidedoor", ["EnclosedTrailer_door"]],
+    ],
+    "controller": [
+        ["fileName"],
+        ["advancedCouplerControl", {"name":"doorCoupler"}],
+    ]
+    "doorCoupler":{
+        "couplerNodes":[
+            ["cid1",    "cid2",     "autoCouplingStrength",    "autoCouplingRadius",   "autoCouplingLockRadius",   "autoCouplingSpeed", "couplingStartRadius",  "breakGroup"]
+            ["dlatch",  "td21",      35000,                     0.01,                   0.005,                      0.5,                 0.01,                   "doorCoupler_latch"]
+        ]
+        "groupType": "autoCoupling",
+        "attachSoundVolume":1,
+        "detachSoundVolume":1,
+        "soundNode:":["td21"]
+        "attachSoundEvent": "event:>Vehicle>Latches>Special>trailer_door_close",
+        "detachSoundEvent": "event:>Vehicle>Latches>Special>trailer_door_open",
+        "breakSoundEvent":""
+        "openForceMagnitude": 2,
+        "openForceDuration": 0.3,
+        "closeForceMagnitude": 75,
+        "closeForceDuration": 1.5
+    }
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["door", "", "td21","td31","td22", "box", {"x":0.1, "y":0.02, "z":0.043}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.015, "y":0.055, "z":0.008}],
+    ],
+    "triggerEventLinks":[
+        ["triggerId:triggers", "action", "targetEventId:events"],
+        ["door", "action0", "door"],
+    ],
+    "events":[
+        ["id", "title", "desc"],
+        ["door", "ui.inputActions.EnclosedTrailer.door.title", "ui.inputActions.EnclosedTrailer.door.description", {"onUp":"controller.getControllerSafe('doorCoupler').toggleGroup()"}],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":true},
+         {"group":"EnclosedTrailer_door"},
+         {"nodeWeight":2.5},
+         ["td11", -1.26509, -3.59542, 0.56860],
+         ["td21", -1.26509, -3.59542, 1.02097],
+         ["td31", -1.26509, -3.59542, 2.45499],
+         ["td12", -1.26509, -4.42591, 0.56860],
+         ["td22", -1.26509, -4.42591, 1.02097],
+         ["td32", -1.26509, -4.42591, 2.45499],
+
+         //rigidifier
+         {"selfCollision":false},
+         {"collision":false},
+         ["tdrgd", -0.62472, -3.88727, 1.02097],
+         {"group":""},
+
+         //door latch
+         ["dlatch", -1.26509, -3.59542, 1.02097],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TAILGATE--
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":1501000,"beamDamp":150},
+          {"beamDeform":30000,"beamStrength":"FLT_MAX"},
+          //door main shape
+          //y
+          ["td11", "td12"],
+          ["td21", "td22"],
+          ["td31", "td32"],
+
+          //z
+          ["td11", "td21"],
+          ["td21", "td31"],
+          ["td12", "td22"],
+          ["td22", "td32"],
+
+          //yz
+          ["td11", "td22"],
+          ["td21", "td12"],
+          ["td21", "td32"],
+          ["td31", "td22"],
+
+          //rigidifier
+          ["tdrgd", "td11"],
+          ["tdrgd", "td21"],
+          ["tdrgd", "td31"],
+          ["tdrgd", "td12"],
+          ["tdrgd", "td22"],
+          ["tdrgd", "td32"],
+
+          //latch attach
+          ["dlatch", "ts25r"],
+          ["dlatch", "tsrr2"],
+          ["dlatch", "ts35r"],
+
+          //hinge
+          {"beamDeform":14000,"beamStrength":22000},
+          {"beamSpring":2001000,"beamDamp":150},
+          {"breakGroup":"doorhinge_a"},
+          ["td32", "tsrr2"],
+          ["td32", "ts26r"],
+          ["td32", "ts35r"],
+
+          {"breakGroup":"doorhinge_b"},
+          ["td22", "tsrr2"],
+          ["td22", "ts16r"],
+          ["td22", "ts25r"],
+
+          {"breakGroup":"doorhinge_b"},
+          ["td12", "tsrr2"],
+          ["td12", "ts16r"],
+          ["td12", "ts15r"],
+
+          //support beams
+          {"beamType":"|SUPPORT","beamLongBound":10},
+          {"beamSpring":2001000,"beamDamp":100},
+          {"beamDeform":10000,"beamStrength":2500000},
+          ["td11", "tsrr2"],
+          ["td31", "tsrr2"],
+
+          {"beamSpring":15,"beamDamp":10},
+          ["td21", "ts24r", {"beamPrecompression":2.5}],
+
+          //pop out
+          {"beamSpring":55000,"beamDamp":1320},
+          {"beamDeform":40000,"beamStrength":10000},
+          ["td21", "tsrr2", {"beamPrecompression":1.015}],
+          {"breakGroup":""},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":1501000,"beamDamp":150},
+          {"beamDeform":30000,"beamStrength":"FLT_MAX"},
+    ],
+    "quads": [
+            ["id1:","id2:","id3:","id4:"],
+            //tailgate
+            {"groundModel":"metal"},
+            {"group":"EnclosedTrailer_door"},
+            {"dragCoef":6},
+            ["td11", "td12", "td22", "td21"],
+            ["td21", "td22", "td32", "td31"],
+            {"dragCoef":0},
+            {"breakGroup":""},
+    ],
+},
+}

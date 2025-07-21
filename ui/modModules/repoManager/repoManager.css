@@ -315,6 +315,23 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
+.downloading-info, .pending-info {
+  margin-top: 0.25rem;
+  opacity: 0.9;
+}
+
+.downloading-info small {
+  font-size: 0.7rem;
+  color: #e8f4ff;
+  font-weight: 400;
+}
+
+.pending-info small {
+  font-size: 0.7rem;
+  color: #fff3cd;
+  font-weight: 400;
+}
+
 .card-content {
   padding: 1.25rem;
 }

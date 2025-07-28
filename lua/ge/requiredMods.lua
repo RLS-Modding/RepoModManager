@@ -850,14 +850,19 @@ function startNextSubscription()
         return
     end
     
-    local nextModId = table.remove(subscriptionQueue, 1)
-    table.insert(activeSubscriptions, {
-        id = nextModId,
-        startTime = os.time()
-    })
-    
-    maxConcurrentSubscriptions = 3
-    subscribeToMod(nextModId)
+    for i = 1, maxConcurrentSubscriptions - #activeSubscriptions do
+        if #subscriptionQueue == 0 then
+            break
+        end
+        
+        local nextModId = table.remove(subscriptionQueue, 1)
+        table.insert(activeSubscriptions, {
+            id = nextModId,
+            startTime = os.time()
+        })
+            
+        subscribeToMod(nextModId)
+    end
 end
 
 local function startSubscriptionManager()
@@ -987,6 +992,7 @@ local function subscribeToPack(packName)
         log("I", "Required Mods", "Downloading " .. #modsToSubscribe .. " mods from pack: " .. packName)
         subscriptionQueue = modsToSubscribe
         if isSubscribing then
+            activeSubscriptions = {}
             startNextSubscription()
         else
             startSubscriptionManager()

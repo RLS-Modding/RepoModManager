@@ -2,24 +2,27 @@ local M = {}
 
 local ourParentMod = nil
 local ourDependencyIds = {}
-
 local subscriptionQueue = {}
 local activeSubscriptions = {}
 local completedSubscriptions = {}
-local maxConcurrentSubscriptions = tonumber(settings.getValue('modNumParallelDownload', 3))
+local maxConcurrentSubscriptions = 3
 local isSubscribing = false
-
 local progressQueue = {}
 local progressQueueDirty = false
 local updateQueue = {}
 local updatingRepo = false
-
--- Retry logic variables
 local retryQueue = {}
 local retryTimers = {}
-local baseRetryDelay = 10.0  -- 10 seconds
-local maxRetryDelay = 300.0  -- 5 minutes max
+local baseRetryDelay = 10.0
+local maxRetryDelay = 300.0
 local maxRetryAttempts = 5
+
+local packQueue = {}
+local currentPack = nil
+
+local packModCount = 0
+local packModDownloaded = 0
+local packModActivated = 0
 
 local startNextSubscription
 
@@ -491,7 +494,6 @@ local function subscribeToMod(modId, retryAttempt)
         if request.responseData == nil then
             log("W", "Required Mods", "Server not responding for mod: " .. modId .. " (attempt " .. retryAttempt .. ")")
             
-            -- Remove from active subscriptions
             for i, sub in ipairs(activeSubscriptions) do
                 if sub.id == modId then
                     table.remove(activeSubscriptions, i)
@@ -499,11 +501,9 @@ local function subscribeToMod(modId, retryAttempt)
                 end
             end
             
-            -- Try to mount locally available mods
             local mountedMods = mountLocallyAvailableMods({modId})
             
             if #mountedMods > 0 then
-                -- Mod was available locally, mark as completed
                 table.insert(completedSubscriptions, {
                     id = modId,
                     success = true,
@@ -512,7 +512,6 @@ local function subscribeToMod(modId, retryAttempt)
                 })
                 startNextSubscription()
             else
-                -- Schedule retry with exponential backoff
                 scheduleRetry(modId, retryAttempt)
             end
             
@@ -535,7 +534,6 @@ local function subscribeToMod(modId, retryAttempt)
             return
         end
         
-        -- Clear any existing retry timer for this mod
         if retryTimers[modId] then
             retryTimers[modId] = nil
         end
@@ -603,6 +601,7 @@ function startModDownload(modData)
     end
     
     local function completionCallback(r)
+        packModDownloaded = packModDownloaded + 1
         downloadProgressCallback(r)
         
         for k, v in pairs(progressQueue) do
@@ -627,7 +626,6 @@ function startModDownload(modData)
             downloadComplete = true
         }
         
-        -- Trigger extension hook for repoManager to update pack progress
         extensions.hook('onModDownloadCompleted', downloadData)
         
         guihooks.trigger('ModDownloaded', downloadData)
@@ -636,7 +634,6 @@ function startModDownload(modData)
         if r.responseCode ~= 200 then
             log("E", "Required Mods", "Failed to download: " .. modData.id)
             
-            -- Trigger extension hook for failed download too
             local failureData = {
                 modID = modData.id,
                 filename = modData.filename,
@@ -672,7 +669,6 @@ function startModDownload(modData)
         elseif not FS:fileExists(r.outfile) then
             log("E", "Required Mods", "Download file missing: " .. modData.id)
             
-            -- Trigger extension hook for missing file too
             local missingData = {
                 modID = modData.id,
                 filename = modData.filename,
@@ -722,12 +718,19 @@ function startModDownload(modData)
             
             changeStateUpdateQueue(modData.filename, "done")
         end
-        
         guihooks.trigger('downloadStateChanged', r)
         
         startNextSubscription()
+        M.sendPackProgress()
         
         if #activeSubscriptions == 0 and #subscriptionQueue == 0 then
+            if #packQueue > 0 then
+                local packName = table.remove(packQueue, 1)
+                currentPack = nil
+                M.subscribeToPack(packName)
+                guihooks.trigger('onNextPackDownload', packName)
+                return
+            end
             onAllSubscriptionsComplete()
         end
     end
@@ -753,7 +756,7 @@ function onAllSubscriptionsComplete()
     if #successfulSubs > 0 then
         local updmods = {}
         for _, sub in ipairs(successfulSubs) do
-            if not sub.localMount then -- Only report downloaded mods to server
+            if not sub.localMount then
                 table.insert(updmods, {
                     id = sub.id,
                     ver = sub.modData and sub.modData.ver or 0,
@@ -801,8 +804,10 @@ function onAllSubscriptionsComplete()
         M.pendingActivation = checkAndActivate
     end
     
+    currentPack = nil
     guihooks.trigger('UpdateFinished')
     uiUpdateQueue()
+    M.sendPackProgress()
 end
 
 function startNextSubscription()
@@ -816,7 +821,7 @@ function startNextSubscription()
         startTime = os.time()
     })
     
-    maxConcurrentSubscriptions = tonumber(settings.getValue('modNumParallelDownload', 3))
+    maxConcurrentSubscriptions = 3
     subscribeToMod(nextModId)
 end
 
@@ -895,9 +900,17 @@ local function getPackModIds(packName)
 end
 
 local function subscribeToPack(packName)
+    if currentPack then
+        table.insert(packQueue, packName)
+        print("Added pack to queue: " .. packName)
+        M.sendPackProgress()
+        return
+    end
+    currentPack = packName
+    print("Set currentPack to: " .. packName)
+    M.sendPackProgress()
     local packModIds = getPackModIds(packName)
-    dump(packModIds)
-    
+
     if #packModIds == 0 then
         log("W", "Required Mods", "No mods found in pack: " .. packName)
         return
@@ -907,16 +920,22 @@ local function subscribeToPack(packName)
     
     local modsToActivate = {}
     local modsToSubscribe = {}
+    packModCount = 0
+    packModDownloaded = 0
+    packModActivated = 0
     
     for _, modId in ipairs(packModIds) do
+        packModCount = packModCount + 1
         ourDependencyIds[modId] = true
         if isModAlreadyActive(modId) then
+            packModActivated = packModActivated + 1
             goto continue
         end
         
         local modName = core_modmanager.getModNameFromID(modId)
         if modName then
             table.insert(modsToActivate, modName)
+            packModActivated = packModActivated + 1
         else
             table.insert(modsToSubscribe, modId)
         end
@@ -932,8 +951,23 @@ local function subscribeToPack(packName)
     if #modsToSubscribe > 0 then
         log("I", "Required Mods", "Downloading " .. #modsToSubscribe .. " mods from pack: " .. packName)
         subscriptionQueue = modsToSubscribe
-        startSubscriptionManager()
+        if isSubscribing then
+            startNextSubscription()
+        else
+            startSubscriptionManager()
+        end
+    else
+        if #packQueue > 0 then
+            local packName = table.remove(packQueue, 1)
+            currentPack = nil
+            M.subscribeToPack(packName)
+            guihooks.trigger('onNextPackDownload', packName)
+            return
+        else
+            onAllSubscriptionsComplete()
+        end
     end
+    M.sendPackProgress()
 end
 
 local function deactivatePack(packName)
@@ -975,7 +1009,6 @@ local function onUpdate(dt)
         M.pendingActivation(dt)
     end
     
-    -- Handle retry timers
     for modId, retryData in pairs(retryTimers) do
         retryData.timeLeft = retryData.timeLeft - dt
         
@@ -990,10 +1023,6 @@ local function onUpdate(dt)
         return
     end
     lastUpdateTime = 0
-end
-
-local function onExtensionLoaded()
-    --subscribeToAllRequiredMods()
 end
 
 local function onModActivated(modData)
@@ -1043,12 +1072,39 @@ local function onModDeactivated(modData)
     
     if ourParentMod and modData.modname == ourParentMod then
         disableAllMods()
-        
         ourParentMod = nil
     end
 end
 
--- Export functions for external use
+M.removePackFromQueue = function(packName)
+    for i, pack in ipairs(packQueue) do
+        if pack == packName then
+            table.remove(packQueue, i)
+            M.sendPackProgress()
+            return
+        end
+    end
+end
+
+M.clearPackQueue = function()
+    packQueue = {}
+    currentPack = nil
+    M.sendPackProgress()
+end
+
+M.getPackQueue = function() return packQueue end
+M.sendPackProgress = function()
+    local progressData = {
+        packQueue = packQueue,
+        currentPack = currentPack,
+        packModCount = packModCount,
+        packModDone = packModActivated + packModDownloaded
+    }
+
+    guihooks.trigger('packQueueUpdate', progressData)
+end
+
+-- Exports
 M.onModDeactivated = onModDeactivated
 M.onModActivated = onModActivated
 M.batchActivateMods = batchActivateMods
@@ -1057,10 +1113,8 @@ M.getAllRequiredModIds = collectAllRequiredMods
 M.subscribeToAllMods = subscribeToAllRequiredMods
 M.disableAllMods = disableAllMods
 M.getParentMod = function() return ourParentMod end
-M.onExtensionLoaded = onExtensionLoaded
 M.onUpdate = onUpdate
 
--- Export subscription management functions
 M.getSubscriptionStatus = function() 
     return {
         active = #activeSubscriptions,
@@ -1071,13 +1125,11 @@ M.getSubscriptionStatus = function()
     }
 end
 
--- Export repository-style functions for UI compatibility
 M.getUpdateQueue = function() return updateQueue end
 M.getProgressQueue = function() return progressQueue end
 M.isUpdatingRepo = function() return updatingRepo end
 M.uiUpdateQueue = uiUpdateQueue
 
--- Export additional functions for retry management
 M.getRetryStatus = function() 
     local retryStatus = {}
     for modId, retryData in pairs(retryTimers) do
@@ -1096,8 +1148,6 @@ M.cancelRetries = function()
 end
 
 M.mountLocallyAvailableMods = mountLocallyAvailableMods
-
--- Export pack-specific functions
 M.getPackModIds = getPackModIds
 M.subscribeToPack = subscribeToPack
 M.deactivatePack = deactivatePack

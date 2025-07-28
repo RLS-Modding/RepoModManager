@@ -17,6 +17,7 @@ local baseRetryDelay = 10.0
 local maxRetryDelay = 300.0
 local maxRetryAttempts = 5
 
+local packsQueued = {}
 local packQueue = {}
 local currentPack = nil
 
@@ -805,6 +806,7 @@ function onAllSubscriptionsComplete()
     end
     
     currentPack = nil
+    packsQueued = {}
     guihooks.trigger('UpdateFinished')
     uiUpdateQueue()
     M.sendPackProgress()
@@ -1054,7 +1056,7 @@ end
 
 local function disableAllMods()
     local activeDependencies = {}
-    for modId, _ in pairs(ourDependencyIds) do
+    for _, modId in ipairs(collectAllRequiredMods()) do
         if isModAlreadyActive(modId) then
             table.insert(activeDependencies, modId)
         end

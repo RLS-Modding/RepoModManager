@@ -268,6 +268,7 @@ angular.module('beamng.stuff')
       $scope.enabledPacks[pack.id] = false;
       $scope.saveEnabledState();
       bngApi.engineLua(`extensions.requiredMods.deactivatePack('${pack.packName}')`);
+      bngApi.engineLua('extensions.repoManager.sendPackStatuses()');
     } else {
       bngApi.engineLua(`extensions.requiredMods.subscribeToPack('${pack.packName}')`);
     }
@@ -302,6 +303,7 @@ angular.module('beamng.stuff')
     
     bngApi.engineLua('extensions.requiredMods.clearPackQueue()');
     bngApi.engineLua('extensions.requiredMods.disableAllMods()');
+    bngApi.engineLua('extensions.repoManager.sendPackStatuses()');
   };
 
   // === LUA COMMUNICATION ===

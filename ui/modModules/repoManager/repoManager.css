@@ -105,8 +105,6 @@
   max-width: 100%;
 }
 
-
-
 /* Responsive grid adjustments - always 3 columns on desktop, fewer on mobile */
 @media (min-width: 769px) {
   .downloading-mods-grid {
@@ -238,36 +236,6 @@
 .no-downloads-message p {
   margin: 0;
   font-size: 1.1rem;
-}
-
-.transition-message {
-  text-align: center;
-  color: #3498db;
-  padding: 2rem;
-  background: rgba(52, 152, 219, 0.1);
-  border-radius: 8px;
-  border: 1px solid rgba(52, 152, 219, 0.3);
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.transition-message p {
-  margin: 0.5rem 0;
-  font-size: 1.1rem;
-}
-
-.transition-message .transition-subtitle {
-  color: #7fb3d3;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-}
-
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(52, 152, 219, 0.4);
-  }
 }
 
 .queue-display {
@@ -681,13 +649,7 @@
   max-height: 70%;
 }
 
-.individual-mod-progress {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.pack-summary {
+.download-summary {
   text-align: center;
   margin-bottom: 0.25rem;
 }
@@ -703,111 +665,9 @@
   border: 1px solid rgba(52, 152, 219, 0.3);
 }
 
-.downloading-mods {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  max-height: 120px;
-  overflow-y: auto;
-}
-
-.downloading-mods::-webkit-scrollbar {
-  width: 4px;
-}
-
-.downloading-mods::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-}
-
-.downloading-mods::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-}
-
-.mod-progress-item {
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 6px;
-  padding: 0.4rem 0.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.mod-info-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.3rem;
-}
-
-.mod-id {
-  color: #3498db;
-  font-size: 0.7rem;
-  font-weight: 600;
-  font-family: monospace;
-}
-
-.mod-size {
-  color: #bdc3c7;
-  font-size: 0.65rem;
-  font-weight: 500;
-}
-
-.mod-progress-bar {
-  width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-bottom: 0.2rem;
-}
-
-.mod-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #3498db, #2ecc71);
-  border-radius: 2px;
-  transition: width 0.3s ease;
-  position: relative;
-}
-
-.mod-progress-fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  animation: shimmer 1.5s infinite;
-}
-
 @keyframes shimmer {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
-}
-
-.mod-progress-text {
-  color: white;
-  font-size: 0.65rem;
-  font-weight: 600;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-}
-
-.downloading-info, .pending-info {
-  margin-top: 0.25rem;
-  opacity: 0.9;
-}
-
-.downloading-info small {
-  font-size: 0.7rem;
-  color: #e8f4ff;
-  font-weight: 400;
-}
-
-.pending-info small {
-  font-size: 0.7rem;
-  color: #fff3cd;
-  font-weight: 400;
 }
 
 .card-content {

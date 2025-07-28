@@ -284,7 +284,11 @@ local function loadDependencies()
     guihooks.trigger('PackStatusesLoaded', packStatuses)
 end
 
-
+local function sendPackStatuses()
+    local packStatuses = checkAllPackStatuses()
+    log('D', 'repoManager', 'SENDING PackStatusesLoaded with ' .. #tableKeys(packStatuses or {}) .. ' pack statuses')
+    guihooks.trigger('PackStatusesLoaded', packStatuses)
+end
 
 local function clearModCache()
     modDataCache = {}
@@ -309,6 +313,15 @@ local function getCacheInfo()
         expiredEntries = expiredCount,
         expiryTime = CACHE_EXPIRY_TIME
     }
+end
+
+M.sendPackStatuses = sendPackStatuses
+M.sendPackStatusesDelayed = function(delay)
+    print("Sending pack statuses delayed by " .. delay .. " seconds")
+    core_jobsystem.create( function(job)
+        job.sleep(delay)
+        sendPackStatuses()
+    end)
 end
 
 M.loadDependencies = loadDependencies

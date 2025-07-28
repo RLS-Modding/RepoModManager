@@ -1,5 +1,6 @@
 {
     "name": "Demo Mods",
     "description": "Quality mods that are marked as Demos in Mod Repository",
-    "preview": "image.png"
+    "preview": "image.png",
+    "order": 7
 }

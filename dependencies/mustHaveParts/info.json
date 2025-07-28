@@ -1,5 +1,6 @@
 {
     "name": "Must Have Parts",
     "description": "Must have part mods that work great for Career",
-    "preview": "image.png"
+    "preview": "image.png",
+    "order": 2
 }

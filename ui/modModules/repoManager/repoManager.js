@@ -342,26 +342,32 @@ angular.module('beamng.stuff')
         const packData = data[dirPath];
         const dirName = dirPath.replace('/dependencies/', '');
         
-        const pack = {
-          id: dirName,
-          packName: packData.packName,
-          dirPath: dirPath,
-          name: packData.info.name || dirName,
-          description: packData.info.description || 'No description available',
-          preview: packData.info.preview || 'image.png',
-          imagePath: packData.info.previewPath || (dirPath + '/image.png'),
-          modIds: packData.requiredMods.modIds || [],
-          count: packData.requiredMods.modIds ? packData.requiredMods.modIds.length : 0
-        };
+              const pack = {
+        id: dirName,
+        packName: packData.packName,
+        dirPath: dirPath,
+        name: packData.info.name || dirName,
+        description: packData.info.description || 'No description available',
+        preview: packData.info.preview || 'image.png',
+        imagePath: packData.info.previewPath || (dirPath + '/image.png'),
+        modIds: packData.requiredMods.modIds || [],
+        count: packData.requiredMods.modIds ? packData.requiredMods.modIds.length : 0,
+        order: packData.info.order || 999
+      };
         
         if ($scope.enabledPacks[pack.id] === undefined) {
           $scope.enabledPacks[pack.id] = true;
         }
         
-        return pack;
-      });
-      
-      $scope.loading = false;
+              return pack;
+    });
+    
+    // Sort dependencies by order field
+    $scope.dependencies.sort(function(a, b) {
+      return a.order - b.order;
+    });
+    
+    $scope.loading = false;
       $scope.saveEnabledState();
       
       $scope.updateCurrentDownloadPack();

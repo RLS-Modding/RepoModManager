@@ -203,27 +203,41 @@ local function checkAllPackStatuses()
     local packStatuses = {}
     
     for directory, pData in pairs(packData) do
-        if pData.requiredMods and pData.requiredMods.modIds then
+        if pData.requiredMods then
             local activeCount = 0
-            local totalCount = #pData.requiredMods.modIds
+            local totalCount = 0
             local activeMods = {}
             local inactiveMods = {}
-            
-            for _, modId in ipairs(pData.requiredMods.modIds) do
-                local modName = core_modmanager.getModNameFromID(modId)
-                local isActive = false
-                
-                if modName then
-                    local modData = core_modmanager.getModDB(modName)
-                    if modData and modData.active then
-                        isActive = true
-                        activeCount = activeCount + 1
-                        table.insert(activeMods, modId)
+
+            if pData.requiredMods.modIds then
+                totalCount = #pData.requiredMods.modIds
+                for _, modId in ipairs(pData.requiredMods.modIds) do
+                    local modName = core_modmanager.getModNameFromID(modId)
+                    
+                    if modName then
+                        local modData = core_modmanager.getModDB(modName)
+                        if modData and modData.active then
+                            activeCount = activeCount + 1
+                            table.insert(activeMods, modId)
+                        else
+                            table.insert(inactiveMods, modId)
+                        end
                     else
                         table.insert(inactiveMods, modId)
                     end
-                else
-                    table.insert(inactiveMods, modId)
+                end
+            end
+
+            if pData.requiredMods.modNames then
+                totalCount = totalCount + #pData.requiredMods.modNames
+                for _, modName in ipairs(pData.requiredMods.modNames) do
+                    local modData = core_modmanager.getModDB(modName)
+                    if modData and modData.active then
+                        activeCount = activeCount + 1
+                        table.insert(activeMods, modName)
+                    else
+                        table.insert(inactiveMods, modName)
+                    end
                 end
             end
             

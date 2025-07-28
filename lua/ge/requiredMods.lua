@@ -142,44 +142,56 @@ local function parseRequiredModsFile(filePath)
         return {}
     end
     
-    if not data or not data.modIds or type(data.modIds) ~= "table" then
+    if not data or (not data.modIds or type(data.modIds) ~= "table") and (not data.modNames or type(data.modNames) ~= "table") then
         log("W", "Required Mods", "Invalid format in " .. filePath)
         return {}
     end
-    
-    return data.modIds
+
+    return {modIds = data.modIds, modNames = data.modNames}
 end
 
 local function collectAllRequiredMods()
     local allModIds = {}
+    local allModNames = {}
     local modIdSet = {}
+    local modNameSet = {}
     local basePath = "/dependencies"
 
     if FS:directoryExists(basePath) then
         local requiredModsFiles = findRequiredModsFiles(basePath)
         
         for _, filePath in ipairs(requiredModsFiles) do
-            local modIds = parseRequiredModsFile(filePath)
+            local mods = parseRequiredModsFile(filePath)
             
-            for _, modId in ipairs(modIds) do
+            for _, modId in ipairs(mods.modIds) do
                 if type(modId) == "string" and modId ~= "" and not modIdSet[modId] then
                     table.insert(allModIds, modId)
                     modIdSet[modId] = true
                     ourDependencyIds[modId] = true
                 end
             end
+
+            for _, modName in ipairs(mods.modNames) do
+                if type(modName) == "string" and modName ~= "" and not modNameSet[modName] then
+                    table.insert(allModNames, modName)
+                    modNameSet[modName] = true
+                end
+            end
         end
     end
     
-    return allModIds
+    return {modIds = allModIds, modNames = allModNames}
 end
 
-local function isModAlreadyActive(modId)
+local function isModAlreadyActive(modId, modName)
     if not core_modmanager then
         return false
     end
     
-    local modName = core_modmanager.getModNameFromID(modId)
+    if not modName then
+        modName = core_modmanager.getModNameFromID(modId)
+    end
+    
     if not modName then
         return false
     end
@@ -888,9 +900,11 @@ local function startSubscriptionManager()
 end
 
 local function subscribeToAllRequiredMods()
-    local allModIds = collectAllRequiredMods()
+    local allMods = collectAllRequiredMods()
+    local allModIds = allMods.modIds or {}
+    local allModNames = allMods.modNames or {}
     
-    if #allModIds == 0 then
+    if #allModIds == 0 and #allModNames == 0 then
         return
     end
     
@@ -911,6 +925,12 @@ local function subscribeToAllRequiredMods()
         
         ::continue::
     end
+
+    for _, modName in ipairs(allModNames) do
+        if not isModAlreadyActive(nil, modName) then
+            table.insert(modsToActivate, modName)
+        end
+    end
     
     if #modsToActivate > 0 then
         batchActivateMods(modsToActivate)
@@ -922,7 +942,7 @@ local function subscribeToAllRequiredMods()
     end
 end
 
-local function getPackModIds(packName)
+local function getPackMods(packName)
     local packPath = "/dependencies/" .. packName
     local reqModsPath = packPath .. "/requiredMods.json"
     
@@ -949,14 +969,13 @@ local function subscribeToPack(packName)
     currentPack = packName
     print("Set currentPack to: " .. packName)
     M.sendPackProgress()
-    local packModIds = getPackModIds(packName)
+    local packMods = getPackMods(packName)
 
-    if #packModIds == 0 then
+    if #packMods.modIds == 0 and #packMods.modNames == 0 then
         log("W", "Required Mods", "No mods found in pack: " .. packName)
         return
     end
     
-    log("I", "Required Mods", "Subscribing to pack: " .. packName .. " with " .. #packModIds .. " mods")
     
     local modsToActivate = {}
     local modsToSubscribe = {}
@@ -964,7 +983,10 @@ local function subscribeToPack(packName)
     packModDownloaded = 0
     packModActivated = 0
     
-    for _, modId in ipairs(packModIds) do
+    if not packMods.modIds then
+        goto modNames
+    end
+    for _, modId in ipairs(packMods.modIds) do
         packModCount = packModCount + 1
         ourDependencyIds[modId] = true
         if isModAlreadyActive(modId) then
@@ -982,6 +1004,30 @@ local function subscribeToPack(packName)
         
         ::continue::
     end
+
+    ::modNames::
+    if not packMods.modNames then
+        goto activate
+    end
+    for _, modName in ipairs(packMods.modNames) do
+        packModCount = packModCount + 1
+        if isModAlreadyActive(nil, modName) then
+            packModActivated = packModActivated + 1
+            goto continue
+        end
+        
+        if modName then
+            table.insert(modsToActivate, modName)
+            packModActivated = packModActivated + 1
+        end
+        
+        ::continue::
+    end
+
+    ::activate::
+
+    log("I", "Required Mods", "Subscribing to pack: " .. packName .. " with " .. packModCount .. " mods")
+    
     
     if #modsToActivate > 0 then
         log("I", "Required Mods", "Activating " .. #modsToActivate .. " locally available mods from pack: " .. packName)
@@ -1031,20 +1077,30 @@ function M.queueAllPacks()
 end
 
 local function deactivatePack(packName)
-    local packModIds = getPackModIds(packName)
+    local packMods = getPackMods(packName)
     
-    if #packModIds == 0 then
+    if #packMods.modIds == 0 and #packMods.modNames == 0 then
         log("W", "Required Mods", "No mods found in pack: " .. packName)
         return
     end
     
-    log("I", "Required Mods", "Deactivating pack: " .. packName .. " with " .. #packModIds .. " mods")
+    log("I", "Required Mods", "Deactivating pack: " .. packName .. " with " .. (#packMods.modIds + #packMods.modNames) .. " mods")
     
     local activePackMods = {}
-    for _, modId in ipairs(packModIds) do
-        ourDependencyIds[modId] = nil
-        if isModAlreadyActive(modId) then
-            table.insert(activePackMods, modId)
+    if packMods.modIds then
+        for _, modId in ipairs(packMods.modIds) do
+            ourDependencyIds[modId] = nil
+            if isModAlreadyActive(modId) then
+                table.insert(activePackMods, modId)
+            end
+        end
+    end
+    if packMods.modNames then
+        for _, modName in ipairs(packMods.modNames) do
+            ourDependencyIds[modName] = nil
+            if isModAlreadyActive(nil, modName) then
+                table.insert(activePackMods, modName)
+            end
         end
     end
     
@@ -1114,9 +1170,15 @@ end
 
 local function disableAllMods()
     local activeDependencies = {}
-    for _, modId in ipairs(collectAllRequiredMods()) do
+    local allMods = collectAllRequiredMods()
+    for _, modId in ipairs(allMods.modIds) do
         if isModAlreadyActive(modId) then
             table.insert(activeDependencies, modId)
+        end
+    end
+    for _, modName in ipairs(allMods.modNames) do
+        if isModAlreadyActive(nil, modName) then
+            table.insert(activeDependencies, modName)
         end
     end
     
@@ -1169,7 +1231,7 @@ M.onModDeactivated = onModDeactivated
 M.onModActivated = onModActivated
 M.batchActivateMods = batchActivateMods
 M.batchDeactivateMods = batchDeactivateMods
-M.getAllRequiredModIds = collectAllRequiredMods
+M.getAllRequiredMods = collectAllRequiredMods
 M.subscribeToAllMods = subscribeToAllRequiredMods
 M.disableAllMods = disableAllMods
 M.getParentMod = function() return ourParentMod end
@@ -1208,7 +1270,7 @@ M.cancelRetries = function()
 end
 
 M.mountLocallyAvailableMods = mountLocallyAvailableMods
-M.getPackModIds = getPackModIds
+M.getPackMods = getPackMods
 M.subscribeToPack = subscribeToPack
 M.deactivatePack = deactivatePack
 

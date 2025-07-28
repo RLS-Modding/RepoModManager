@@ -1011,6 +1011,25 @@ local function subscribeToPack(packName)
     M.sendPackProgress()
 end
 
+function M.queueAllPacks()
+    local availablePacks = {}
+    local packs = FS:findFiles("/dependencies", "*", -1, true, false)
+    for _, pack in ipairs(packs) do
+        if string.match(pack, ".*requiredMods.json")  then
+            local packName = pack:gsub("/requiredMods.json", "")
+            packName = packName:gsub("/dependencies/", "")
+            print("Pack: " .. tostring(packName))
+            table.insert(availablePacks, packName)
+        end
+    end
+    if #availablePacks > 0 then
+        local firstPack = table.remove(availablePacks, 1)
+        packQueue = availablePacks
+        subscribeToPack(firstPack)
+    end
+    M.sendPackProgress()
+end
+
 local function deactivatePack(packName)
     local packModIds = getPackModIds(packName)
     

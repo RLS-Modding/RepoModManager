@@ -286,13 +286,7 @@ angular.module('beamng.stuff')
   };
 
   $scope.installAllPacks = function() {
-    const packsToInstall = $scope.dependencies.filter(function(pack) {
-      return !$scope.enabledPacks[pack.id] && !$scope.isPackDownloading(pack);
-    });
-    
-    packsToInstall.forEach(function(pack) {
-      bngApi.engineLua(`extensions.requiredMods.subscribeToPack('${pack.packName}')`);
-    });
+    bngApi.engineLua('extensions.requiredMods.queueAllPacks()');
   };
   
   $scope.uninstallAllPacks = function() {
@@ -369,6 +363,8 @@ angular.module('beamng.stuff')
       
       $scope.loading = false;
       $scope.saveEnabledState();
+      
+      $scope.updateCurrentDownloadPack();
       
       setTimeout(function() {
         $scope.requestQueueUpdate();

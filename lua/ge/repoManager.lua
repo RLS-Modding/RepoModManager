@@ -291,11 +291,32 @@ local function loadDependencies()
     
     local packStatuses = checkAllPackStatuses()
     
+    -- Get mod-to-pack association data
+    local modToPacks = M.getModToPacks()
+    local baseMod = M.getBaseMod()
+    
+    -- Create pack-to-mod mapping for the frontend
+    local packToMod = {}
+    for modName, packs in pairs(modToPacks) do
+        for _, packName in ipairs(packs) do
+            packToMod[packName] = modName
+        end
+    end
+    
     log('D', 'repoManager', 'SENDING DependenciesLoaded with ' .. #tableKeys(packData or {}) .. ' packs')
     guihooks.trigger('DependenciesLoaded', packData)
     
     log('D', 'repoManager', 'SENDING PackStatusesLoaded with ' .. #tableKeys(packStatuses or {}) .. ' pack statuses')
     guihooks.trigger('PackStatusesLoaded', packStatuses)
+    
+    -- Send mod association data
+    local modAssociationData = {
+        packToMod = packToMod,
+        baseMod = baseMod,
+        modToPacks = modToPacks
+    }
+    log('D', 'repoManager', 'SENDING ModAssociationLoaded with pack-to-mod mapping')
+    guihooks.trigger('ModAssociationLoaded', modAssociationData)
 end
 
 local function sendPackStatuses()
@@ -451,6 +472,54 @@ local function getModToPacks()
     return modToPacks
 end
 
+local function findModContainingFile(targetFile)
+    local activeMods = getActiveMods()
+    local containingMods = {}
+    
+    local normalizedTarget = normalizePath(targetFile)
+    
+    for modName, modData in pairs(activeMods) do
+        local modFiles = getModFiles(modData, modName)
+        for _, filePath in ipairs(modFiles) do
+            if filePath == normalizedTarget then
+                table.insert(containingMods, {
+                    modName = modName,
+                    isActive = true,
+                    isZipped = modData.fullpath ~= nil,
+                    modPath = modData.unpackedPath or modData.fullpath
+                })
+                log('D', 'repoManager', 'File "' .. targetFile .. '" found in active mod: ' .. modName)
+                break -- Found in this mod, move to next mod
+            end
+        end
+    end
+    
+    return containingMods
+end
+
+local function getFileOwnerMod(targetFile)
+    local containingMods = findModContainingFile(targetFile)
+    
+    if #containingMods > 0 then
+        if #containingMods > 1 then
+            log('W', 'repoManager', 'File "' .. targetFile .. '" found in multiple mods: ' .. 
+                table.concat(tableKeys(containingMods), ', ') .. '. Returning first active mod.')
+        end
+        return containingMods[1].modName
+    end
+    
+    return nil
+end
+
+local function isFileInAnyMod(targetFile)
+    local containingMods = findModContainingFile(targetFile)
+    return #containingMods > 0
+end
+
+local function getBaseMod()
+    return getFileOwnerMod("lua/ge/repoManager.lua")
+end
+
 M.sendPackStatuses = sendPackStatuses
 M.sendPackStatusesDelayed = function(delay)
     print("Sending pack statuses delayed by " .. delay .. " seconds")
@@ -467,5 +536,9 @@ M.checkAllPackStatuses = checkAllPackStatuses
 M.clearModCache = clearModCache
 M.getCacheInfo = getCacheInfo
 M.getModToPacks = getModToPacks
+M.findModContainingFile = findModContainingFile
+M.getFileOwnerMod = getFileOwnerMod
+M.isFileInAnyMod = isFileInAnyMod
+M.getBaseMod = getBaseMod
 
 return M

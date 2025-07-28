@@ -31,6 +31,13 @@ angular.module('beamng.stuff')
   $scope.requestedMods = [];
   $scope.loadedModsCount = 0;
   
+  // Mod association data
+  $scope.packToMod = {};
+  $scope.baseMod = null;
+  $scope.modToPacks = {};
+  $scope.modSections = [];
+  $scope.expandedSections = {};
+  
   $scope._intervals = [];
   $scope._timeouts = [];
 
@@ -72,6 +79,129 @@ angular.module('beamng.stuff')
       return displayName;
     }
     return $scope.getShortModId(modData.modId);
+  };
+
+  // === MOD SECTION FUNCTIONS ===
+  $scope.buildModSections = function() {
+    if (!$scope.dependencies || $scope.dependencies.length === 0) {
+      $scope.modSections = [];
+      return;
+    }
+    
+    const sections = {};
+    
+    $scope.dependencies.forEach(function(pack) {
+      const sourceMod = $scope.packToMod[pack.packName];
+      let modName = sourceMod;
+      
+      // Use "Base" for the base mod
+      if (sourceMod === $scope.baseMod) {
+        modName = 'Base';
+      } else if (!sourceMod) {
+        modName = 'Unknown';
+      }
+      
+      if (!sections[modName]) {
+        sections[modName] = {
+          modName: modName,
+          sourceMod: sourceMod,
+          packs: [],
+          isBase: sourceMod === $scope.baseMod
+        };
+      }
+      
+      sections[modName].packs.push(pack);
+    });
+    
+    // Convert to array and sort (Base first, then alphabetically)
+    $scope.modSections = Object.values(sections).sort(function(a, b) {
+      if (a.isBase) return -1;
+      if (b.isBase) return 1;
+      return a.modName.localeCompare(b.modName);
+    });
+    
+    // Initialize expanded state for sections
+    $scope.modSections.forEach(function(section) {
+      if ($scope.expandedSections[section.modName] === undefined) {
+        $scope.expandedSections[section.modName] = section.isBase; // Base expanded by default
+      }
+    });
+  };
+  
+  $scope.toggleSection = function(sectionName) {
+    $scope.expandedSections[sectionName] = !$scope.expandedSections[sectionName];
+    $scope.saveExpandedState();
+  };
+  
+  $scope.isSectionExpanded = function(sectionName) {
+    return $scope.expandedSections[sectionName] || false;
+  };
+  
+  $scope.saveExpandedState = function() {
+    localStorage.setItem('repoManager_expandedSections', JSON.stringify($scope.expandedSections));
+  };
+  
+  $scope.loadExpandedState = function() {
+    const saved = localStorage.getItem('repoManager_expandedSections');
+    if (saved) {
+      $scope.expandedSections = JSON.parse(saved);
+    }
+  };
+  
+  $scope.queueAllPacksInSection = function(section) {
+    if (!section.packs || section.packs.length === 0) return;
+    
+    const packNames = section.packs.map(function(pack) {
+      return pack.packName;
+    });
+    
+    const luaTable = '{' + packNames.map(name => `'${name}'`).join(',') + '}';
+    bngApi.engineLua(`extensions.requiredMods.queuePacks(${luaTable})`);
+  };
+  
+  $scope.deactivateAllPacksInSection = function(section) {
+    if (!section.packs || section.packs.length === 0) return;
+    
+    // Update local state
+    section.packs.forEach(function(pack) {
+      $scope.enabledPacks[pack.id] = false;
+    });
+    $scope.saveEnabledState();
+    
+    const packNames = section.packs.map(function(pack) {
+      return pack.packName;
+    });
+    
+    const luaTable = '{' + packNames.map(name => `'${name}'`).join(',') + '}';
+    bngApi.engineLua(`extensions.requiredMods.deactivatePacks(${luaTable})`);
+    bngApi.engineLua('extensions.repoManager.sendPackStatuses()');
+  };
+  
+  $scope.getSectionStatus = function(section) {
+    if (!section.packs || section.packs.length === 0) return { text: 'EMPTY', class: 'empty' };
+    
+    const activePacks = section.packs.filter(pack => $scope.enabledPacks[pack.id]);
+    const downloadingPacks = section.packs.filter(pack => $scope.isPackDownloading(pack));
+    
+    if (downloadingPacks.length > 0) {
+      return { text: 'DOWNLOADING', class: 'downloading' };
+    }
+    
+    if (activePacks.length === section.packs.length) {
+      return { text: 'ALL ENABLED', class: 'enabled' };
+    } else if (activePacks.length > 0) {
+      return { text: 'PARTIAL', class: 'partial' };
+    } else {
+      return { text: 'DISABLED', class: 'disabled' };
+    }
+  };
+  
+  $scope.canQueueSection = function(section) {
+    return section.packs && section.packs.some(pack => !$scope.enabledPacks[pack.id] && !$scope.isPackDownloading(pack));
+  };
+  
+  $scope.canDeactivateSection = function(section) {
+    return section.packs && section.packs.some(pack => $scope.enabledPacks[pack.id]);
   };
 
   // === SIMPLE PACK STATUS FUNCTIONS ===
@@ -372,6 +502,11 @@ angular.module('beamng.stuff')
       
       $scope.updateCurrentDownloadPack();
       
+      // Build mod sections if we have mod association data
+      if ($scope.packToMod && Object.keys($scope.packToMod).length > 0) {
+        $scope.buildModSections();
+      }
+      
       setTimeout(function() {
         $scope.requestQueueUpdate();
       }, 100);
@@ -393,6 +528,21 @@ angular.module('beamng.stuff')
       
       $scope.saveEnabledState();
       $scope.requestQueueUpdate();
+    });
+  });
+  
+  $scope.$on('ModAssociationLoaded', function(event, data) {
+    $scope.$apply(function() {
+      if (data) {
+        $scope.packToMod = data.packToMod || {};
+        $scope.baseMod = data.baseMod;
+        $scope.modToPacks = data.modToPacks || {};
+        
+        // Build mod sections if we have dependencies loaded
+        if ($scope.dependencies && $scope.dependencies.length > 0) {
+          $scope.buildModSections();
+        }
+      }
     });
   });
   
@@ -568,6 +718,7 @@ angular.module('beamng.stuff')
 
   // === INITIALIZATION ===
   $scope.loadEnabledState();
+  $scope.loadExpandedState();
   $scope.loadDependencies();
   
   // Safety timeout

@@ -1076,6 +1076,14 @@ function M.queueAllPacks()
     M.sendPackProgress()
 end
 
+local function queuePacks(packNames)
+    local queue = packNames
+    local firstPack = table.remove(queue, 1)
+    packQueue = queue
+    subscribeToPack(firstPack)
+    M.sendPackProgress()
+end
+
 local function deactivatePack(packName)
     local packMods = getPackMods(packName)
     
@@ -1109,6 +1117,34 @@ local function deactivatePack(packName)
         batchDeactivateMods(activePackMods)
     else
         log("I", "Required Mods", "No active mods found in pack: " .. packName)
+    end
+end
+
+local function deactivatePacks(packNames)
+    local activePackMods = {}
+    for _, packName in ipairs(packNames) do
+        local packMods = getPackMods(packName)
+        if packMods.modIds then
+            for _, modId in ipairs(packMods.modIds) do
+                if isModAlreadyActive(modId) then
+                    table.insert(activePackMods, modId)
+                end
+            end
+        end
+        if packMods.modNames then
+            for _, modName in ipairs(packMods.modNames) do
+                if isModAlreadyActive(nil, modName) then
+                    table.insert(activePackMods, modName)
+                end
+            end
+        end
+    end
+
+    if #activePackMods > 0 then
+        log("I", "Required Mods", "Deactivating " .. #activePackMods .. " active mods from packs: " .. table.concat(packNames, ", "))
+        batchDeactivateMods(activePackMods)
+    else
+        log("I", "Required Mods", "No active mods found in packs: " .. table.concat(packNames, ", "))
     end
 end
 
@@ -1273,5 +1309,7 @@ M.mountLocallyAvailableMods = mountLocallyAvailableMods
 M.getPackMods = getPackMods
 M.subscribeToPack = subscribeToPack
 M.deactivatePack = deactivatePack
+M.deactivatePacks = deactivatePacks
+M.queuePacks = queuePacks
 
 return M

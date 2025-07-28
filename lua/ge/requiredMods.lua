@@ -192,6 +192,35 @@ local function isModAlreadyActive(modId)
     return modData.active == true
 end
 
+local function saveModStateToPersistence(modIdentifiers, newActiveState)
+    local persistencyfile = 'mods/db.json'
+    
+    local persistenceData = jsonReadFile(persistencyfile)
+    if not persistenceData or not persistenceData.mods then
+        log("W", "Required Mods", "Could not read mod persistence file")
+        return
+    end
+    
+    local updatedCount = 0
+    
+    for _, identifier in ipairs(modIdentifiers) do
+        local modName = identifier
+        
+        if not persistenceData.mods[identifier] then
+            modName = core_modmanager.getModNameFromID(identifier)
+        end
+        
+        if modName and persistenceData.mods[modName] then
+            persistenceData.mods[modName].active = newActiveState
+            updatedCount = updatedCount + 1
+        end
+    end
+
+    if updatedCount > 0 then
+        jsonWriteFile(persistencyfile, persistenceData, true)
+    end
+end
+
 local function batchActivateMods(modNames)
     if not modNames or #modNames == 0 then
         return
@@ -303,6 +332,8 @@ local function batchActivateMods(modNames)
     end
     
     loadManualUnloadExtensions()
+    
+    saveModStateToPersistence(modNames, true)
 end
 
 local function batchDeactivateMods(modIdentifiers)
@@ -397,6 +428,8 @@ local function batchDeactivateMods(modIdentifiers)
     if #allMountedFilesChange > 0 then
         _G.onFileChanged(allMountedFilesChange)
     end
+    
+    saveModStateToPersistence(modIdentifiers, false)
 end
 
 local function activateDownloadedMods(successfulSubs)

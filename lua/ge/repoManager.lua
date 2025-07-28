@@ -315,6 +315,128 @@ local function getCacheInfo()
     }
 end
 
+-- Helper function to normalize file paths
+local function normalizePath(path)
+    if not path then return "" end
+    path = path:gsub("\\", "/")
+    path = path:gsub("//+", "/")
+    if not path:startswith("/") then
+        path = "/" .. path
+    end
+    return path
+end
+
+-- Helper function to get files from a ZIP archive
+local function getZipFileMap(zipPath)
+    local zip = ZipArchive()
+    local fileMap = {}
+    
+    if zip:openArchiveName(zipPath, "R") then
+        local fileList = zip:getFileList()
+        for i, f in ipairs(fileList) do
+            fileMap[f] = i
+        end
+        zip:close()
+    end
+    
+    return fileMap
+end
+
+-- Get all active mods
+local function getActiveMods()    
+    local activeMods = {}
+    local allMods = core_modmanager.getMods()
+    
+    if not allMods then
+        return {}
+    end
+    
+    for modName, modData in pairs(allMods) do
+        if modData.active then
+            activeMods[modName] = modData
+        end
+    end
+    
+    return activeMods
+end
+
+-- Get files from a specific mod (handles both unpacked and ZIP mods)
+local function getModFiles(modData, modName)
+    local files = {}
+    
+    -- For mods with hash data (most common)
+    if modData.modData and modData.modData.hashes then
+        for _, hashData in ipairs(modData.modData.hashes) do
+            local filePath = normalizePath(hashData[1])
+            table.insert(files, filePath)
+        end
+    -- For unpacked mods
+    elseif modData.unpackedPath and FS:directoryExists(modData.unpackedPath) then
+        local modFiles = FS:findFiles(modData.unpackedPath, '*', -1, true, false)
+        for _, fullPath in ipairs(modFiles) do
+            local relativePath = fullPath:gsub(modData.unpackedPath, "")
+            relativePath = normalizePath(relativePath)
+            table.insert(files, relativePath)
+        end
+    -- For ZIP-based mods
+    elseif modData.fullpath and FS:fileExists(modData.fullpath) then
+        local zipFileMap = getZipFileMap(modData.fullpath)
+        for filePath, _ in pairs(zipFileMap) do
+            local normalized = normalizePath(filePath)
+            table.insert(files, normalized)
+        end
+    end
+    
+    return files
+end
+
+-- Main function to map mods to their dependency packs
+local function getModToPacks()
+    local activeMods = getActiveMods()
+    local modToPacks = {}
+    
+    for modName, modData in pairs(activeMods) do
+        local modFiles = getModFiles(modData, modName)
+        local dependencyPacks = {}
+        
+        -- Look for files in dependencies directories
+        for _, filePath in ipairs(modFiles) do
+            -- Check if this file is in a dependencies directory
+            local dependenciesMatch = filePath:match("^/dependencies/([^/]+)/")
+            if dependenciesMatch then
+                -- Check if this is a pack directory with required files
+                local hasInfo = false
+                local hasRequiredMods = false
+                
+                for _, checkPath in ipairs(modFiles) do
+                    if checkPath == "/dependencies/" .. dependenciesMatch .. "/info.json" then
+                        hasInfo = true
+                    elseif checkPath == "/dependencies/" .. dependenciesMatch .. "/requiredMods.json" then
+                        hasRequiredMods = true
+                    end
+                end
+                
+                -- If both required files exist, this is a valid pack
+                if hasInfo and hasRequiredMods then
+                    if not dependencyPacks[dependenciesMatch] then
+                        dependencyPacks[dependenciesMatch] = true
+                        log('D', 'repoManager', 'Found pack "' .. dependenciesMatch .. '" in mod: ' .. modName)
+                    end
+                end
+            end
+        end
+        
+        -- Only add mods that have at least one pack
+        local packList = tableKeys(dependencyPacks)
+        if #packList > 0 then
+            modToPacks[modName] = packList
+            log('D', 'repoManager', 'Mod ' .. modName .. ' has ' .. #packList .. ' packs: ' .. table.concat(packList, ', '))
+        end
+    end
+    
+    return modToPacks
+end
+
 M.sendPackStatuses = sendPackStatuses
 M.sendPackStatusesDelayed = function(delay)
     print("Sending pack statuses delayed by " .. delay .. " seconds")
@@ -330,5 +452,6 @@ M.requestMultipleMods = requestMultipleMods
 M.checkAllPackStatuses = checkAllPackStatuses
 M.clearModCache = clearModCache
 M.getCacheInfo = getCacheInfo
+M.getModToPacks = getModToPacks
 
 return M

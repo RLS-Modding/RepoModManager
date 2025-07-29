@@ -1091,9 +1091,7 @@ local function deactivatePack(packName)
         log("W", "Required Mods", "No mods found in pack: " .. packName)
         return
     end
-    
-    log("I", "Required Mods", "Deactivating pack: " .. packName .. " with " .. (#packMods.modIds + #packMods.modNames) .. " mods")
-    
+        
     local activePackMods = {}
     if packMods.modIds then
         for _, modId in ipairs(packMods.modIds) do
@@ -1111,12 +1109,9 @@ local function deactivatePack(packName)
             end
         end
     end
-    
+
     if #activePackMods > 0 then
-        log("I", "Required Mods", "Deactivating " .. #activePackMods .. " active mods from pack: " .. packName)
         batchDeactivateMods(activePackMods)
-    else
-        log("I", "Required Mods", "No active mods found in pack: " .. packName)
     end
 end
 

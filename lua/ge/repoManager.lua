@@ -587,6 +587,37 @@ local function getAllAvailableMods()
             if modInfo.tagid or modInfo.modname then
                 table.insert(availableMods, modInfo)
             end
+        elseif modData then
+           
+            local modInfo = {
+                modname = modName,
+                name = modName,
+                title = nil,
+                tagid = nil,
+                author = nil,
+                version = nil,
+                description = "Mod without metadata",
+                active = modData.active or false,
+                fullpath = modData.fullpath,
+                dirname = modData.dirname,
+                hasModData = false
+            }
+            
+            if modData.modInfoPath then
+                local iconPath = modData.modInfoPath .. "icon.jpg"
+                if FS:fileExists(iconPath) then
+                    modInfo.iconPath = iconPath
+                    modInfo.hasIcon = true
+                else
+                    modInfo.hasIcon = false
+                end
+            else
+                modInfo.hasIcon = false
+            end
+            
+            table.insert(availableMods, modInfo)
+        else
+            log('W', 'repoManager', 'Mod ' .. tostring(modName) .. ' has no valid data structure')
         end
     end
     

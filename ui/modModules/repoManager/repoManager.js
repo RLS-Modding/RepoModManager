@@ -247,9 +247,16 @@ angular.module('beamng.stuff')
     
     const activePacks = realPacks.filter(pack => $scope.enabledPacks[pack.id]);
     const downloadingPacks = realPacks.filter(pack => $scope.isPackDownloading(pack));
+    const pendingPacks = realPacks.filter(pack => 
+      $scope.packStatuses[pack.packName] && $scope.packStatuses[pack.packName].isPending
+    );
     
     if (downloadingPacks.length > 0) {
       return { text: 'DOWNLOADING', class: 'downloading' };
+    }
+    
+    if (pendingPacks.length > 0) {
+      return { text: 'PENDING', class: 'pending' };
     }
     
     if (activePacks.length === realPacks.length) {
@@ -430,6 +437,10 @@ angular.module('beamng.stuff')
       return { text: 'Downloading...', disabled: true, class: 'downloading-btn' };
     }
     
+    if ($scope.packStatuses[pack.packName] && $scope.packStatuses[pack.packName].isPending) {
+      return { text: 'Activating...', disabled: true, class: 'pending-btn' };
+    }
+    
     if ($scope.isPackQueued(pack.id)) {
       const position = $scope.packQueue.indexOf(pack.packName) + 1;
       return { text: 'Remove from Queue (' + position + ')', disabled: false, class: 'queue-btn' };
@@ -453,6 +464,10 @@ angular.module('beamng.stuff')
     
     if ($scope.isPackDownloading(pack)) {
       return { text: 'DOWNLOADING', class: 'downloading' };
+    }
+    
+    if ($scope.packStatuses[pack.packName] && $scope.packStatuses[pack.packName].isPending) {
+      return { text: 'PENDING', class: 'pending' };
     }
     
     if ($scope.enabledPacks[pack.id]) {

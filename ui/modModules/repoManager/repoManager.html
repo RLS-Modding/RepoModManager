@@ -135,12 +135,16 @@
                 <h3>{{ pack.name }}</h3>
                 <div class="mod-count-container" ng-if="!pack.isCreatePack">
                   <span class="mod-count" ng-if="!packStatuses[pack.packName]">{{ pack.count }} mods</span>
+                  <span class="mod-count pending"
+                    ng-if="packStatuses[pack.packName] && packStatuses[pack.packName].isPending">
+                    {{ packStatuses[pack.packName].totalCount }} mods pending
+                  </span>
                   <span class="mod-count active"
-                    ng-if="packStatuses[pack.packName] && packStatuses[pack.packName].activeCount > 0">
+                    ng-if="packStatuses[pack.packName] && !packStatuses[pack.packName].isPending && packStatuses[pack.packName].activeCount > 0">
                     {{ packStatuses[pack.packName].activeCount }}/{{ packStatuses[pack.packName].totalCount }} active
                   </span>
                   <span class="mod-count inactive"
-                    ng-if="packStatuses[pack.packName] && packStatuses[pack.packName].activeCount === 0">
+                    ng-if="packStatuses[pack.packName] && !packStatuses[pack.packName].isPending && packStatuses[pack.packName].activeCount === 0">
                     0/{{ packStatuses[pack.packName].totalCount }} active
                   </span>
                 </div>

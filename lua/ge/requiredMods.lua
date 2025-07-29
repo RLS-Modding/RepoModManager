@@ -21,6 +21,8 @@ local packsQueued = {}
 local packQueue = {}
 local currentPack = nil
 
+local pendingPacks = {}
+
 local packModCount = 0
 local packModDownloaded = 0
 local packModActivated = 0
@@ -776,12 +778,14 @@ function startModDownload(modData)
         if #activeSubscriptions == 0 and #subscriptionQueue == 0 then
             if #packQueue > 0 then
                 local packName = table.remove(packQueue, 1)
+                table.insert(pendingPacks, currentPack)
                 currentPack = nil
                 M.subscribeToPack(packName)
                 guihooks.trigger('onNextPackDownload', packName)
                 return
             end
             onAllSubscriptionsComplete()
+            pendingPacks = {}
         end
     end
     
@@ -1037,6 +1041,8 @@ local function subscribeToPack(packName)
         log("I", "Required Mods", "Activating " .. #modsToActivate .. " locally available mods from pack: " .. packName)
         batchActivateMods(modsToActivate)
     end
+
+    repoManager.sendPackStatuses()
 
     if #modsToSubscribe > 0 then
         log("I", "Required Mods", "Downloading " .. #modsToSubscribe .. " mods from pack: " .. packName)
@@ -1310,5 +1316,6 @@ M.subscribeToPack = subscribeToPack
 M.deactivatePack = deactivatePack
 M.deactivatePacks = deactivatePacks
 M.queuePacks = queuePacks
+M.getPendingPacks = function() return pendingPacks end
 
 return M

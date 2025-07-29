@@ -202,6 +202,13 @@ end
 local function checkAllPackStatuses()
     local packStatuses = {}
     
+    -- Get pending packs from requiredMods
+    local pendingPacks = extensions.requiredMods.getPendingPacks()
+    local pendingPacksSet = {}
+    for _, packName in ipairs(pendingPacks) do
+        pendingPacksSet[packName] = true
+    end
+    
     for directory, pData in pairs(packData) do
         if pData.requiredMods then
             local activeCount = 0
@@ -243,6 +250,7 @@ local function checkAllPackStatuses()
             
             local isPackActive = activeCount > 0
             local isPackFullyActive = activeCount == totalCount
+            local isPending = pendingPacksSet[pData.packName] == true
             
             packStatuses[pData.packName] = {
                 packName = pData.packName,
@@ -251,11 +259,16 @@ local function checkAllPackStatuses()
                 totalCount = totalCount,
                 isPackActive = isPackActive,
                 isPackFullyActive = isPackFullyActive,
+                isPending = isPending,
                 activeMods = activeMods,
                 inactiveMods = inactiveMods
             }
             
-            log('D', 'repoManager', 'Pack: ' .. pData.packName .. ' - ' .. activeCount .. '/' .. totalCount .. ' active')
+            local statusText = activeCount .. '/' .. totalCount .. ' active'
+            if isPending then
+                statusText = statusText .. ' (pending)'
+            end
+            log('D', 'repoManager', 'Pack: ' .. pData.packName .. ' - ' .. statusText)
         end
     end
     

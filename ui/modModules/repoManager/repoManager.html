@@ -115,7 +115,7 @@
             ng-class="{'disabled': !enabledPacks[pack.id], 'downloading': currentPack === pack.packName}">
             <div class="card-image-container">
               <img ng-src="{{pack.imagePath}}" alt="{{pack.name}}" class="pack-image"
-                onerror="this.src='/ui/modModules/repoManager/icons/repoManagerIcon.svg'">
+                onerror="this.src='/ui/modModules/repoManager/icons/repoManagerIcon.png'">
               <div class="pack-status" ng-class="getPackStatusState(pack).class">
                 <span>{{getPackStatusState(pack).text}}</span>
               </div>
@@ -332,9 +332,9 @@
             </div>
             
             <div class="mod-icon-container">
-              <img ng-src="{{ mod.iconPath || '/ui/modModules/repoManager/icons/default-mod-icon.svg' }}" 
+              <img ng-src="{{ mod.iconPath || '/ui/modModules/repoManager/icons/default-mod-icon.png' }}" 
                    class="mod-icon"
-                   onerror="this.src='/ui/modModules/repoManager/icons/default-mod-icon.svg'">
+                   onerror="this.src='/ui/modModules/repoManager/icons/default-mod-icon.png'">
             </div>
             
             <div class="mod-basic-info">

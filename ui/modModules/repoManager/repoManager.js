@@ -149,7 +149,7 @@ angular.module('beamng.stuff')
       packName: '__create_pack__',
       name: 'Create New Pack',
       description: 'Create your own custom dependency pack from your installed mods',
-      imagePath: '/ui/modModules/repoManager/icons/create-pack.svg',
+      imagePath: '/ui/modModules/repoManager/icons/create-pack.png',
       count: 0,
       isCreatePack: true,
       order: 999
@@ -1167,7 +1167,7 @@ export default angular.module('repoManager', ['ui.router'])
         window.bridge.events.on("MainMenuButtons", function(addButton) {
           if (typeof addButton === 'function') {
             const buttonConfig = {
-              icon: '/ui/modModules/repoManager/icons/repoManagerIcon.svg',
+              icon: '/ui/modModules/repoManager/icons/repoManagerIcon.png',
               targetState: 'menu.repoManager',
               translateid: 'Repo Manager'
             };

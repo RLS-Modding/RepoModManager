@@ -1,7 +1,15 @@
 'use strict'
 
 angular.module('beamng.stuff')
-.controller('RepoManagerController', ['$scope', '$state', function($scope, $state) {
+
+.filter('trusted', ['$sce', function($sce) {
+  return function(html) {
+    if (!html) return '';
+    return $sce.trustAsHtml(html);
+  };
+}])
+
+.controller('RepoManagerController', ['$scope', '$state', '$sanitize', function($scope, $state, $sanitize) {
   // === CORE STATE ===
   $scope.dependencies = [];
   $scope.loading = true;
@@ -29,7 +37,7 @@ angular.module('beamng.stuff')
   $scope.loadingPackDetails = false;
   $scope.showDetailsModal = false;
   $scope.currentPage = 1;
-  $scope.modsPerPage = 9;
+  $scope.modsPerPage = 12;
   $scope.totalPages = 1;
   $scope.requestedMods = [];
   $scope.loadedModsCount = 0;
@@ -49,6 +57,45 @@ angular.module('beamng.stuff')
   $scope.createPackFilter = '';
   $scope.filteredMods = [];
   $scope.editingPack = null; // Track if we're editing an existing pack
+  
+  // Repository browsing state
+  $scope.createPackActiveTab = 'local'; // 'local' or 'repo'
+  $scope.repoMods = [];
+  $scope.loadingRepoMods = false;
+  $scope.repoCurrentPage = 1;
+  $scope.repoTotalPages = 1;
+  $scope.repoModsPerPage = 12;
+  $scope.repoFilter = {
+    query: '',
+    orderBy: 'update',
+    order: 'desc',
+    categories: [3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15], // All categories by default
+    subscribedOnly: false
+  };
+  $scope.repoCategories = [
+    { category: 'vehicles', name: 'Land Vehicles', value: 3, originalTxt: "Land" },
+    { category: 'vehicles', name: 'Air Vehicles', value: 4, originalTxt: "Air" },
+    { category: 'vehicles', name: 'Props', value: 5, originalTxt: "Props" },
+    { category: 'vehicles', name: 'Boats', value: 6, originalTxt: "Boats" },
+    { category: 'vehicles', name: 'Configurations', value: 14, originalTxt: "Configurations" },
+    { category: 'none', name: 'Scenarios', value: 8, originalTxt: "Scenarios" },
+    { category: 'none', name: 'Terrains/Maps', value: 9, originalTxt: "Terrains, Levels, Maps" },
+    { category: 'none', name: 'User Interface', value: 10, originalTxt: "User Interface Apps" },
+    { category: 'none', name: 'Sounds', value: 13, originalTxt: "Sounds" },
+    { category: 'none', name: 'License Plates', value: 15, originalTxt: "License Plates" },
+    { category: 'none', name: 'Mods of Mods', value: 7, originalTxt: "Mods of Mods" },
+    { category: 'none', name: 'Skins', value: 12, originalTxt: "Skins" }
+  ];
+  $scope.showCategoryFilter = false;
+  
+  // Custom dropdown states
+  $scope.showSortByDropdown = false;
+  $scope.showOrderDropdown = false;
+  
+  // Mod info modal states
+  $scope.showModInfoModal = false;
+  $scope.loadingModInfo = false;
+  $scope.selectedModInfo = null;
   
   // Delete confirmation modal
   $scope.showDeleteConfirmModal = false;
@@ -694,7 +741,13 @@ angular.module('beamng.stuff')
   
   $scope.$on('AllModsLoaded', function(event, data) {
     $scope.$apply(function() {
-      $scope.allAvailableMods = data || [];
+      $scope.allAvailableMods = (data || []).map(function(mod) {
+        // Ensure author field is set for local mods (check multiple possible field names)
+        if (!mod.author) {
+          mod.author = mod.username || mod.creator || mod.user_name || mod.modAuthor || null;
+        }
+        return mod;
+      });
       $scope.loadingAllMods = false;
       $scope.filterMods();
     });
@@ -761,6 +814,37 @@ angular.module('beamng.stuff')
     });
   });
   
+  // Repository mod list event handler
+  $scope.$on('ModListReceived', function(event, data) {
+    $scope.$apply(function() {
+      $scope.loadingRepoMods = false;
+      
+      if (data && data.data) {
+        $scope.repoMods = data.data.map(function(mod) {
+          // Process mod data similar to base game repository
+          mod.icon = "https://api.beamng.com/s1/v4/download/mods/" + mod.path + "icon.jpg";
+          mod.downTxt = mod.download_count > 1000 ? 
+            (mod.download_count / 1000).toFixed(0) + "K" : 
+            mod.download_count;
+          mod.rating_avg = parseFloat(mod.rating_avg || 0).toFixed(0);
+          mod.filesize_display = $scope.formatFileSize(mod.filesize);
+          
+          // Ensure author field is set (check multiple possible field names)
+          if (!mod.author) {
+            mod.author = mod.username || mod.creator || mod.user_name || null;
+          }
+          
+          return mod;
+        });
+        
+        $scope.repoTotalPages = Math.ceil(data.count / $scope.repoModsPerPage);
+      } else {
+        $scope.repoMods = [];
+        $scope.repoTotalPages = 1;
+      }
+    });
+  });
+  
   $scope.preselectPackMods = function(pack) {
     // Clear existing selections first
     $scope.createPackForm.selectedMods = {};
@@ -806,6 +890,12 @@ angular.module('beamng.stuff')
     $scope.currentPage = 1;
     $scope.totalPages = Math.ceil(pack.modIds.length / $scope.modsPerPage);
     $scope.requestedMods = [];
+    
+    // Load available mods if not already loaded for mod status checking
+    if (!$scope.allAvailableMods || $scope.allAvailableMods.length === 0) {
+      $scope.loadAllAvailableMods();
+    }
+    
     $scope.loadModsPage(1);
   };
   
@@ -867,9 +957,69 @@ angular.module('beamng.stuff')
   };
   
   $scope.openModInRepo = function(mod) {
-    bngApi.engineLua(`guihooks.trigger('ChangeState', {state = 'menu.mods.details', params = {modId = '${mod.tagid}'}})`);
+    // Open mod info modal instead of navigating away
+    $scope.openModInfo(mod);
   };
   
+  // === MOD STATUS CHECKING FUNCTIONS ===
+  $scope.isModInstalledLocally = function(mod) {
+    if (!mod || !mod.tagid) return false;
+    
+    // Check if mod exists in our local mods list
+    if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0) {
+      return $scope.allAvailableMods.some(function(localMod) {
+        return localMod.tagid === mod.tagid;
+      });
+    }
+    
+    return false;
+  };
+  
+  $scope.isModActive = function(mod) {
+    if (!mod || !mod.tagid) return false;
+    
+    // Check if mod is active in our local mods list
+    if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0) {
+      const localMod = $scope.allAvailableMods.find(function(localMod) {
+        return localMod.tagid === mod.tagid;
+      });
+      return localMod ? localMod.active : false;
+    }
+    
+    return false;
+  };
+
+  // Get the best available icon for a mod (prefer local, fallback to repository)
+  $scope.getModIcon = function(mod) {
+    if (!mod) return '/ui/modModules/repoManager/icons/default-mod-icon.png';
+    
+    // First check if there's a local version with an icon
+    if ($scope.allAvailableMods && mod.tagid) {
+      const localMod = $scope.allAvailableMods.find(function(localMod) {
+        return localMod.tagid === mod.tagid;
+      });
+      if (localMod && localMod.iconPath) {
+        return localMod.iconPath;
+      }
+    }
+    
+    // Fall back to repository icon or default
+    return mod.icon || '/ui/modModules/repoManager/icons/default-mod-icon.png';
+  };
+  
+  $scope.getLocalMod = function(mod) {
+    if (!mod || !mod.tagid) return null;
+    
+    if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0) {
+      return $scope.allAvailableMods.find(function(localMod) {
+        return localMod.tagid === mod.tagid;
+      });
+    }
+    
+    return null;
+  };
+
+  // === MOD ACTION FUNCTIONS ===
   $scope.subscribeToMod = function(mod) {
     bngApi.engineLua(`extensions.core_repository.modSubscribe('${mod.tagid}')`);
     mod.sub = true;
@@ -881,6 +1031,38 @@ angular.module('beamng.stuff')
     bngApi.engineLua(`extensions.core_repository.modUnsubscribe('${mod.tagid}')`);
     mod.sub = false;
     mod.subscribed = false;
+    
+    // Update local mod status if it exists
+    const localMod = $scope.getLocalMod(mod);
+    if (localMod) {
+      localMod.active = false;
+    }
+  };
+  
+  $scope.activateMod = function(mod) {
+    const localMod = $scope.getLocalMod(mod);
+    if (localMod && localMod.modname) {
+      bngApi.engineLua(`core_modmanager.activateMod('${localMod.modname}')`);
+      localMod.active = true;
+      
+      // Trigger pack status update
+      setTimeout(function() {
+        bngApi.engineLua('extensions.repoManager.sendPackStatuses()');
+      }, 100);
+    }
+  };
+  
+  $scope.deactivateMod = function(mod) {
+    const localMod = $scope.getLocalMod(mod);
+    if (localMod && localMod.modname) {
+      bngApi.engineLua(`core_modmanager.deactivateMod('${localMod.modname}')`);
+      localMod.active = false;
+      
+      // Trigger pack status update
+      setTimeout(function() {
+        bngApi.engineLua('extensions.repoManager.sendPackStatuses()');
+      }, 100);
+    }
   };
   
   $scope.getCacheInfo = function() {
@@ -891,6 +1073,272 @@ angular.module('beamng.stuff')
     bngApi.engineLua('extensions.repoManager.clearModCache()');
   };
 
+  // === REPOSITORY BROWSING FUNCTIONS ===
+  $scope.switchCreatePackTab = function(tab) {
+    $scope.createPackActiveTab = tab;
+    if (tab === 'repo' && $scope.repoMods.length === 0) {
+      $scope.loadRepoMods();
+    }
+  };
+  
+  $scope.loadRepoMods = function() {
+    if (!$scope.isOnlineEnabled()) {
+      alert('Online features are disabled. Please enable them in game settings.');
+      return;
+    }
+    
+    $scope.loadingRepoMods = true;
+    $scope.repoMods = [];
+    
+    const args = [
+      $scope.repoFilter.query || '',
+      $scope.repoFilter.orderBy,
+      $scope.repoFilter.order,
+      $scope.repoCurrentPage,
+      $scope.repoFilter.categories || []
+    ];
+    
+    bngApi.engineLua("extensions.repoManager.requestRepositoryMods(" + bngApi.serializeToLua(args) + ")");
+  };
+  
+  $scope.isOnlineEnabled = function() {
+    // This will be set by the online state check
+    return $scope.onlineFeatures === 'enable' && $scope.onlineState;
+  };
+  
+  $scope.applyRepoFilters = function() {
+    $scope.repoCurrentPage = 1;
+    $scope.loadRepoMods();
+  };
+  
+  $scope.toggleCategory = function(categoryValue) {
+    const index = $scope.repoFilter.categories.indexOf(categoryValue);
+    if (index > -1) {
+      $scope.repoFilter.categories.splice(index, 1);
+    } else {
+      $scope.repoFilter.categories.push(categoryValue);
+    }
+  };
+  
+  $scope.isCategorySelected = function(categoryValue) {
+    return $scope.repoFilter.categories.includes(categoryValue);
+  };
+  
+  $scope.selectAllCategories = function() {
+    $scope.repoFilter.categories = $scope.repoCategories.map(function(cat) {
+      return cat.value;
+    });
+  };
+  
+  $scope.clearAllCategories = function() {
+    $scope.repoFilter.categories = [];
+  };
+  
+  $scope.getRepoPagedMods = function() {
+    return $scope.repoMods || [];
+  };
+  
+  $scope.goToRepoPage = function(pageNumber) {
+    if (pageNumber >= 1 && pageNumber <= $scope.repoTotalPages) {
+      $scope.repoCurrentPage = pageNumber;
+      $scope.loadRepoMods();
+    }
+  };
+  
+  $scope.previousRepoPage = function() {
+    if ($scope.repoCurrentPage > 1) {
+      $scope.goToRepoPage($scope.repoCurrentPage - 1);
+    }
+  };
+  
+  $scope.nextRepoPage = function() {
+    if ($scope.repoCurrentPage < $scope.repoTotalPages) {
+      $scope.goToRepoPage($scope.repoCurrentPage + 1);
+    }
+  };
+  
+  // Function to toggle repository mod selection
+  $scope.toggleRepoModSelection = function(mod) {
+    const modId = mod.tagid;
+    if ($scope.createPackForm.selectedMods[modId]) {
+      delete $scope.createPackForm.selectedMods[modId];
+    } else {
+      $scope.createPackForm.selectedMods[modId] = mod;
+    }
+  };
+  
+  // Function to open mod info in native BeamNG repository interface
+  $scope.openModInfo = function(mod, event) {
+    if (event) {
+      event.stopPropagation(); // Prevent card selection
+    }
+    
+    // Show custom modal instead of native interface
+    $scope.showModInfoModal = true;
+    $scope.loadingModInfo = true;
+    $scope.selectedModInfo = null;
+    
+    // Request detailed mod information
+    bngApi.engineLua('extensions.core_repository.requestMod("' + mod.tagid + '")');
+  };
+  
+  // Function to close mod info modal
+  $scope.closeModInfo = function() {
+    $scope.showModInfoModal = false;
+    $scope.loadingModInfo = false;
+    $scope.selectedModInfo = null;
+  };
+  
+  // Function to select/deselect mod from info modal
+  $scope.selectModFromInfo = function() {
+    if ($scope.selectedModInfo) {
+      $scope.toggleRepoModSelection($scope.selectedModInfo);
+    }
+  };
+  
+  // Helper function to generate star array for rating display
+  $scope.getStarArray = function(rating) {
+    var stars = [];
+    var fullStars = Math.floor(rating);
+    for (var i = 0; i < 5; i++) {
+      stars.push(i < fullStars);
+    }
+    return stars;
+  };
+  
+  // Listen for mod info response
+  $scope.$on('ModReceived', function(event, data) {
+    if (data && data.data && $scope.showModInfoModal) {
+      $scope.$apply(function() {
+        $scope.loadingModInfo = false;
+        $scope.selectedModInfo = data.data;
+        
+        // Ensure we have the icon URL
+        if (!$scope.selectedModInfo.icon && $scope.selectedModInfo.path) {
+          $scope.selectedModInfo.icon = "https://api.beamng.com/s1/v4/download/mods/" + $scope.selectedModInfo.path + "icon.jpg";
+        }
+        
+        // Format file size
+        if ($scope.selectedModInfo.filesize && !$scope.selectedModInfo.filesize_display) {
+          $scope.selectedModInfo.filesize_display = $scope.formatFileSize($scope.selectedModInfo.filesize);
+        }
+        
+        // Fix date formatting (convert Unix timestamp to proper date)
+        if ($scope.selectedModInfo.last_update) {
+          // Check if it's a Unix timestamp (number) and convert to Date
+          var timestamp = parseInt($scope.selectedModInfo.last_update);
+          if (!isNaN(timestamp) && timestamp > 0) {
+            // If it looks like a Unix timestamp, convert it
+            $scope.selectedModInfo.last_update_formatted = new Date(timestamp * 1000);
+          } else {
+            // Otherwise try to parse as date string
+            $scope.selectedModInfo.last_update_formatted = new Date($scope.selectedModInfo.last_update);
+          }
+        }
+        
+        // Process description using BeamNG's BBCode parser (same as main repository)
+        if ($scope.selectedModInfo.message) {
+          try {
+            // Use the actual BeamNG BBCode parser - same as Utils.parseBBCode
+            if (typeof window.angularParseBBCode !== 'undefined') {
+              $scope.selectedModInfo.message_parsed = window.angularParseBBCode($scope.selectedModInfo.message);
+            } else if (typeof Utils !== 'undefined' && Utils && Utils.parseBBCode) {
+              // Fallback to Utils.parseBBCode if available
+              $scope.selectedModInfo.message_parsed = Utils.parseBBCode($scope.selectedModInfo.message);
+            } else {
+              // Use our own BBCode parser as final fallback
+              $scope.selectedModInfo.message_parsed = $scope.parseBBCodeFallback($scope.selectedModInfo.message);
+            }
+          } catch (error) {
+            console.log('BBCode parsing failed, using fallback:', error);
+            $scope.selectedModInfo.message_parsed = $scope.parseBBCodeFallback($scope.selectedModInfo.message);
+          }
+        } else {
+          $scope.selectedModInfo.message_parsed = '';
+        }
+      });
+    }
+     });
+
+  // Function to check if repository mod is selected
+  $scope.isRepoModSelected = function(mod) {
+    const modId = mod.tagid;
+    return !!$scope.createPackForm.selectedMods[modId];
+  };
+  
+  // Helper function to format file sizes
+  $scope.formatFileSize = function(bytes) {
+    if (!bytes || bytes === 0) return '0 B';
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+    return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
+  };
+  
+  // Simple BBCode parser as fallback
+  $scope.parseBBCodeFallback = function(text) {
+    if (!text) return '';
+    
+    var html = text;
+    
+    // Convert line breaks first
+    html = html.replace(/\r?\n/g, '<br>');
+    
+    // Bold
+    html = html.replace(/\[B\](.*?)\[\/B\]/gi, '<strong>$1</strong>');
+    html = html.replace(/\[b\](.*?)\[\/b\]/gi, '<strong>$1</strong>');
+    
+    // Italic
+    html = html.replace(/\[I\](.*?)\[\/I\]/gi, '<em>$1</em>');
+    html = html.replace(/\[i\](.*?)\[\/i\]/gi, '<em>$1</em>');
+    
+    // Underline
+    html = html.replace(/\[U\](.*?)\[\/U\]/gi, '<u>$1</u>');
+    html = html.replace(/\[u\](.*?)\[\/u\]/gi, '<u>$1</u>');
+    
+    // URLs with text
+    html = html.replace(/\[URL=(.*?)\](.*?)\[\/URL\]/gi, '<a href="$1" target="_blank">$2</a>');
+    html = html.replace(/\[url=(.*?)\](.*?)\[\/url\]/gi, '<a href="$1" target="_blank">$2</a>');
+    
+    // Simple URLs
+    html = html.replace(/\[URL\](.*?)\[\/URL\]/gi, '<a href="$1" target="_blank">$1</a>');
+    html = html.replace(/\[url\](.*?)\[\/url\]/gi, '<a href="$1" target="_blank">$1</a>');
+    
+    // Size (basic implementation)
+    html = html.replace(/\[SIZE=(\d+)\](.*?)\[\/SIZE\]/gi, '<span style="font-size: $1px;">$2</span>');
+    html = html.replace(/\[size=(\d+)\](.*?)\[\/size\]/gi, '<span style="font-size: $1px;">$2</span>');
+    
+    // Color
+    html = html.replace(/\[COLOR=(.*?)\](.*?)\[\/COLOR\]/gi, '<span style="color: $1;">$2</span>');
+    html = html.replace(/\[color=(.*?)\](.*?)\[\/color\]/gi, '<span style="color: $1;">$2</span>');
+    
+    // Center
+    html = html.replace(/\[CENTER\](.*?)\[\/CENTER\]/gi, '<div style="text-align: center;">$1</div>');
+    html = html.replace(/\[center\](.*?)\[\/center\]/gi, '<div style="text-align: center;">$1</div>');
+    
+    // Lists (basic)
+    html = html.replace(/\[LIST\](.*?)\[\/LIST\]/gi, '<ul>$1</ul>');
+    html = html.replace(/\[list\](.*?)\[\/list\]/gi, '<ul>$1</ul>');
+    html = html.replace(/\[\*\]/gi, '<li>');
+    
+    // Code
+    html = html.replace(/\[CODE\](.*?)\[\/CODE\]/gi, '<code>$1</code>');
+    html = html.replace(/\[code\](.*?)\[\/code\]/gi, '<code>$1</code>');
+    
+    // Quote
+    html = html.replace(/\[QUOTE\](.*?)\[\/QUOTE\]/gi, '<blockquote>$1</blockquote>');
+    html = html.replace(/\[quote\](.*?)\[\/quote\]/gi, '<blockquote>$1</blockquote>');
+    
+    // Note/Attachment tags (remove them as they're not needed in descriptions)
+    html = html.replace(/\[ATTACH\].*?\[\/ATTACH\]/gi, '');
+    html = html.replace(/\[attach\].*?\[\/attach\]/gi, '');
+    html = html.replace(/\[NOTE\]/gi, '<strong>Note:</strong> ');
+    html = html.replace(/\[note\]/gi, '<strong>Note:</strong> ');
+    html = html.replace(/\[\/NOTE\]/gi, '');
+    html = html.replace(/\[\/note\]/gi, '');
+    
+    return html;
+  };
+  
   // === CUSTOM PACK CREATION FUNCTIONS ===
   $scope.loadAllAvailableMods = function() {
     $scope.loadingAllMods = true;
@@ -1097,7 +1545,19 @@ angular.module('beamng.stuff')
       if (data && data.data && $scope.requestedMods.includes(data.data.tagid)) {
         const modData = data.data;
         
-        if (modData.isLocal && modData.localIconPath) {
+        // First check if there's a local version of this mod with an icon
+        let localIcon = null;
+        if ($scope.allAvailableMods && modData.tagid) {
+          const localMod = $scope.allAvailableMods.find(mod => mod.tagid === modData.tagid);
+          if (localMod && localMod.iconPath) {
+            localIcon = localMod.iconPath;
+          }
+        }
+        
+        // Use local icon if available, otherwise fall back to original logic
+        if (localIcon) {
+          modData.icon = localIcon;
+        } else if (modData.isLocal && modData.localIconPath) {
           modData.icon = modData.localIconPath;
         } else if (modData.path) {
           modData.icon = `https://api.beamng.com/s1/v4/download/mods/${modData.path}icon.jpg`;
@@ -1139,6 +1599,19 @@ angular.module('beamng.stuff')
   $scope.loadEnabledState();
   $scope.loadExpandedState();
   $scope.loadDependencies();
+  
+  // Check online features state
+  bngApi.engineLua('settings.getValue("onlineFeatures")', function(data) {
+    $scope.$apply(function() {
+      $scope.onlineFeatures = data;
+    });
+  });
+  
+  bngApi.engineLua('Engine.Online.isAuthenticated()', function(data) {
+    $scope.$apply(function() {
+      $scope.onlineState = data;
+    });
+  });
   
   // Safety timeout
   const safetyTimeout = setTimeout(function() {

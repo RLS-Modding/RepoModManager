@@ -901,6 +901,132 @@ local function updateCustomPack(packDataJson)
     return true
 end
 
+-- Repository mod request function with detailed logging
+local function requestRepositoryMods(args)
+    log('I', 'repoManager', 'Starting repository mod request')
+    
+    -- Handle case where args is passed as a table (from bngApi.serializeToLua)
+    local query, orderBy, order, page, categories
+    if type(args) == 'table' and #args > 0 then
+        query = args[1]
+        orderBy = args[2]
+        order = args[3]
+        page = args[4]
+        categories = args[5]
+    else
+        -- Fallback for direct calls
+        query = args
+        orderBy = nil
+        order = nil
+        page = nil
+        categories = nil
+    end
+    
+    log('D', 'repoManager', '  query: ' .. tostring(query or 'nil'))
+    log('D', 'repoManager', '  orderBy: ' .. tostring(orderBy or 'nil'))
+    log('D', 'repoManager', '  order: ' .. tostring(order or 'nil'))
+    log('D', 'repoManager', '  page: ' .. tostring(page or 'nil'))
+    log('D', 'repoManager', '  categories type: ' .. type(categories))
+    
+    if categories then
+        if type(categories) == 'table' then
+            log('D', 'repoManager', '  categories count: ' .. #categories)
+            for i, cat in ipairs(categories) do
+                log('D', 'repoManager', '    category[' .. i .. ']: ' .. tostring(cat))
+            end
+        else
+            log('D', 'repoManager', '  categories value: ' .. tostring(categories))
+        end
+    end
+    
+    -- Check if online features are enabled
+    if settings.getValue('onlineFeatures') ~= 'enable' then
+        log('W', 'repoManager', 'Online features are disabled')
+        guihooks.trigger('ModListReceived', { 
+            data = {}, 
+            count = 0, 
+            error = 'Online features are disabled' 
+        })
+        return
+    end
+    
+    -- Check if network is available
+    if not Engine.Platform.isNetworkUnrestricted() then
+        log('W', 'repoManager', 'Network is metered or restricted!')
+    end
+    
+    -- Check if user is authenticated
+    if not Engine.Online.isAuthenticated() then
+        log('W', 'repoManager', 'User is not authenticated')
+        guihooks.trigger('ModListReceived', { 
+            data = {}, 
+            count = 0, 
+            error = 'User is not authenticated' 
+        })
+        return
+    end
+    
+    log('I', 'repoManager', 'Making API call to s1/v4/getMods')
+    
+    -- Make the API call using the same format as the base game
+    core_online.apiCall('s1/v4/getMods', function(request)
+        log('I', 'repoManager', 'API call completed')
+        log('D', 'repoManager', '  responseCode: ' .. tostring(request.responseCode or 'nil'))
+        log('D', 'repoManager', '  responseData: ' .. tostring(request.responseData and 'present' or 'nil'))
+        
+        if request.responseCode then
+            log('D', 'repoManager', '  HTTP response code: ' .. request.responseCode)
+        end
+        
+        if request.responseBuffer then
+            log('D', 'repoManager', '  Response buffer length: ' .. #tostring(request.responseBuffer))
+            log('D', 'repoManager', '  Response buffer preview: ' .. tostring(request.responseBuffer):sub(1, 200))
+        end
+        
+        if request.responseData == nil then
+            log('E', 'repoManager', 'Server Error - no response data')
+            log('E', 'repoManager', 'url = s1/v4/getMods')
+            log('E', 'repoManager', 'responseBuffer = ' .. tostring(request.responseBuffer or 'nil'))
+            
+            guihooks.trigger('ModListReceived', { 
+                data = {}, 
+                count = 0, 
+                error = 'Server returned no data',
+                responseCode = request.responseCode,
+                responseBuffer = request.responseBuffer
+            })
+            return
+        end
+        
+        log('I', 'repoManager', 'Successfully received mod list data')
+        
+        local modList = request.responseData.data or {}
+        log('D', 'repoManager', 'Received ' .. #modList .. ' mods')
+        
+        -- Process the mod list (similar to base game repository)
+        for k, v in pairs(modList) do
+            -- Add additional fields that the base game adds
+            modList[k].pending = false -- We don't track pending downloads in our UI
+            modList[k].unpacked = false -- Repository mods are always packed
+            modList[k].downState = false -- No download state for repository browsing
+        end
+        
+        -- Add metadata that base game includes
+        request.responseData.metered = not Engine.Platform.isNetworkUnrestricted()
+        request.responseData.updatingRepo = false -- We're not updating, just browsing
+        
+        log('I', 'repoManager', 'Triggering ModListReceived with processed data')
+        guihooks.trigger('ModListReceived', request.responseData)
+        
+    end, {
+        query = query or '',
+        order_by = orderBy or 'downloads',
+        order = order or 'desc',
+        page = (page or 1) - 1, -- API uses 0-based pages
+        categories = categories or {}
+    })
+end
+
 -- Delete a custom pack
 local function deleteCustomPack(packName)
     local packDir = "/dependencies/" .. packName
@@ -952,5 +1078,6 @@ M.createCustomPack = createCustomPack
 M.loadPackForEdit = loadPackForEdit
 M.updateCustomPack = updateCustomPack
 M.deleteCustomPack = deleteCustomPack
+M.requestRepositoryMods = requestRepositoryMods
 
 return M

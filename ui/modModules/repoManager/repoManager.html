@@ -188,86 +188,137 @@
 <!-- Pack Details Modal -->
 <div class="pack-details-modal" ng-show="showDetailsModal">
   <div class="modal-backdrop" ng-click="closePackDetails()"></div>
-  <div class="modal-content">
+  <div class="modal-content pack-details-content">
     <div class="modal-header">
-      <h2>{{ selectedPack.name }} - Mod Details</h2>
+      <h2>{{ selectedPack.name }} - Pack Details</h2>
       <button class="close-btn" ng-click="closePackDetails()">×</button>
     </div>
 
     <div class="modal-body">
-      <div class="pack-info">
-        <p><strong>Description:</strong> {{ selectedPack.description }}</p>
-        <p><strong>Total Mods:</strong> {{ selectedPack.count }}</p>
-        <p><strong>Showing:</strong> Page {{ currentPage }} of {{ totalPages }}</p>
+      <!-- Pack Information Section -->
+      <div class="pack-form-section">
+        <div class="pack-details-info">
+          <div class="pack-detail-item">
+            <span class="detail-label">Description:</span>
+            <span class="detail-value">{{ selectedPack.description }}</span>
+          </div>
+          <div class="pack-detail-item">
+            <span class="detail-label">Total Mods:</span>
+            <span class="detail-value">{{ selectedPack.count }}</span>
+          </div>
+          <div class="pack-detail-item">
+            <span class="detail-label">Pack Status:</span>
+            <span class="detail-value" ng-class="getPackStatusState(selectedPack).class">{{ getPackStatusState(selectedPack).text }}</span>
+          </div>
+          <div class="pack-detail-item" ng-if="packStatuses[selectedPack.packName]">
+            <span class="detail-label">Active Mods:</span>
+            <span class="detail-value">{{ packStatuses[selectedPack.packName].activeCount || 0 }}/{{ packStatuses[selectedPack.packName].totalCount || selectedPack.count }}</span>
+          </div>
+        </div>
       </div>
 
+      <!-- Loading State -->
       <div class="loading-mods" ng-show="loadingPackDetails">
         <p>Loading mod details... ({{ loadedModsCount }}/{{ modsPerPage }})</p>
         <div class="loading-spinner"></div>
       </div>
 
-      <!-- Pagination Controls -->
-      <div class="pagination-controls" ng-show="!loadingPackDetails && totalPages > 1">
-        <button class="page-btn" ng-click="previousPage()" ng-disabled="currentPage === 1">
-          ← Previous
-        </button>
-
-        <div class="page-numbers">
-          <span ng-repeat="page in [] | range:1:totalPages" class="page-number"
-            ng-class="{active: page === currentPage}" ng-click="goToPage(page)">
-            {{ page }}
-          </span>
+      <!-- Mods Section -->
+      <div class="pack-mods-section" ng-show="!loadingPackDetails">
+        <!-- Pagination Controls -->
+        <div class="pagination-controls" ng-show="totalPages > 1">
+          <button class="page-btn" ng-click="previousPage()" ng-disabled="currentPage === 1">
+            ← Previous
+          </button>
+          
+          <span class="page-info">Page {{ currentPage }} of {{ totalPages }}</span>
+          
+          <button class="page-btn" ng-click="nextPage()" ng-disabled="currentPage === totalPages">
+            Next →
+          </button>
         </div>
 
-        <button class="page-btn" ng-click="nextPage()" ng-disabled="currentPage === totalPages">
-          Next →
-        </button>
+        <!-- Mods Grid -->
+        <div class="create-pack-mods-grid">
+          <div class="create-pack-mod-card pack-detail-mod-card" ng-repeat="mod in packModDetails">
+            <div class="mod-icon-container">
+              <img ng-src="{{ getModIcon(mod) }}" 
+                   class="mod-icon"
+                   onerror="this.src='/ui/modModules/repoManager/icons/default-mod-icon.png'">
+            </div>
+            
+            <div class="mod-basic-info">
+              <div class="mod-name">{{ mod.title }}</div>
+              <div class="mod-author" ng-if="mod.author">By: {{ mod.author || 'Unknown' }}</div>
+              <div class="mod-description-mini">{{ mod.tag_line }}</div>
+            </div>
+            
+            <!-- Info Button for detailed mod information -->
+            <div class="mod-info-button" ng-click="openModInfo(mod, $event)" title="View detailed mod information">
+              <span class="info-icon">ⓘ</span>
+            </div>
+            
+            <!-- Mod Stats -->
+            <div class="mod-stats-section">
+              <div class="mod-status repo-mod-stats">
+                <span class="downloads" ng-if="mod.downTxt">{{ mod.downTxt }} downloads</span>
+                <span class="rating" ng-if="mod.rating_avg > 0">★ {{ mod.rating_avg }}</span>
+                <span class="filesize" ng-if="mod.filesize_display">{{ mod.filesize_display }}</span>
+              </div>
+            </div>
+            
+                         <!-- Action Buttons -->
+             <div class="mod-detail-actions">
+               <!-- If mod is not installed locally, show subscribe button -->
+               <button class="mod-action-btn subscribe-btn" ng-if="!isModInstalledLocally(mod)"
+                 ng-click="subscribeToMod(mod)" title="Subscribe to download this mod">
+                 Subscribe
+               </button>
+               
+               <!-- If mod is installed locally, show activate/deactivate and unsubscribe -->
+               <button class="mod-action-btn activate-btn" ng-if="isModInstalledLocally(mod) && !isModActive(mod)"
+                 ng-click="activateMod(mod)" title="Activate this mod">
+                 Activate
+               </button>
+               <button class="mod-action-btn deactivate-btn" ng-if="isModInstalledLocally(mod) && isModActive(mod)"
+                 ng-click="deactivateMod(mod)" title="Deactivate this mod">
+                 Deactivate
+               </button>
+               <button class="mod-action-btn unsubscribe-btn" ng-if="isModInstalledLocally(mod)"
+                 ng-click="unsubscribeFromMod(mod)" title="Unsubscribe and remove this mod">
+                 Unsubscribe
+               </button>
+             </div>
+          </div>
+        </div>
+        
+        <!-- Bottom Pagination -->
+        <div class="pagination-controls" ng-show="totalPages > 1">
+          <button class="page-btn" ng-click="previousPage()" ng-disabled="currentPage === 1">
+            ← Previous
+          </button>
+          
+          <span class="page-info">Page {{ currentPage }} of {{ totalPages }}</span>
+          
+          <button class="page-btn" ng-click="nextPage()" ng-disabled="currentPage === totalPages">
+            Next →
+          </button>
+        </div>
+
+        <!-- No Mods Message -->
+        <div class="no-mods-found" ng-show="packModDetails.length === 0 && !loadingPackDetails">
+          <p>No mod details available for this pack.</p>
+        </div>
       </div>
+    </div>
 
-      <div class="mods-grid" ng-show="!loadingPackDetails">
-        <div class="mod-card" ng-repeat="mod in packModDetails">
-          <div class="mod-image">
-            <img ng-src="{{ mod.icon || '/ui/modModules/repoManager/icons/default-mod.png' }}"
-              onerror="this.src='/ui/modModules/repoManager/icons/default-mod.png'; this.onerror=null; console.log('Image failed to load:', this.getAttribute('ng-src'));"
-              onload="console.log('Image loaded successfully:', this.src)">
-          </div>
-
-          <div class="mod-info">
-            <div class="mod-header">
-              <h4>{{ mod.title }}</h4>
-              <div class="mod-stats">
-                <span class="filesize">{{ mod.filesize_display }}</span>
-                <span class="downloads">{{ mod.downTxt }} <i class="icon-download"></i></span>
-              </div>
-            </div>
-
-            <p class="mod-description">{{ mod.tag_line }}</p>
-
-            <div class="mod-meta">
-              <span class="author">By: {{ mod.author || 'Unknown' }}</span>
-              <div class="rating" ng-if="mod.rating_avg > 0">
-                <span class="stars">★</span>
-                <span>{{ mod.rating_avg }}</span>
-              </div>
-            </div>
-
-            <div class="mod-actions">
-              <button class="mod-action-btn view-btn" ng-click="openModInRepo(mod)">
-                View in Repo
-              </button>
-
-              <button class="mod-action-btn subscribe-btn" ng-if="!mod.sub && !mod.subscribed"
-                ng-click="subscribeToMod(mod)">
-                Subscribe
-              </button>
-
-              <button class="mod-action-btn unsubscribe-btn" ng-if="mod.sub || mod.subscribed"
-                ng-click="unsubscribeFromMod(mod)">
-                Unsubscribe
-              </button>
-            </div>
-          </div>
-        </div>
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <div class="footer-info">
+        <span>{{ selectedPack.name }} - {{ selectedPack.count }} total mods</span>
+      </div>
+      <div class="footer-actions">
+        <button class="cancel-btn" ng-click="closePackDetails()">Close</button>
       </div>
     </div>
   </div>
@@ -299,6 +350,12 @@
           <span class="selected-count">Selected Mods: {{ getSelectedModCount() }}</span>
         </div>
       </div>
+      
+      <!-- Tab Navigation -->
+      <div class="create-pack-tabs">
+        <button class="tab-btn" ng-class="{active: createPackActiveTab === 'local'}" ng-click="switchCreatePackTab('local')">Local Mods</button>
+        <button class="tab-btn" ng-class="{active: createPackActiveTab === 'repo'}" ng-click="switchCreatePackTab('repo')">Repository</button>
+      </div>
 
       <!-- Loading State -->
       <div class="loading-mods" ng-show="loadingAllMods">
@@ -306,8 +363,8 @@
         <div class="loading-spinner"></div>
       </div>
 
-      <!-- Mod Selection -->
-      <div class="mod-selection-section" ng-show="!loadingAllMods">
+      <!-- Local Mods Tab Content -->
+      <div class="mod-selection-section" ng-show="!loadingAllMods && createPackActiveTab === 'local'">
         <!-- Filter Input -->
         <div class="filter-section">
           <input type="text" ng-model="createPackFilter" ng-change="filterMods()" 
@@ -332,7 +389,7 @@
         <div class="create-pack-mods-grid">
           <div class="create-pack-mod-card" ng-repeat="mod in getPagedMods()" ng-class="{'selected': isModSelected(mod)}" ng-click="toggleModSelection(mod)">
             <div class="mod-selection-checkbox">
-              <input type="checkbox" ng-checked="isModSelected(mod)" ng-click="$event.stopPropagation()">
+              <input type="checkbox" ng-checked="isModSelected(mod)" disabled>
             </div>
             
             <div class="mod-icon-container">
@@ -344,17 +401,203 @@
             <div class="mod-basic-info">
               <div class="mod-name">{{ mod.title || mod.name || mod.modname }}</div>
               <div class="mod-author" ng-if="mod.author">By: {{ mod.author }}</div>
-              <div class="mod-id">ID: {{ mod.tagid || mod.modname }}</div>
               <div class="mod-status" ng-class="{'active': mod.active, 'inactive': !mod.active}">
                 {{ mod.active ? 'Active' : 'Inactive' }}
+              </div>
+            </div>
+            
+            <!-- Info section for local mods -->
+            <div class="mod-info-section">
+              <div class="mod-stats local-mod-stats" ng-if="mod.filesize || mod.download_count">
+                <span class="filesize" ng-if="mod.filesize">{{ formatFileSize(mod.filesize) }}</span>
+                <span class="downloads" ng-if="mod.download_count">{{ mod.download_count }} downloads</span>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- Bottom Pagination for Local Mods -->
+        <div class="pagination-controls" ng-show="createPackTotalPages > 1">
+          <button class="page-btn" ng-click="previousCreatePackPage()" ng-disabled="createPackCurrentPage === 1">
+            ← Previous
+          </button>
+          
+          <span class="page-info">Page {{ createPackCurrentPage }} of {{ createPackTotalPages }}</span>
+          
+          <button class="page-btn" ng-click="nextCreatePackPage()" ng-disabled="createPackCurrentPage === createPackTotalPages">
+            Next →
+          </button>
+        </div>
+
         <!-- No Mods Found -->
         <div class="no-mods-found" ng-show="filteredMods.length === 0 && !loadingAllMods">
           <p>No mods found matching your search criteria.</p>
+        </div>
+      </div>
+      
+      <!-- Repository Tab Content -->
+      <div class="repo-selection-section" ng-show="createPackActiveTab === 'repo'">
+        <!-- Repository Filters - Always Visible -->
+        <div class="repo-filters">
+          <!-- Main Search Bar -->
+          <div class="filter-section">
+            <input type="text" ng-model="repoFilter.query" placeholder="Search repository mods by title, author, or description..." class="filter-input">
+            <button class="search-btn" ng-click="applyRepoFilters()">Search</button>
+          </div>
+          
+          <!-- Filter Controls Row -->
+          <div class="repo-filter-controls-row">
+            <div class="sort-controls">
+              <label>Sort by:</label>
+              
+              <!-- Custom Sort By Dropdown -->
+              <div class="custom-dropdown">
+                <div class="dropdown-selected" ng-click="showSortByDropdown = !showSortByDropdown">
+                  <span>{{ repoFilter.orderBy === 'downloads' ? 'Downloads' : repoFilter.orderBy === 'rating' ? 'Rating' : repoFilter.orderBy === 'update' ? 'Last Updated' : 'Name' }}</span>
+                  <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="dropdown-options" ng-show="showSortByDropdown">
+                  <div class="dropdown-option" ng-click="repoFilter.orderBy = 'downloads'; showSortByDropdown = false; applyRepoFilters()">Downloads</div>
+                  <div class="dropdown-option" ng-click="repoFilter.orderBy = 'rating'; showSortByDropdown = false; applyRepoFilters()">Rating</div>
+                  <div class="dropdown-option" ng-click="repoFilter.orderBy = 'update'; showSortByDropdown = false; applyRepoFilters()">Last Updated</div>
+                  <div class="dropdown-option" ng-click="repoFilter.orderBy = 'name'; showSortByDropdown = false; applyRepoFilters()">Name</div>
+                </div>
+              </div>
+              
+              <!-- Custom Order Dropdown -->
+              <div class="custom-dropdown">
+                <div class="dropdown-selected" ng-click="showOrderDropdown = !showOrderDropdown">
+                  <span>{{ repoFilter.order === 'desc' ? 'Descending' : 'Ascending' }}</span>
+                  <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="dropdown-options" ng-show="showOrderDropdown">
+                  <div class="dropdown-option" ng-click="repoFilter.order = 'desc'; showOrderDropdown = false; applyRepoFilters()">Descending</div>
+                  <div class="dropdown-option" ng-click="repoFilter.order = 'asc'; showOrderDropdown = false; applyRepoFilters()">Ascending</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="category-controls">
+              <button class="category-toggle-btn" ng-click="showCategoryFilter = !showCategoryFilter">
+                Categories ({{ repoFilter.categories.length }})
+                <span class="dropdown-arrow" ng-class="{'expanded': showCategoryFilter}">▼</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Category Filter Dropdown -->
+          <div class="category-filter-dropdown" ng-show="showCategoryFilter">
+            <div class="category-actions">
+              <button class="cat-action-btn" ng-click="selectAllCategories()">Select All</button>
+              <button class="cat-action-btn" ng-click="clearAllCategories()">Clear All</button>
+              <button class="cat-apply-btn" ng-click="applyRepoFilters()">Apply</button>
+            </div>
+            <div class="category-grid">
+              <div class="category-item" ng-repeat="category in repoCategories">
+                <label>
+                  <input type="checkbox" ng-checked="isCategorySelected(category.value)" ng-click="toggleCategory(category.value)">
+                  {{ category.name }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Repository Mods Section -->
+        <div class="repo-mods-section">
+          <!-- Pagination Controls - Always Visible -->
+          <div class="pagination-controls" ng-show="repoTotalPages > 1">
+            <button class="page-btn" ng-click="previousRepoPage()" ng-disabled="repoCurrentPage === 1">
+              ← Previous
+            </button>
+            
+            <span class="page-info">Page {{ repoCurrentPage }} of {{ repoTotalPages }}</span>
+            
+            <button class="page-btn" ng-click="nextRepoPage()" ng-disabled="repoCurrentPage === repoTotalPages">
+              Next →
+            </button>
+          </div>
+          
+          <!-- Repository Loading State - Only for mod grid -->
+          <div class="loading-mods" ng-show="loadingRepoMods">
+            <p>Loading repository mods...</p>
+            <div class="loading-spinner"></div>
+          </div>
+          
+          <!-- Unified Mods Grid (same as local mods) -->
+          <div class="create-pack-mods-grid" ng-show="!loadingRepoMods">
+            <div class="create-pack-mod-card" ng-repeat="mod in getRepoPagedMods()" ng-class="{'selected': isRepoModSelected(mod)}" ng-click="toggleRepoModSelection(mod)">
+              <div class="mod-selection-checkbox">
+                <input type="checkbox" ng-checked="isRepoModSelected(mod)" disabled>
+              </div>
+              
+              <div class="mod-icon-container">
+                <img ng-src="{{ getModIcon(mod) }}" 
+                     class="mod-icon"
+                     onerror="this.src='/ui/modModules/repoManager/icons/default-mod-icon.png'">
+              </div>
+              
+              <div class="mod-basic-info">
+                <div class="mod-name">{{ mod.title }}</div>
+                <div class="mod-author" ng-if="mod.author">By: {{ mod.author }}</div>
+              </div>
+              
+              <!-- Info Button with stats positioned underneath -->
+              <div class="mod-info-button" ng-click="openModInfo(mod, $event)" title="View detailed mod information">
+                <span class="info-icon">ⓘ</span>
+              </div>
+              
+              <div class="mod-stats-section">
+                <div class="mod-status repo-mod-stats">
+                  <span class="downloads">{{ mod.downTxt }} downloads</span>
+                  <span class="rating" ng-if="mod.rating_avg > 0">★ {{ mod.rating_avg }}</span>
+                  <span class="filesize">{{ mod.filesize_display }}</span>
+                </div>
+              </div>
+              
+                             <!-- Action Buttons for Repository Mods -->
+               <div class="mod-detail-actions" style="position: absolute; bottom: 8px; left: 8px; right: 8px;">
+                 <!-- If mod is not installed locally, show subscribe button -->
+                 <button class="mod-action-btn subscribe-btn" ng-if="!isModInstalledLocally(mod)"
+                   ng-click="subscribeToMod(mod)" title="Subscribe to download this mod">
+                   Subscribe
+                 </button>
+                 
+                 <!-- If mod is installed locally, show activate/deactivate and unsubscribe -->
+                 <button class="mod-action-btn activate-btn" ng-if="isModInstalledLocally(mod) && !isModActive(mod)"
+                   ng-click="activateMod(mod)" title="Activate this mod">
+                   Activate
+                 </button>
+                 <button class="mod-action-btn deactivate-btn" ng-if="isModInstalledLocally(mod) && isModActive(mod)"
+                   ng-click="deactivateMod(mod)" title="Deactivate this mod">
+                   Deactivate
+                 </button>
+                 <button class="mod-action-btn unsubscribe-btn" ng-if="isModInstalledLocally(mod)"
+                   ng-click="unsubscribeFromMod(mod)" title="Unsubscribe and remove this mod">
+                   Unsubscribe
+                 </button>
+               </div>
+            </div>
+          </div>
+          
+          <!-- Bottom Pagination Controls - Same as top -->
+          <div class="pagination-controls" ng-show="repoTotalPages > 1 && !loadingRepoMods">
+            <button class="page-btn" ng-click="previousRepoPage()" ng-disabled="repoCurrentPage === 1">
+              ← Previous
+            </button>
+            
+            <span class="page-info">Page {{ repoCurrentPage }} of {{ repoTotalPages }}</span>
+            
+            <button class="page-btn" ng-click="nextRepoPage()" ng-disabled="repoCurrentPage === repoTotalPages">
+              Next →
+            </button>
+          </div>
+          
+          <!-- No Repository Mods Found -->
+          <div class="no-mods-found" ng-show="getRepoPagedMods().length === 0 && !loadingRepoMods">
+            <p>No repository mods found. Try adjusting your search or category filters.</p>
+            <p ng-if="!isOnlineEnabled()">Online features may be disabled or you may not be authenticated.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -395,6 +638,95 @@
       <div class="footer-actions">
         <button class="cancel-btn" ng-click="cancelDelete()">Cancel</button>
         <button class="delete-confirm-btn" ng-click="confirmDelete()">Delete Pack</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Mod Info Modal -->
+<div class="mod-info-overlay" ng-show="showModInfoModal" ng-click="closeModInfo()">
+  <div class="mod-info-modal" ng-click="$event.stopPropagation()">
+    <!-- Modal Header -->
+    <div class="mod-info-header">
+      <h2>{{ selectedModInfo.title }}</h2>
+      <button class="close-btn" ng-click="closeModInfo()">×</button>
+    </div>
+    
+    <!-- Loading State -->
+    <div class="mod-info-loading" ng-show="loadingModInfo">
+      <p>Loading mod information...</p>
+      <div class="loading-spinner"></div>
+    </div>
+    
+    <!-- Mod Content -->
+    <div class="mod-info-content" ng-show="!loadingModInfo && selectedModInfo">
+      <!-- Two Column Layout -->
+      <div class="mod-info-two-column">
+        <!-- Left Column: Description Only -->
+        <div class="mod-info-left-column">
+          <div class="mod-info-description">
+            <h3>Description</h3>
+            <div class="description-content" ng-bind-html="selectedModInfo.message_parsed | trusted"></div>
+          </div>
+        </div>
+        
+        <!-- Right Column: All Mod Info -->
+        <div class="mod-info-right-column">
+          <!-- Mod Header Info -->
+          <div class="mod-info-header-section">
+            <div class="mod-info-icon">
+              <img ng-src="{{ getModIcon(selectedModInfo) }}" 
+                   onerror="this.src='/ui/modModules/repoManager/icons/default-mod-icon.png'">
+            </div>
+            
+            <div class="mod-info-basic">
+              <div class="mod-title">{{ selectedModInfo.title }}</div>
+              <div class="mod-tagline">{{ selectedModInfo.tag_line }}</div>
+              <div class="mod-author">By: {{ selectedModInfo.username }}</div>
+              
+              <!-- Rating -->
+              <div class="mod-rating" ng-if="selectedModInfo.rating_avg > 0">
+                <span class="stars">
+                  <span ng-repeat="star in getStarArray(selectedModInfo.rating_avg) track by $index" 
+                        class="star" ng-class="{'filled': star}">★</span>
+                </span>
+                <span class="rating-text">({{ selectedModInfo.rating_avg }}/5)</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Stats Section -->
+          <div class="mod-info-stats">
+            <div class="stat-item">
+              <span class="stat-label">Downloads:</span>
+              <span class="stat-value">{{ selectedModInfo.download_count }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">File Size:</span>
+              <span class="stat-value">{{ selectedModInfo.filesize_display }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Version:</span>
+              <span class="stat-value">{{ selectedModInfo.version_string }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Category:</span>
+              <span class="stat-value">{{ selectedModInfo.category_title }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Last Updated:</span>
+              <span class="stat-value">{{ selectedModInfo.last_update_formatted | date:'yyyy-MM-dd' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="mod-info-actions">
+        <button class="action-btn primary" ng-click="selectModFromInfo()">
+          {{ isRepoModSelected(selectedModInfo) ? 'Remove from Pack' : 'Add to Pack' }}
+        </button>
+        <button class="action-btn secondary" ng-click="closeModInfo()">Close</button>
       </div>
     </div>
   </div>

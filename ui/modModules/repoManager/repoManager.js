@@ -17,6 +17,9 @@ angular.module('beamng.stuff')
   // Download states
   $scope.currentDownloadStates = [];
   
+  // Rate limiting state
+  $scope.isRateLimited = false;
+  
   // Current download pack data (stored in scope to prevent recalculation)
   $scope.currentDownloadPack = null;
   
@@ -427,6 +430,13 @@ angular.module('beamng.stuff')
     return !hasActiveDownloads;
   };
 
+  $scope.getPreparingDownloadsMessage = function() {
+    if ($scope.isRateLimited) {
+      return "Rate limiting due to Repo requirements";
+    }
+    return "Preparing downloads...";
+  };
+
   // === SIMPLIFIED BUTTON STATE FUNCTIONS ===
   $scope.getPackButtonState = function(pack) {
     if (pack.isCreatePack) {
@@ -538,6 +548,10 @@ angular.module('beamng.stuff')
     bngApi.engineLua('extensions.requiredMods.sendPackProgress()');
   };
 
+  $scope.requestSubscriptionStatus = function() {
+    bngApi.engineLua('extensions.repoManager.sendSubscriptionStatus()');
+  };
+
   // === EVENT HANDLERS ===
   $scope.$on('downloadStatesChanged', function(event, progressData) {
     $scope.$apply(function() {
@@ -608,6 +622,7 @@ angular.module('beamng.stuff')
       
       setTimeout(function() {
         $scope.requestQueueUpdate();
+        $scope.requestSubscriptionStatus();
       }, 100);
     });
   });
@@ -666,6 +681,14 @@ angular.module('beamng.stuff')
   $scope.$on('onNextPackDownload', function(event, packName) {
     $scope.$apply(function() {
       $scope.requestQueueUpdate();
+    });
+  });
+  
+  $scope.$on('subscriptionStatusUpdate', function(event, statusData) {
+    $scope.$apply(function() {
+      if (statusData && statusData.rateLimited !== undefined) {
+        $scope.isRateLimited = statusData.rateLimited;
+      }
     });
   });
   
@@ -1139,6 +1162,12 @@ angular.module('beamng.stuff')
     }
   }, 2000);
   $scope._intervals.push(mainInterval);
+  
+  // Subscription status check interval
+  const statusInterval = setInterval(function() {
+    $scope.requestSubscriptionStatus();
+  }, 5000);
+  $scope._intervals.push(statusInterval);
   
   // Cleanup
   $scope.$on('$destroy', function() {

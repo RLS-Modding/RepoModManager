@@ -17,6 +17,12 @@ local baseRetryDelay = 10.0
 local maxRetryDelay = 300.0
 local maxRetryAttempts = 5
 
+local subTimes = {}
+local subTimeOut = 60
+local subAmountCap = 40
+
+local rateLimitFlag = false
+
 local packsQueued = {}
 local packQueue = {}
 local currentPack = nil
@@ -795,6 +801,9 @@ end
 function onAllSubscriptionsComplete()
     isSubscribing = false
     updatingRepo = false
+    rateLimitFlag = false
+    
+    repoManager.sendSubscriptionStatus()
     
     local successfulSubs = {}
     local failedSubs = {}
@@ -865,24 +874,111 @@ function onAllSubscriptionsComplete()
     M.sendPackProgress()
 end
 
+local function checkSubTimes()
+    local currentTime = os.time()
+    local i = 1
+    while i <= #subTimes and (currentTime - subTimes[i]) > subTimeOut do
+        i = i + 1
+    end
+    
+    if i > 1 then
+        for j = i, #subTimes do
+            subTimes[j - i + 1] = subTimes[j]
+        end
+        for j = #subTimes - i + 2, #subTimes do
+            subTimes[j] = nil
+        end
+    end
+end
+
+local function canStartSubscription()
+    checkSubTimes()
+    return #subTimes < subAmountCap
+end
+
+local function getWaitTimeForNextSlot()
+    if #subTimes < subAmountCap then
+        return 0
+    end
+    
+    local oldestTime = subTimes[1]
+    if oldestTime then
+        local waitTime = subTimeOut - (os.time() - oldestTime)
+        return math.max(0.1, waitTime)
+    end
+    
+    return 0.1
+end
+
 function startNextSubscription()
     if #activeSubscriptions >= maxConcurrentSubscriptions or #subscriptionQueue == 0 then
         return
     end
-    
-    for i = 1, maxConcurrentSubscriptions - #activeSubscriptions do
-        if #subscriptionQueue == 0 then
-            break
-        end
-        
-        local nextModId = table.remove(subscriptionQueue, 1)
-        table.insert(activeSubscriptions, {
-            id = nextModId,
-            startTime = os.time()
-        })
+
+    core_jobsystem.create(function(JOB)
+        for i = 1, maxConcurrentSubscriptions - #activeSubscriptions do
+            if #subscriptionQueue == 0 then
+                break
+            end
             
-        subscribeToMod(nextModId)
-    end
+            local nextModId = table.remove(subscriptionQueue, 1)
+            table.insert(activeSubscriptions, {
+                id = nextModId,
+                startTime = os.time()
+            })
+            
+            if canStartSubscription() then
+                if rateLimitFlag then
+                    rateLimitFlag = false
+                    repoManager.sendSubscriptionStatus()
+                end
+                table.insert(subTimes, os.time())
+                JOB.sleep(0.5)
+                subscribeToMod(nextModId)
+            else
+                if not rateLimitFlag then
+                    rateLimitFlag = true
+                    repoManager.sendSubscriptionStatus()
+                end
+                local waitTime = getWaitTimeForNextSlot()
+                
+                log("I", "Required Mods", string.format("Rate limit reached (%d/%d requests in %ds), waiting %.1fs for mod %s", 
+                    #subTimes, subAmountCap, subTimeOut, waitTime, nextModId))
+                
+                core_jobsystem.create(function(job)
+                    job.sleep(waitTime)
+                    
+                    if canStartSubscription() then
+                        if rateLimitFlag then
+                            rateLimitFlag = false
+                            repoManager.sendSubscriptionStatus()
+                        end
+                        table.insert(subTimes, os.time())
+                        subscribeToMod(nextModId)
+                    else
+                        if not rateLimitFlag then
+                            rateLimitFlag = true
+                            repoManager.sendSubscriptionStatus()
+                        end
+                        table.insert(subscriptionQueue, 1, nextModId) -- Put back at front
+                        
+                        for j, sub in ipairs(activeSubscriptions) do
+                            if sub.id == nextModId then
+                                table.remove(activeSubscriptions, j)
+                                break
+                            end
+                        end
+                        
+
+                        core_jobsystem.create(function(delayJob)
+                            delayJob.sleep(1.0)
+                            startNextSubscription()
+                        end)
+                    end
+                end)
+            end
+        end
+    end)
 end
 
 local function startSubscriptionManager()
@@ -892,8 +988,11 @@ local function startSubscriptionManager()
     
     isSubscribing = true
     updatingRepo = true
+    rateLimitFlag = false
     completedSubscriptions = {}
     updateQueue = {}
+    
+    repoManager.sendSubscriptionStatus()
     
     core_modmanager.disableAutoMount()
     
@@ -1284,7 +1383,8 @@ M.getSubscriptionStatus = function()
         queued = #subscriptionQueue,
         completed = #completedSubscriptions,
         isSubscribing = isSubscribing,
-        updatingRepo = updatingRepo
+        updatingRepo = updatingRepo,
+        rateLimited = rateLimitFlag
     }
 end
 
@@ -1308,6 +1408,10 @@ end
 M.cancelRetries = function()
     retryTimers = {}
     log("I", "Required Mods", "All retry timers cancelled")
+end
+
+M.isRateLimited = function()
+    return rateLimitFlag
 end
 
 M.mountLocallyAvailableMods = mountLocallyAvailableMods

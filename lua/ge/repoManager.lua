@@ -338,6 +338,13 @@ local function sendPackStatuses()
     guihooks.trigger('PackStatusesLoaded', packStatuses)
 end
 
+local function sendSubscriptionStatus()
+    if requiredMods and requiredMods.getSubscriptionStatus then
+        local status = requiredMods.getSubscriptionStatus()
+        guihooks.trigger('subscriptionStatusUpdate', status)
+    end
+end
+
 local function clearModCache()
     modDataCache = {}
     log('D', 'repoManager', 'Mod cache cleared')
@@ -886,6 +893,7 @@ local function deleteCustomPack(packName)
 end
 
 M.sendPackStatuses = sendPackStatuses
+M.sendSubscriptionStatus = sendSubscriptionStatus
 M.sendPackStatusesDelayed = function(delay)
     print("Sending pack statuses delayed by " .. delay .. " seconds")
     core_jobsystem.create( function(job)

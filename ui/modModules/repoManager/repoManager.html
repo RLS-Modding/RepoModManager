@@ -88,7 +88,7 @@
           <div class="section-title">
             <span class="section-arrow" ng-class="{'expanded': isSectionExpanded(section.modName)}">▶</span>
             <h3>{{ section.modName }}</h3>
-            <span class="pack-count">({{ section.packs.length }} pack{{ section.packs.length !== 1 ? 's' : '' }})</span>
+            <span class="pack-count">({{ (section.packs | filter:{isCreatePack: '!true'}).length }} pack{{ (section.packs | filter:{isCreatePack: '!true'}).length !== 1 ? 's' : '' }})</span>
           </div>
           <div class="section-status">
             <span class="status-badge" ng-class="getSectionStatus(section).class">
@@ -133,7 +133,7 @@
             <div class="card-content">
               <div class="pack-header">
                 <h3>{{ pack.name }}</h3>
-                <div class="mod-count-container">
+                <div class="mod-count-container" ng-if="!pack.isCreatePack">
                   <span class="mod-count" ng-if="!packStatuses[pack.packName]">{{ pack.count }} mods</span>
                   <span class="mod-count active"
                     ng-if="packStatuses[pack.packName] && packStatuses[pack.packName].activeCount > 0">
@@ -155,7 +155,19 @@
                   ng-disabled="getPackButtonState(pack).disabled">
                   <span>{{getPackButtonState(pack).text}}</span>
                 </button>
-                <button class="details-btn" ng-click="showPackDetails(pack)">Details</button>
+                
+                <!-- Regular pack details button -->
+                <button class="details-btn" ng-click="showPackDetails(pack)" ng-if="!pack.isCreatePack && !isCustomPack(pack)">Details</button>
+                
+                <!-- Custom pack management buttons -->
+                <div ng-if="isCustomPack(pack)" class="custom-pack-actions">
+                  <button class="edit-pack-btn" ng-click="editCustomPack(pack)" title="Edit Pack">
+                    <span>Edit</span>
+                  </button>
+                  <button class="delete-pack-btn" ng-click="deleteCustomPack(pack)" title="Delete Pack">
+                    <span>Delete</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -211,7 +223,7 @@
       <div class="mods-grid" ng-show="!loadingPackDetails">
         <div class="mod-card" ng-repeat="mod in packModDetails">
           <div class="mod-image">
-            <img ng-src="{{ mod.icon || '/ui/modModules/repoManager/icons/default-mod.png' }}" alt="{{ mod.title }}"
+            <img ng-src="{{ mod.icon || '/ui/modModules/repoManager/icons/default-mod.png' }}"
               onerror="this.src='/ui/modModules/repoManager/icons/default-mod.png'; this.onerror=null; console.log('Image failed to load:', this.getAttribute('ng-src'));"
               onload="console.log('Image loaded successfully:', this.src)">
           </div>
@@ -252,6 +264,133 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Pack Modal -->
+<div class="create-pack-modal" ng-show="showCreatePackModal">
+  <div class="modal-backdrop" ng-click="cancelCreatePack()"></div>
+  <div class="modal-content create-pack-content">
+    <div class="modal-header">
+      <h2>{{ editingPack ? 'Edit Custom Pack' : 'Create Custom Pack' }}</h2>
+      <button class="close-btn" ng-click="cancelCreatePack()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Pack Information Form -->
+      <div class="pack-form-section">
+        <div class="form-group">
+          <label for="packName">Pack Name *</label>
+          <input type="text" id="packName" ng-model="createPackForm.name" placeholder="Enter pack name" maxlength="50" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="packDescription">Description</label>
+          <textarea id="packDescription" ng-model="createPackForm.description" placeholder="Enter pack description" maxlength="200"></textarea>
+        </div>
+        
+        <div class="selected-mods-summary">
+          <span class="selected-count">Selected Mods: {{ getSelectedModCount() }}</span>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading-mods" ng-show="loadingAllMods">
+        <p>Loading available mods...</p>
+        <div class="loading-spinner"></div>
+      </div>
+
+      <!-- Mod Selection -->
+      <div class="mod-selection-section" ng-show="!loadingAllMods">
+        <!-- Filter Input -->
+        <div class="filter-section">
+          <input type="text" ng-model="createPackFilter" ng-change="filterMods()" 
+                 placeholder="Search mods by title, name, author, or ID..." class="filter-input">
+          <span class="filter-results">{{ filteredMods.length }} mod{{ filteredMods.length !== 1 ? 's' : '' }} found</span>
+        </div>
+
+        <!-- Pagination for Mods -->
+        <div class="pagination-controls" ng-show="createPackTotalPages > 1">
+          <button class="page-btn" ng-click="previousCreatePackPage()" ng-disabled="createPackCurrentPage === 1">
+            ← Previous
+          </button>
+          
+          <span class="page-info">Page {{ createPackCurrentPage }} of {{ createPackTotalPages }}</span>
+          
+          <button class="page-btn" ng-click="nextCreatePackPage()" ng-disabled="createPackCurrentPage === createPackTotalPages">
+            Next →
+          </button>
+        </div>
+
+        <!-- Mods Grid -->
+        <div class="create-pack-mods-grid">
+          <div class="create-pack-mod-card" ng-repeat="mod in getPagedMods()" ng-class="{'selected': isModSelected(mod)}" ng-click="toggleModSelection(mod)">
+            <div class="mod-selection-checkbox">
+              <input type="checkbox" ng-checked="isModSelected(mod)" ng-click="$event.stopPropagation()">
+            </div>
+            
+            <div class="mod-icon-container">
+              <img ng-src="{{ mod.iconPath || '/ui/modModules/repoManager/icons/default-mod-icon.svg' }}" 
+                   class="mod-icon"
+                   onerror="this.src='/ui/modModules/repoManager/icons/default-mod-icon.svg'">
+            </div>
+            
+            <div class="mod-basic-info">
+              <div class="mod-name">{{ mod.title || mod.name || mod.modname }}</div>
+              <div class="mod-author" ng-if="mod.author">By: {{ mod.author }}</div>
+              <div class="mod-id">ID: {{ mod.tagid || mod.modname }}</div>
+              <div class="mod-status" ng-class="{'active': mod.active, 'inactive': !mod.active}">
+                {{ mod.active ? 'Active' : 'Inactive' }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Mods Found -->
+        <div class="no-mods-found" ng-show="filteredMods.length === 0 && !loadingAllMods">
+          <p>No mods found matching your search criteria.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <div class="footer-info">
+        <span>{{ getSelectedModCount() }} mod{{ getSelectedModCount() !== 1 ? 's' : '' }} selected</span>
+      </div>
+      <div class="footer-actions">
+        <button class="cancel-btn" ng-click="cancelCreatePack()">Cancel</button>
+        <button class="create-btn" ng-click="createPack()" ng-disabled="!createPackForm.name || getSelectedModCount() === 0">
+          {{ editingPack ? 'Update Pack' : 'Create Pack' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="delete-confirm-modal" ng-show="showDeleteConfirmModal">
+  <div class="modal-backdrop" ng-click="cancelDelete()"></div>
+  <div class="modal-content delete-confirm-content">
+    <div class="modal-header">
+      <h2>Delete Pack</h2>
+      <button class="close-btn" ng-click="cancelDelete()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="delete-confirm-message">
+        <div class="warning-icon">⚠️</div>
+        <h3>Are you sure you want to delete "{{ packToDelete.name }}"?</h3>
+        <p>This action cannot be undone. The pack and all its settings will be permanently removed.</p>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="footer-actions">
+        <button class="cancel-btn" ng-click="cancelDelete()">Cancel</button>
+        <button class="delete-confirm-btn" ng-click="confirmDelete()">Delete Pack</button>
       </div>
     </div>
   </div>

@@ -520,6 +520,358 @@ local function getBaseMod()
     return getFileOwnerMod("lua/ge/repoManager.lua")
 end
 
+-- Get all available mods from core_modmanager
+local function getAllAvailableMods()
+    local availableMods = {}
+    
+    if not core_modmanager then
+        log('W', 'repoManager', 'core_modmanager not available')
+        return {}
+    end
+    
+    local allMods = core_modmanager.getMods()
+    if not allMods then
+        log('W', 'repoManager', 'No mods found in core_modmanager')
+        return {}
+    end
+    
+    for modName, modData in pairs(allMods) do
+        if modData and modData.modData then
+            local modInfo = {
+                modname = modName,
+                name = modData.modData.name or modName,
+                title = modData.modData.title,
+                tagid = modData.modData.tagid,
+                author = modData.modData.author or modData.modData.creator,
+                version = modData.modData.version,
+                description = modData.modData.description,
+                active = modData.active or false,
+                fullpath = modData.fullpath,
+                dirname = modData.dirname
+            }
+            
+            -- Add icon path using the same method as modmanager
+            if modData.modInfoPath then
+                local iconPath = modData.modInfoPath .. "icon.jpg"
+                if FS:fileExists(iconPath) then
+                    modInfo.iconPath = iconPath
+                    modInfo.hasIcon = true
+                else
+                    modInfo.hasIcon = false
+                end
+            else
+                modInfo.hasIcon = false
+            end
+            
+            -- Only include mods that have some identification
+            if modInfo.tagid or modInfo.modname then
+                table.insert(availableMods, modInfo)
+            end
+        end
+    end
+    
+    -- Sort by name for better user experience
+    table.sort(availableMods, function(a, b)
+        local nameA = a.name or a.modname or ""
+        local nameB = b.name or b.modname or ""
+        return nameA:lower() < nameB:lower()
+    end)
+    
+    log('D', 'repoManager', 'Found ' .. #availableMods .. ' available mods')
+    return availableMods
+end
+
+-- Create a custom pack with the provided data
+local function createCustomPack(packDataJson)
+    local success, packData = pcall(jsonDecode, packDataJson)
+    if not success then
+        log('E', 'repoManager', 'Failed to parse pack data JSON: ' .. tostring(packData))
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Invalid pack data' })
+        return false
+    end
+    
+    -- Validate required fields
+    if not packData.name or packData.name == "" then
+        log('E', 'repoManager', 'Pack name is required')
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Pack name is required' })
+        return false
+    end
+    
+    -- Sanitize pack name for directory creation
+    local packName = packData.name:gsub("[^%w%s%-_]", ""):gsub("%s+", "_")
+    if packName == "" then
+        log('E', 'repoManager', 'Invalid pack name after sanitization')
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Invalid pack name' })
+        return false
+    end
+    
+    local packDir = "/dependencies/" .. packName
+    
+    -- Check if pack already exists
+    if FS:directoryExists(packDir) then
+        log('E', 'repoManager', 'Pack already exists: ' .. packName)
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Pack with this name already exists' })
+        return false
+    end
+    
+    -- Create the pack directory
+    if not FS:directoryCreate(packDir) then
+        log('E', 'repoManager', 'Failed to create pack directory: ' .. packDir)
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Failed to create pack directory' })
+        return false
+    end
+    
+    -- Create requiredMods.json
+    local requiredMods = {
+        modIds = packData.modIds or {},
+        modNames = packData.modNames or {}
+    }
+    
+    local requiredModsFile = io.open(packDir .. "/requiredMods.json", "w")
+    if not requiredModsFile then
+        log('E', 'repoManager', 'Failed to create requiredMods.json')
+        FS:directoryRemove(packDir) -- Cleanup
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Failed to create requiredMods.json' })
+        return false
+    end
+    
+    requiredModsFile:write(jsonEncode(requiredMods))
+    requiredModsFile:close()
+    
+    -- Create info.json
+    local info = {
+        name = packData.name,
+        description = packData.description or "Custom pack created by user",
+        preview = "image.png",
+        order = 999 -- Custom packs go at the end
+    }
+    
+    local infoFile = io.open(packDir .. "/info.json", "w")
+    if not infoFile then
+        log('E', 'repoManager', 'Failed to create info.json')
+        FS:directoryRemove(packDir) -- Cleanup
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Failed to create info.json' })
+        return false
+    end
+    
+    infoFile:write(jsonEncode(info))
+    infoFile:close()
+    
+    -- Copy default image if it doesn't exist
+    local defaultImagePath = "/ui/modModules/repoManager/icons/default-pack.png"
+    local packImagePath = packDir .. "/image.png"
+    
+    if FS:fileExists(defaultImagePath) then
+        FS:copyFile(defaultImagePath, packImagePath)
+    end
+    
+    log('I', 'repoManager', 'Successfully created custom pack: ' .. packName .. ' with ' .. 
+        (#requiredMods.modIds + #requiredMods.modNames) .. ' mods')
+    
+    guihooks.trigger('CustomPackCreated', { success = true, packName = packName })
+    return true
+end
+
+-- Load pack data for editing
+local function loadPackForEdit(packName)
+    local packDir = "/dependencies/" .. packName
+    
+    if not FS:directoryExists(packDir) then
+        log('E', 'repoManager', 'Pack directory not found: ' .. packDir)
+        guihooks.trigger('PackLoadedForEdit', { success = false, error = 'Pack not found' })
+        return false
+    end
+    
+    -- Read info.json
+    local infoFile = io.open(packDir .. "/info.json", "r")
+    if not infoFile then
+        log('E', 'repoManager', 'Failed to read info.json for pack: ' .. packName)
+        guihooks.trigger('PackLoadedForEdit', { success = false, error = 'Failed to read pack info' })
+        return false
+    end
+    
+    local infoContent = infoFile:read("*all")
+    infoFile:close()
+    
+    local success, infoData = pcall(jsonDecode, infoContent)
+    if not success then
+        log('E', 'repoManager', 'Failed to parse info.json for pack: ' .. packName)
+        guihooks.trigger('PackLoadedForEdit', { success = false, error = 'Invalid pack info format' })
+        return false
+    end
+    
+    -- Read requiredMods.json
+    local requiredModsFile = io.open(packDir .. "/requiredMods.json", "r")
+    if not requiredModsFile then
+        log('E', 'repoManager', 'Failed to read requiredMods.json for pack: ' .. packName)
+        guihooks.trigger('PackLoadedForEdit', { success = false, error = 'Failed to read pack mods' })
+        return false
+    end
+    
+    local requiredModsContent = requiredModsFile:read("*all")
+    requiredModsFile:close()
+    
+    local success, requiredModsData = pcall(jsonDecode, requiredModsContent)
+    if not success then
+        log('E', 'repoManager', 'Failed to parse requiredMods.json for pack: ' .. packName)
+        guihooks.trigger('PackLoadedForEdit', { success = false, error = 'Invalid pack mods format' })
+        return false
+    end
+    
+    -- Ensure arrays are properly formatted for JavaScript
+    local modIds = requiredModsData.modIds or {}
+    local modNames = requiredModsData.modNames or {}
+    
+    -- Convert to proper arrays if they're not already
+    if type(modIds) == "table" then
+        local modIdsArray = {}
+        for _, modId in pairs(modIds) do
+            table.insert(modIdsArray, modId)
+        end
+        modIds = modIdsArray
+    end
+    
+    if type(modNames) == "table" then
+        local modNamesArray = {}
+        for _, modName in pairs(modNames) do
+            table.insert(modNamesArray, modName)
+        end
+        modNames = modNamesArray
+    end
+    
+    local packData = {
+        name = infoData.name,
+        description = infoData.description,
+        modIds = modIds,
+        modNames = modNames
+    }
+    
+    log('I', 'repoManager', 'Successfully loaded pack for editing: ' .. packName)
+    log('D', 'repoManager', 'Pack data being sent: modIds count=' .. #modIds .. ', modNames count=' .. #modNames)
+    guihooks.trigger('PackLoadedForEdit', { success = true, pack = packData })
+    return true
+end
+
+-- Update an existing custom pack
+local function updateCustomPack(packDataJson)
+    local success, packData = pcall(jsonDecode, packDataJson)
+    if not success then
+        log('E', 'repoManager', 'Failed to parse pack data JSON: ' .. tostring(packData))
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Invalid pack data' })
+        return false
+    end
+    
+    -- Validate required fields
+    if not packData.originalName or packData.originalName == "" then
+        log('E', 'repoManager', 'Original pack name is required for update')
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Original pack name required' })
+        return false
+    end
+    
+    if not packData.name or packData.name == "" then
+        log('E', 'repoManager', 'Pack name is required')
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Pack name is required' })
+        return false
+    end
+    
+    local originalPackDir = "/dependencies/" .. packData.originalName
+    
+    if not FS:directoryExists(originalPackDir) then
+        log('E', 'repoManager', 'Original pack not found: ' .. packData.originalName)
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Original pack not found' })
+        return false
+    end
+    
+    -- Sanitize new pack name
+    local newPackName = packData.name:gsub("[^%w%s%-_]", ""):gsub("%s+", "_")
+    if newPackName == "" then
+        log('E', 'repoManager', 'Invalid pack name after sanitization')
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Invalid pack name' })
+        return false
+    end
+    
+    local newPackDir = "/dependencies/" .. newPackName
+    
+    -- If name changed, check if new name conflicts
+    if newPackName ~= packData.originalName and FS:directoryExists(newPackDir) then
+        log('E', 'repoManager', 'Pack with new name already exists: ' .. newPackName)
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Pack with this name already exists' })
+        return false
+    end
+    
+    -- Update requiredMods.json
+    local requiredMods = {
+        modIds = packData.modIds or {},
+        modNames = packData.modNames or {}
+    }
+    
+    local requiredModsFile = io.open(originalPackDir .. "/requiredMods.json", "w")
+    if not requiredModsFile then
+        log('E', 'repoManager', 'Failed to update requiredMods.json')
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Failed to update pack mods' })
+        return false
+    end
+    
+    requiredModsFile:write(jsonEncode(requiredMods))
+    requiredModsFile:close()
+    
+    -- Update info.json
+    local info = {
+        name = packData.name,
+        description = packData.description or "Custom pack created by user",
+        preview = "image.png",
+        order = 999
+    }
+    
+    local infoFile = io.open(originalPackDir .. "/info.json", "w")
+    if not infoFile then
+        log('E', 'repoManager', 'Failed to update info.json')
+        guihooks.trigger('CustomPackCreated', { success = false, error = 'Failed to update pack info' })
+        return false
+    end
+    
+    infoFile:write(jsonEncode(info))
+    infoFile:close()
+    
+    -- If name changed, rename the directory
+    if newPackName ~= packData.originalName then
+        if not FS:directoryMove(originalPackDir, newPackDir) then
+            log('E', 'repoManager', 'Failed to rename pack directory from ' .. packData.originalName .. ' to ' .. newPackName)
+            guihooks.trigger('CustomPackCreated', { success = false, error = 'Failed to rename pack' })
+            return false
+        end
+        log('I', 'repoManager', 'Renamed pack directory from ' .. packData.originalName .. ' to ' .. newPackName)
+    end
+    
+    log('I', 'repoManager', 'Successfully updated custom pack: ' .. newPackName .. ' with ' .. 
+        (#requiredMods.modIds + #requiredMods.modNames) .. ' mods')
+    
+    guihooks.trigger('CustomPackCreated', { success = true, packName = newPackName })
+    return true
+end
+
+-- Delete a custom pack
+local function deleteCustomPack(packName)
+    local packDir = "/dependencies/" .. packName
+    
+    if not FS:directoryExists(packDir) then
+        log('E', 'repoManager', 'Pack directory not found: ' .. packDir)
+        guihooks.trigger('CustomPackDeleted', { success = false, error = 'Pack not found' })
+        return false
+    end
+    
+    -- Remove the entire pack directory
+    if not FS:directoryRemove(packDir) then
+        log('E', 'repoManager', 'Failed to delete pack directory: ' .. packDir)
+        guihooks.trigger('CustomPackDeleted', { success = false, error = 'Failed to delete pack directory' })
+        return false
+    end
+    
+    log('I', 'repoManager', 'Successfully deleted custom pack: ' .. packName)
+    guihooks.trigger('CustomPackDeleted', { success = true, packName = packName })
+    return true
+end
+
 M.sendPackStatuses = sendPackStatuses
 M.sendPackStatusesDelayed = function(delay)
     print("Sending pack statuses delayed by " .. delay .. " seconds")
@@ -540,5 +892,13 @@ M.findModContainingFile = findModContainingFile
 M.getFileOwnerMod = getFileOwnerMod
 M.isFileInAnyMod = isFileInAnyMod
 M.getBaseMod = getBaseMod
+M.getAllAvailableMods = function()
+    local mods = getAllAvailableMods()
+    guihooks.trigger('AllModsLoaded', mods)
+end
+M.createCustomPack = createCustomPack
+M.loadPackForEdit = loadPackForEdit
+M.updateCustomPack = updateCustomPack
+M.deleteCustomPack = deleteCustomPack
 
 return M

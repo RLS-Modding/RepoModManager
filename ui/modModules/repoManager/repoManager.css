@@ -1384,3 +1384,485 @@
   padding: 1.5rem;
   background: transparent;
 }
+
+/* Create Pack Button Styles */
+.create-pack-btn {
+  background: linear-gradient(145deg, #27ae60, #229954);
+  color: white;
+  border: 2px solid rgba(39, 174, 96, 0.3);
+}
+
+.create-pack-btn:hover {
+  background: linear-gradient(145deg, #229954, #1e8449);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+  border-color: rgba(39, 174, 96, 0.5);
+}
+
+.create-pack {
+  background: linear-gradient(135deg, #27ae60, #229954);
+  color: white;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+}
+
+/* Create Pack Modal */
+.create-pack-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-pack-content {
+  width: 1000px;
+  max-height: 85vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.create-pack-content .modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem 2rem;
+}
+
+/* Pack Form Section */
+.pack-form-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #3498db;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+  max-height: 120px;
+}
+
+.selected-mods-summary {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(39, 174, 96, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(39, 174, 96, 0.3);
+}
+
+.selected-count {
+  color: #27ae60;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Filter Section */
+.filter-section {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filter-input {
+  flex: 1;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: #3498db;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.filter-results {
+  color: #bdc3c7;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* Create Pack Mods Grid */
+.create-pack-mods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: start;
+}
+
+.create-pack-mod-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-height: 80px;
+}
+
+.create-pack-mod-card:hover {
+  border-color: rgba(52, 152, 219, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(52, 152, 219, 0.2);
+}
+
+.create-pack-mod-card.selected {
+  border-color: #27ae60;
+  background: rgba(39, 174, 96, 0.1);
+  box-shadow: 0 4px 16px rgba(39, 174, 96, 0.3);
+}
+
+.mod-selection-checkbox {
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 0.75rem;
+}
+
+.mod-selection-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #27ae60;
+}
+
+.mod-icon-container {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mod-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.create-pack-mod-card:hover .mod-icon {
+  transform: scale(1.05);
+}
+
+.mod-basic-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 80px;
+}
+
+.mod-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.mod-author {
+  font-size: 0.85rem;
+  color: #bdc3c7;
+  margin-bottom: 0.2rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-height: 2.4em;
+  overflow: hidden;
+}
+
+.mod-id {
+  font-size: 0.75rem;
+  color: #95a5a6;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 0.25rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-height: 2.2em;
+  overflow: hidden;
+}
+
+.mod-status {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 10px;
+  display: inline-block;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  align-self: flex-start;
+}
+
+.mod-status.active {
+  background: rgba(39, 174, 96, 0.2);
+  color: #27ae60;
+  border: 1px solid rgba(39, 174, 96, 0.3);
+}
+
+.mod-status.inactive {
+  background: rgba(149, 165, 166, 0.2);
+  color: #95a5a6;
+  border: 1px solid rgba(149, 165, 166, 0.3);
+}
+
+/* No Mods Found */
+.no-mods-found {
+  text-align: center;
+  padding: 3rem;
+  color: #bdc3c7;
+}
+
+.no-mods-found p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Modal Footer */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, #2c5282, #1e3a5f);
+}
+
+.footer-info {
+  color: #bdc3c7;
+  font-size: 0.9rem;
+}
+
+.footer-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.cancel-btn,
+.create-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+
+.cancel-btn {
+  background: linear-gradient(145deg, #95a5a6, #7f8c8d);
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: linear-gradient(145deg, #7f8c8d, #95a5a6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(127, 140, 141, 0.3);
+}
+
+.create-btn {
+  background: linear-gradient(145deg, #27ae60, #229954);
+  color: white;
+}
+
+.create-btn:hover:not(:disabled) {
+  background: linear-gradient(145deg, #229954, #1e8449);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+}
+
+.create-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Page Info for Create Pack Modal */
+.page-info {
+  color: #bdc3c7;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+/* Custom Pack Management Buttons */
+.custom-pack-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-pack-btn,
+.delete-pack-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 60px;
+}
+
+.edit-pack-btn {
+  background: linear-gradient(145deg, #3498db, #2980b9);
+  color: white;
+}
+
+.edit-pack-btn:hover {
+  background: linear-gradient(145deg, #2980b9, #1f5f8b);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+}
+
+.delete-pack-btn {
+  background: linear-gradient(145deg, #e74c3c, #c0392b);
+  color: white;
+}
+
+.delete-pack-btn:hover {
+  background: linear-gradient(145deg, #c0392b, #a93226);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+.edit-pack-btn:active,
+.delete-pack-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Delete Confirmation Modal */
+.delete-confirm-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-confirm-content {
+  width: 500px;
+  max-height: 400px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.delete-confirm-message {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.warning-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.delete-confirm-message h3 {
+  color: #e74c3c;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+}
+
+.delete-confirm-message p {
+  color: #bdc3c7;
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.delete-confirm-btn {
+  background: linear-gradient(145deg, #e74c3c, #c0392b);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.delete-confirm-btn:hover {
+  background: linear-gradient(145deg, #c0392b, #a93226);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+.delete-confirm-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}

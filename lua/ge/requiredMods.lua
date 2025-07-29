@@ -914,71 +914,57 @@ function startNextSubscription()
     if #activeSubscriptions >= maxConcurrentSubscriptions or #subscriptionQueue == 0 then
         return
     end
-
-    core_jobsystem.create(function(JOB)
-        for i = 1, maxConcurrentSubscriptions - #activeSubscriptions do
-            if #subscriptionQueue == 0 then
-                break
-            end
-            
-            local nextModId = table.remove(subscriptionQueue, 1)
-            table.insert(activeSubscriptions, {
-                id = nextModId,
-                startTime = os.time()
-            })
-            
-            if canStartSubscription() then
-                if rateLimitFlag then
-                    rateLimitFlag = false
-                    repoManager.sendSubscriptionStatus()
-                end
-                table.insert(subTimes, os.time())
-                JOB.sleep(0.5)
-                subscribeToMod(nextModId)
-            else
-                if not rateLimitFlag then
-                    rateLimitFlag = true
-                    repoManager.sendSubscriptionStatus()
-                end
-                local waitTime = getWaitTimeForNextSlot()
-                
-                log("I", "Required Mods", string.format("Rate limit reached (%d/%d requests in %ds), waiting %.1fs for mod %s", 
-                    #subTimes, subAmountCap, subTimeOut, waitTime, nextModId))
-                
-                core_jobsystem.create(function(job)
-                    job.sleep(waitTime)
-                    
-                    if canStartSubscription() then
-                        if rateLimitFlag then
-                            rateLimitFlag = false
-                            repoManager.sendSubscriptionStatus()
-                        end
-                        table.insert(subTimes, os.time())
-                        subscribeToMod(nextModId)
-                    else
-                        if not rateLimitFlag then
-                            rateLimitFlag = true
-                            repoManager.sendSubscriptionStatus()
-                        end
-                        table.insert(subscriptionQueue, 1, nextModId) -- Put back at front
-                        
-                        for j, sub in ipairs(activeSubscriptions) do
-                            if sub.id == nextModId then
-                                table.remove(activeSubscriptions, j)
-                                break
-                            end
-                        end
-                        
-
-                        core_jobsystem.create(function(delayJob)
-                            delayJob.sleep(1.0)
-                            startNextSubscription()
-                        end)
-                    end
-                end)
-            end
+    
+    -- Only start one subscription at a time to respect both rate limiting and concurrent limits
+    if #subscriptionQueue == 0 then
+        return
+    end
+    
+    local nextModId = table.remove(subscriptionQueue, 1)
+    
+    if canStartSubscription() then
+        -- Can start immediately - add to active subscriptions and start
+        if rateLimitFlag then
+            rateLimitFlag = false
+            repoManager.sendSubscriptionStatus()
         end
-    end)
+        
+        table.insert(activeSubscriptions, {
+            id = nextModId,
+            startTime = os.time()
+        })
+        
+        core_jobsystem.create(function(job)
+            job.sleep(0.5)
+            table.insert(subTimes, os.time())
+            subscribeToMod(nextModId)
+            
+            -- Try to start more subscriptions if we haven't hit the concurrent limit
+            if #activeSubscriptions < maxConcurrentSubscriptions then
+                startNextSubscription()
+            end
+        end)
+    else
+        -- Rate limited - schedule for later without adding to activeSubscriptions yet
+        if not rateLimitFlag then
+            rateLimitFlag = true
+            repoManager.sendSubscriptionStatus()
+        end
+        
+        local waitTime = getWaitTimeForNextSlot()
+        
+        log("I", "Required Mods", string.format("Rate limit reached (%d/%d requests in %ds), waiting %.1fs for mod %s", 
+            #subTimes, subAmountCap, subTimeOut, waitTime, nextModId))
+        
+        -- Put the mod back at the front of the queue
+        table.insert(subscriptionQueue, 1, nextModId)
+        
+        -- Schedule a retry
+        core_jobsystem.create(function(job)
+            job.sleep(waitTime)
+            startNextSubscription() -- Try again after waiting
+        end)
+    end
 end
 
 local function startSubscriptionManager()

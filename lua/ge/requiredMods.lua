@@ -163,18 +163,22 @@ local function collectAllRequiredMods()
         for _, filePath in ipairs(requiredModsFiles) do
             local mods = parseRequiredModsFile(filePath)
             
-            for _, modId in ipairs(mods.modIds) do
-                if type(modId) == "string" and modId ~= "" and not modIdSet[modId] then
-                    table.insert(allModIds, modId)
-                    modIdSet[modId] = true
-                    ourDependencyIds[modId] = true
+            if mods.modIds then
+                for _, modId in ipairs(mods.modIds) do
+                    if type(modId) == "string" and modId ~= "" and not modIdSet[modId] then
+                        table.insert(allModIds, modId)
+                        modIdSet[modId] = true
+                        ourDependencyIds[modId] = true
+                    end
                 end
             end
 
-            for _, modName in ipairs(mods.modNames) do
-                if type(modName) == "string" and modName ~= "" and not modNameSet[modName] then
-                    table.insert(allModNames, modName)
-                    modNameSet[modName] = true
+            if mods.modNames then
+                for _, modName in ipairs(mods.modNames) do
+                    if type(modName) == "string" and modName ~= "" and not modNameSet[modName] then
+                        table.insert(allModNames, modName)
+                        modNameSet[modName] = true
+                    end
                 end
             end
         end

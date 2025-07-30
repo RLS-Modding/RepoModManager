@@ -567,7 +567,8 @@ local function getAllAvailableMods()
                 description = modData.modData.description,
                 active = modData.active or false,
                 fullpath = modData.fullpath,
-                dirname = modData.dirname
+                dirname = modData.dirname,
+                unpacked = not (modData.fullpath and modData.fullpath:find("%.zip$"))
             }
             
             -- Add icon path using the same method as modmanager
@@ -581,6 +582,25 @@ local function getAllAvailableMods()
                 end
             else
                 modInfo.hasIcon = false
+            end
+            
+            -- Check if we have cached repository data for this mod
+            if modInfo.tagid then
+                local cachedData = getCachedMod(modInfo.tagid)
+                if cachedData and cachedData.data then
+                    -- Merge repository data with local mod data
+                    modInfo.download_count = cachedData.data.download_count
+                    modInfo.rating_avg = cachedData.data.rating_avg
+                    modInfo.filesize = cachedData.data.filesize
+                    modInfo.filesize_display = cachedData.data.filesize_display
+                    modInfo.category_title = cachedData.data.category_title
+                    modInfo.tag_line = cachedData.data.tag_line
+                    modInfo.message = cachedData.data.message
+                    modInfo.last_update = cachedData.data.last_update
+                    modInfo.version_string = cachedData.data.version_string
+                    modInfo.username = cachedData.data.username
+                    log('D', 'repoManager', 'Enhanced mod ' .. modName .. ' with cached repository data')
+                end
             end
             
             -- Only include mods that have some identification
@@ -600,7 +620,8 @@ local function getAllAvailableMods()
                 active = modData.active or false,
                 fullpath = modData.fullpath,
                 dirname = modData.dirname,
-                hasModData = false
+                hasModData = false,
+                unpacked = not (modData.fullpath and modData.fullpath:find("%.zip$"))
             }
             
             if modData.modInfoPath then
@@ -613,6 +634,25 @@ local function getAllAvailableMods()
                 end
             else
                 modInfo.hasIcon = false
+            end
+            
+            -- Check if we have cached repository data for this mod
+            if modInfo.tagid then
+                local cachedData = getCachedMod(modInfo.tagid)
+                if cachedData and cachedData.data then
+                    -- Merge repository data with local mod data
+                    modInfo.download_count = cachedData.data.download_count
+                    modInfo.rating_avg = cachedData.data.rating_avg
+                    modInfo.filesize = cachedData.data.filesize
+                    modInfo.filesize_display = cachedData.data.filesize_display
+                    modInfo.category_title = cachedData.data.category_title
+                    modInfo.tag_line = cachedData.data.tag_line
+                    modInfo.message = cachedData.data.message
+                    modInfo.last_update = cachedData.data.last_update
+                    modInfo.version_string = cachedData.data.version_string
+                    modInfo.username = cachedData.data.username
+                    log('D', 'repoManager', 'Enhanced mod ' .. modName .. ' with cached repository data')
+                end
             end
             
             table.insert(availableMods, modInfo)
@@ -694,7 +734,7 @@ local function createCustomPack(packDataJson)
         name = packData.name,
         description = packData.description or "Custom pack created by user",
         preview = "image.png",
-        order = 999 -- Custom packs go at the end
+        order = packData.order or 999 -- Use provided order or default to 999
     }
     
     local infoFile = io.open(packDir .. "/info.json", "w")
@@ -793,6 +833,7 @@ local function loadPackForEdit(packName)
     local packData = {
         name = infoData.name,
         description = infoData.description,
+        order = infoData.order or 999,
         modIds = modIds,
         modNames = modNames
     }
@@ -871,7 +912,7 @@ local function updateCustomPack(packDataJson)
         name = packData.name,
         description = packData.description or "Custom pack created by user",
         preview = "image.png",
-        order = 999
+        order = packData.order or 999
     }
     
     local infoFile = io.open(originalPackDir .. "/info.json", "w")

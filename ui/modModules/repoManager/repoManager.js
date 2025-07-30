@@ -47,6 +47,7 @@ angular.module('beamng.stuff')
   $scope.createPackForm = {
     name: '',
     description: '',
+    order: 999,
     selectedMods: {}
   };
   $scope.allAvailableMods = [];
@@ -77,6 +78,13 @@ angular.module('beamng.stuff')
   $scope.showPackExclusionFilter = false;
   $scope.excludedPacks = [];
   $scope.availablePacksForExclusion = [];
+  
+  // Mod type filter state for local mods
+  $scope.modTypeFilters = {
+    local: true,      // Local mods without tagid
+    unpacked: true,   // Unpacked mods 
+    repo: true        // Repository mods with tagid
+  };
   $scope.repoFilter = {
     query: '',
     orderBy: 'update',
@@ -180,6 +188,23 @@ angular.module('beamng.stuff')
           modName = 'Base';
         } else if (!sourceMod) {
           modName = 'Custom';
+        } else {
+          // Try to find the actual mod data to get a better display name
+          if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0) {
+            const modData = $scope.allAvailableMods.find(function(mod) {
+              return mod.modname === sourceMod;
+            });
+            if (modData) {
+              // Prioritize title from mod data, then fallback to name, then sourceMod
+              if (modData.title && modData.title.trim() !== '') {
+                modName = modData.title;
+              } else if (modData.name && modData.name.trim() !== '') {
+                modName = modData.name;
+              } else {
+                modName = sourceMod;
+              }
+            }
+          }
         }
         
         if (!sections[modName]) {
@@ -811,6 +836,7 @@ angular.module('beamng.stuff')
         // Populate form with existing pack data
         $scope.createPackForm.name = data.pack.name;
         $scope.createPackForm.description = data.pack.description;
+        $scope.createPackForm.order = data.pack.order || 999;
 
         // Pre-select mods that are in this pack
         $scope.createPackForm.selectedMods = {};
@@ -1374,6 +1400,12 @@ angular.module('beamng.stuff')
       });
     }
     
+    // Apply mod type filters
+    modsToFilter = modsToFilter.filter(function(mod) {
+      const modType = $scope.getModType(mod);
+      return $scope.modTypeFilters[modType];
+    });
+    
     // Then apply text filter
     if (!$scope.createPackFilter) {
       $scope.filteredMods = modsToFilter;
@@ -1484,6 +1516,71 @@ angular.module('beamng.stuff')
     $scope.filterMods(); // Re-filter mods with new exclusions
   };
   
+  // Mod Type Filtering Functions
+  $scope.getModType = function(mod) {
+    if (!mod) return 'local';
+    
+    // If mod has tagid, it's from the repository
+    if (mod.tagid) {
+      return 'repo';
+    }
+    
+    // Check if mod is unpacked using the unpacked flag from Lua or fullpath analysis
+    if (mod.unpacked === true || (mod.fullpath && !mod.fullpath.toLowerCase().endsWith('.zip'))) {
+      return 'unpacked';
+    }
+    
+    // Default to local
+    return 'local';
+  };
+  
+  $scope.toggleModTypeFilter = function(type) {
+    $scope.modTypeFilters[type] = !$scope.modTypeFilters[type];
+    $scope.filterMods();
+  };
+  
+  $scope.isModTypeEnabled = function(type) {
+    return $scope.modTypeFilters[type];
+  };
+  
+  $scope.getModTypeCount = function(type) {
+    if (!$scope.allAvailableMods || $scope.allAvailableMods.length === 0) {
+      return 0;
+    }
+    
+    return $scope.allAvailableMods.filter(function(mod) {
+      return $scope.getModType(mod) === type;
+    }).length;
+  };
+  
+  // Function to get repository information for local mods with tagid
+  $scope.hasRepoInfo = function(mod) {
+    return mod && mod.tagid && (mod.download_count || mod.rating_avg || mod.filesize);
+  };
+  
+  $scope.getRepoInfoDisplay = function(mod) {
+    if (!mod || !mod.tagid) return null;
+    
+    const info = [];
+    
+    if (mod.download_count) {
+      const downTxt = mod.download_count > 1000 ? 
+        (mod.download_count / 1000).toFixed(0) + "K" : 
+        mod.download_count;
+      info.push(downTxt + " downloads");
+    }
+    
+    if (mod.rating_avg && mod.rating_avg > 0) {
+      info.push("★ " + parseFloat(mod.rating_avg).toFixed(1));
+    }
+    
+    if (mod.filesize) {
+      info.push($scope.formatFileSize(mod.filesize));
+    }
+    
+    return info.length > 0 ? info : null;
+  };
+  
   $scope.getPagedMods = function() {
     if (!$scope.filteredMods || $scope.filteredMods.length === 0) {
       return [];
@@ -1542,6 +1639,7 @@ angular.module('beamng.stuff')
     const packData = {
       name: $scope.createPackForm.name.trim(),
       description: $scope.createPackForm.description.trim() || 'Custom pack created by user',
+      order: parseInt($scope.createPackForm.order) || 999,
       modIds: modIds,
       modNames: modNames
     };
@@ -1555,6 +1653,7 @@ angular.module('beamng.stuff')
     $scope.createPackForm = {
       name: '',
       description: '',
+      order: 999,
       selectedMods: {}
     };
     $scope.allAvailableMods = [];
@@ -1748,6 +1847,7 @@ angular.module('beamng.stuff')
       originalName: $scope.editingPack.packName,
       name: $scope.createPackForm.name.trim(),
       description: $scope.createPackForm.description.trim() || 'Custom pack created by user',
+      order: parseInt($scope.createPackForm.order) || 999,
       modIds: modIds,
       modNames: modNames
     };

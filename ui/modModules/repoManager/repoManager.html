@@ -346,6 +346,11 @@
           <textarea id="packDescription" ng-model="createPackForm.description" placeholder="Enter pack description" maxlength="200"></textarea>
         </div>
         
+        <div class="form-group">
+          <label for="packOrder">Order (Priority)</label>
+          <input type="number" id="packOrder" ng-model="createPackForm.order" placeholder="999" min="0" max="999" step="1">
+        </div>
+        
         <div class="selected-mods-summary">
           <span class="selected-count">Selected Mods: {{ getSelectedModCount() }}</span>
         </div>
@@ -381,6 +386,21 @@
             </div>
             
             <div class="local-controls">
+              <!-- Mod Type Toggles -->
+              <div class="mod-type-filters-inline">
+                <div class="mod-type-toggles">
+                  <button class="mod-type-toggle" ng-class="{'active': isModTypeEnabled('local')}" ng-click="toggleModTypeFilter('local')">
+                    Local ({{ getModTypeCount('local') }})
+                  </button>
+                  <button class="mod-type-toggle" ng-class="{'active': isModTypeEnabled('unpacked')}" ng-click="toggleModTypeFilter('unpacked')">
+                    Unpacked ({{ getModTypeCount('unpacked') }})
+                  </button>
+                  <button class="mod-type-toggle" ng-class="{'active': isModTypeEnabled('repo')}" ng-click="toggleModTypeFilter('repo')">
+                    Repository ({{ getModTypeCount('repo') }})
+                  </button>
+                </div>
+              </div>
+              
               <!-- Mods Per Page Dropdown -->
               <div class="mods-per-page-control">
                 <label>Show:</label>
@@ -467,11 +487,25 @@
               </div>
             </div>
             
+            <!-- Info Button for mods with repository data -->
+            <div class="mod-info-button" ng-if="mod.tagid" ng-click="openModInfo(mod, $event)" title="View detailed mod information">
+              <span class="info-icon">ⓘ</span>
+            </div>
+            
             <!-- Info section for local mods -->
             <div class="mod-info-section">
-              <div class="mod-stats local-mod-stats" ng-if="mod.filesize || mod.download_count">
+              <!-- Repository info for local mods with tagid -->
+              <div class="mod-stats repo-mod-stats" ng-if="hasRepoInfo(mod)">
+                <span ng-repeat="info in getRepoInfoDisplay(mod)" class="repo-info-item">{{ info }}</span>
+              </div>
+              <!-- Local mod stats for mods without repo info -->
+              <div class="mod-stats local-mod-stats" ng-if="!hasRepoInfo(mod) && (mod.filesize || mod.download_count)">
                 <span class="filesize" ng-if="mod.filesize">{{ formatFileSize(mod.filesize) }}</span>
                 <span class="downloads" ng-if="mod.download_count">{{ mod.download_count }} downloads</span>
+              </div>
+              <!-- Mod type badge -->
+              <div class="mod-type-badge" ng-class="getModType(mod)">
+                {{ getModType(mod) | uppercase }}
               </div>
             </div>
           </div>
@@ -617,7 +651,7 @@
               </div>
               
                              <!-- Action Buttons for Repository Mods -->
-               <div class="mod-detail-actions" style="position: absolute; bottom: 8px; left: 8px; right: 8px;">
+               <div class="mod-detail-actions" style="position: absolute; bottom: 12px; left: 8px; right: 8px;">
                  <!-- If mod is not installed locally, show subscribe button -->
                  <button class="mod-action-btn subscribe-btn" ng-if="!isModInstalledLocally(mod)"
                    ng-click="subscribeToMod(mod)" title="Subscribe to download this mod">

@@ -1246,7 +1246,7 @@
 
 .mod-detail-actions {
   position: absolute;
-  bottom: 8px;
+  bottom: 12px; /* Moved up slightly for better spacing from card bottom */
   left: 8px;
   right: 8px;
   display: flex;
@@ -1830,6 +1830,41 @@
   margin-bottom: 20px;
 }
 
+/* Mod Type Toggle Buttons (used in inline filters) */
+
+.mod-type-toggles {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mod-type-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.mod-type-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.mod-type-toggle.active {
+  background: #4a9eff;
+  border-color: #4a9eff;
+  color: #ffffff;
+}
+
+.mod-type-toggle.active:hover {
+  background: #3d8ce6;
+  border-color: #3d8ce6;
+}
+
 /* Local filter controls row - matches repository styling */
 .local-filter-controls-row {
   display: flex;
@@ -1856,6 +1891,19 @@
   display: flex;
   align-items: center;
   gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Inline mod type filters in local controls */
+.mod-type-filters-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mod-type-filters-inline .mod-type-toggles {
+  display: flex;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
@@ -2278,11 +2326,17 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  min-height: 80px;
+  min-height: 60px; /* Reduced from 80px to 60px */
   position: relative;
   max-width: 100%;
   overflow: hidden;
-  padding-bottom: 2rem; /* Reduced height - less room for action buttons */
+  padding-bottom: 1rem; /* Reduced from 1.5rem to 1rem */
+}
+
+/* Cards with action buttons need more space */
+.create-pack-mod-card:has(.mod-detail-actions) {
+  min-height: 90px; /* Reduced from 110px to 90px */
+  padding-bottom: 2.5rem; /* Reduced from 3rem to 2.5rem */
 }
 
 .create-pack-mod-card:hover {
@@ -2427,6 +2481,48 @@
   bottom: 48px; /* Position above the action buttons */
   right: 8px;
   z-index: 1;
+}
+
+/* Repository info for local mods */
+.repo-info-item {
+  display: block;
+  font-size: 10px;
+  color: #4a9eff !important;
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+
+/* Mod type badge */
+.mod-type-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+  text-align: center;
+  z-index: 2;
+}
+
+/* Adjust mod type badge position when info button is present */
+.create-pack-mod-card:has(.mod-info-button) .mod-type-badge {
+  right: 40px; /* Move left to make room for info button */
+}
+
+.mod-type-badge.local {
+  background: rgba(102, 187, 106, 0.8);
+  color: #ffffff;
+}
+
+.mod-type-badge.unpacked {
+  background: rgba(255, 183, 77, 0.8);
+  color: #ffffff;
+}
+
+.mod-type-badge.repo {
+  background: rgba(74, 158, 255, 0.8);
+  color: #ffffff;
 }
 
 /* Updated info button positioning */

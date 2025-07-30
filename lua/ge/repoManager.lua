@@ -886,11 +886,37 @@ local function updateCustomPack(packDataJson)
     
     -- If name changed, rename the directory
     if newPackName ~= packData.originalName then
-        if not FS:directoryMove(originalPackDir, newPackDir) then
-            log('E', 'repoManager', 'Failed to rename pack directory from ' .. packData.originalName .. ' to ' .. newPackName)
-            guihooks.trigger('CustomPackCreated', { success = false, error = 'Failed to rename pack' })
+        -- Create the new directory
+        if not FS:directoryCreate(newPackDir) then
+            log('E', 'repoManager', 'Failed to create new pack directory: ' .. newPackName)
+            guihooks.trigger('CustomPackCreated', { success = false, error = 'Failed to create new pack directory' })
             return false
         end
+        
+        -- Find all files in the original directory
+        local files = FS:findFiles(originalPackDir, "*", -1, true, false)
+        if files then
+            -- Copy each file to the new directory
+            for _, file in ipairs(files) do
+                local relativePath = file:sub(#originalPackDir + 2) -- Remove original path + "/"
+                local newFilePath = newPackDir .. "/" .. relativePath
+                
+                if not FS:copyFile(originalPackDir .. "/" .. relativePath, newFilePath) then
+                    log('E', 'repoManager', 'Failed to copy file: ' .. relativePath)
+                    FS:directoryRemove(newPackDir) -- Cleanup new directory
+                    guihooks.trigger('CustomPackCreated', { success = false, error = 'Failed to copy pack files' })
+                    return false
+                end
+            end
+        end
+        
+        -- Remove the original directory
+        if not FS:directoryRemove(originalPackDir) then
+            log('E', 'repoManager', 'Failed to remove original pack directory: ' .. packData.originalName)
+            -- Don't fail completely as files are already copied
+            log('W', 'repoManager', 'Pack renamed but original directory could not be removed')
+        end
+        
         log('I', 'repoManager', 'Renamed pack directory from ' .. packData.originalName .. ' to ' .. newPackName)
     end
     

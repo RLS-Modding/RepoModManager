@@ -563,6 +563,12 @@ angular.module('beamng.stuff')
   $scope.togglePack = function(pack) {
     // Handle Create Pack card
     if (pack.isCreatePack) {
+      // Clear selected mods when opening create pack modal
+      $scope.createPackForm.selectedMods = {};
+      $scope.selectedModsFilter = ''; // Clear any filter
+      $scope.filteredSelectedMods = []; // Directly clear the display array
+      $scope.selectedModsCurrentPage = 1;
+      $scope.selectedModsTotalPages = 1;
       $scope.showCreatePackModal = true;
       $scope.loadAllAvailableMods();
       return;
@@ -894,6 +900,7 @@ angular.module('beamng.stuff')
     
     
     $scope.filterMods(); // Update filtered view
+    $scope.filterSelectedMods(); // Update selected mods display
   };
 
   // Navigation
@@ -1687,7 +1694,7 @@ angular.module('beamng.stuff')
     $scope.showCreatePackModal = true;
     $scope.loadAllAvailableMods();
     
-
+    // Load the pack data first, then the UI will be updated with the pack's mods
     bngApi.engineLua(`extensions.repoManager.loadPackForEdit('${pack.packName}')`);
   };
   

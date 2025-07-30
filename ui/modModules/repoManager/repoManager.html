@@ -355,6 +355,7 @@
       <div class="create-pack-tabs">
         <button class="tab-btn" ng-class="{active: createPackActiveTab === 'local'}" ng-click="switchCreatePackTab('local')">Local Mods</button>
         <button class="tab-btn" ng-class="{active: createPackActiveTab === 'repo'}" ng-click="switchCreatePackTab('repo')">Repository</button>
+        <button class="tab-btn" ng-class="{active: createPackActiveTab === 'selected'}" ng-click="switchCreatePackTab('selected')">Selected ({{ getSelectedModCount() }})</button>
       </div>
 
       <!-- Loading State -->
@@ -365,11 +366,71 @@
 
       <!-- Local Mods Tab Content -->
       <div class="mod-selection-section" ng-show="!loadingAllMods && createPackActiveTab === 'local'">
-        <!-- Filter Input -->
-        <div class="filter-section">
-          <input type="text" ng-model="createPackFilter" ng-change="filterMods()" 
-                 placeholder="Search mods by title, name, author, or ID..." class="filter-input">
-          <span class="filter-results">{{ filteredMods.length }} mod{{ filteredMods.length !== 1 ? 's' : '' }} found</span>
+        <!-- Local Mods Filters -->
+        <div class="local-mods-filters">
+          <!-- Main Search Bar -->
+          <div class="filter-section">
+            <input type="text" ng-model="createPackFilter" ng-change="filterMods()" 
+                   placeholder="Search mods by title, name, author, or ID..." class="filter-input">
+          </div>
+          
+          <!-- Filter Controls Row -->
+          <div class="local-filter-controls-row">
+            <div class="local-results-info">
+              <span class="filter-results">{{ filteredMods.length }} mod{{ filteredMods.length !== 1 ? 's' : '' }} found</span>
+            </div>
+            
+            <div class="local-controls">
+              <!-- Mods Per Page Dropdown -->
+              <div class="mods-per-page-control">
+                <label>Show:</label>
+                <div class="custom-dropdown">
+                  <div class="dropdown-selected" ng-click="showLocalModsPerPageDropdown = !showLocalModsPerPageDropdown">
+                    <span>{{ createPackModsPerPage }}</span>
+                    <span class="dropdown-arrow">▼</span>
+                  </div>
+                  <div class="dropdown-options" ng-show="showLocalModsPerPageDropdown">
+                    <div class="dropdown-option" ng-click="createPackModsPerPage = 10; showLocalModsPerPageDropdown = false; updateModsPagination()">10</div>
+                    <div class="dropdown-option" ng-click="createPackModsPerPage = 20; showLocalModsPerPageDropdown = false; updateModsPagination()">20</div>
+                    <div class="dropdown-option" ng-click="createPackModsPerPage = 50; showLocalModsPerPageDropdown = false; updateModsPagination()">50</div>
+                    <div class="dropdown-option" ng-click="createPackModsPerPage = 100; showLocalModsPerPageDropdown = false; updateModsPagination()">100</div>
+                  </div>
+                </div>
+                <span>per page</span>
+              </div>
+              
+              <!-- Pack Exclusion Control -->
+              <div class="pack-exclusion-controls">
+                <button class="pack-exclusion-toggle-btn" ng-click="togglePackExclusionFilter()">
+                  Exclude from Packs ({{ excludedPacks.length }})
+                  <span class="dropdown-arrow" ng-class="{'expanded': showPackExclusionFilter}">▼</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Pack Exclusion Filter Dropdown -->
+          <div class="pack-exclusion-filter-dropdown" ng-show="showPackExclusionFilter">
+            <div class="pack-exclusion-actions">
+              <button class="pack-exclusion-action-btn" ng-click="selectAllPacksForExclusion()">Select All</button>
+              <button class="pack-exclusion-action-btn" ng-click="clearAllPackExclusions()">Clear All</button>
+              <button class="pack-exclusion-apply-btn" ng-click="applyPackExclusionFilter()">Apply</button>
+            </div>
+            <div class="pack-exclusion-grid">
+              <div class="pack-exclusion-item" ng-repeat="pack in availablePacksForExclusion">
+                <label>
+                  <input type="checkbox" ng-checked="isPackExcluded(pack.packName)" ng-click="togglePackExclusion(pack.packName)">
+                  <div class="pack-info">
+                    <div class="pack-name">{{ pack.name }}</div>
+                    <div class="pack-mod-count">({{ pack.count }} mods)</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="no-packs-message" ng-show="availablePacksForExclusion.length === 0">
+              <p>No dependency packs available to exclude from.</p>
+            </div>
+          </div>
         </div>
 
         <!-- Pagination for Mods -->
@@ -598,6 +659,115 @@
             <p>No repository mods found. Try adjusting your search or category filters.</p>
             <p ng-if="!isOnlineEnabled()">Online features may be disabled or you may not be authenticated.</p>
           </div>
+        </div>
+      </div>
+      
+      <!-- Selected Mods Tab Content -->
+      <div class="selected-mods-section" ng-show="createPackActiveTab === 'selected'">
+        <!-- Filter Input for Selected Mods -->
+        <div class="filter-section">
+          <input type="text" ng-model="selectedModsFilter" ng-change="filterSelectedMods()" 
+                 placeholder="Search selected mods by title, name, author, or ID..." class="filter-input">
+          <div class="filter-controls-row">
+            <span class="filter-results">{{ filteredSelectedMods.length }} selected mod{{ filteredSelectedMods.length !== 1 ? 's' : '' }} found</span>
+            
+            <!-- Mods Per Page Dropdown for Selected -->
+            <div class="mods-per-page-control">
+              <label>Show:</label>
+              <div class="custom-dropdown">
+                <div class="dropdown-selected" ng-click="showSelectedModsPerPageDropdown = !showSelectedModsPerPageDropdown">
+                  <span>{{ selectedModsPerPage }}</span>
+                  <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="dropdown-options" ng-show="showSelectedModsPerPageDropdown">
+                  <div class="dropdown-option" ng-click="selectedModsPerPage = 10; showSelectedModsPerPageDropdown = false; updateSelectedModsPagination()">10</div>
+                  <div class="dropdown-option" ng-click="selectedModsPerPage = 20; showSelectedModsPerPageDropdown = false; updateSelectedModsPagination()">20</div>
+                  <div class="dropdown-option" ng-click="selectedModsPerPage = 50; showSelectedModsPerPageDropdown = false; updateSelectedModsPagination()">50</div>
+                </div>
+              </div>
+              <span>per page</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination for Selected Mods -->
+        <div class="pagination-controls" ng-show="selectedModsTotalPages > 1">
+          <button class="page-btn" ng-click="previousSelectedModsPage()" ng-disabled="selectedModsCurrentPage === 1">
+            ← Previous
+          </button>
+          
+          <span class="page-info">Page {{ selectedModsCurrentPage }} of {{ selectedModsTotalPages }}</span>
+          
+          <button class="page-btn" ng-click="nextSelectedModsPage()" ng-disabled="selectedModsCurrentPage === selectedModsTotalPages">
+            Next →
+          </button>
+        </div>
+
+        <!-- Selected Mods Grid -->
+        <div class="create-pack-mods-grid">
+          <div class="create-pack-mod-card selected-mod-card" ng-repeat="mod in getPagedSelectedMods()" ng-click="removeModFromSelection(mod)">
+            <div class="mod-selection-checkbox selected">
+              <input type="checkbox" checked disabled>
+            </div>
+            
+            <div class="mod-icon-container">
+              <img ng-src="{{ getModIcon(mod) }}" 
+                   class="mod-icon"
+                   onerror="this.src='/ui/modModules/repoManager/icons/default-mod-icon.png'">
+            </div>
+            
+            <div class="mod-basic-info">
+              <div class="mod-name">{{ mod.title || mod.name || mod.modname }}</div>
+              <div class="mod-author" ng-if="mod.author">By: {{ mod.author }}</div>
+              <div class="mod-source-info">
+                <span class="mod-source-badge" ng-class="{'local-source': !mod.tagid, 'repo-source': mod.tagid}">
+                  {{ mod.tagid ? 'Repository' : 'Local' }}
+                </span>
+              </div>
+            </div>
+            
+            <!-- Remove button -->
+            <div class="mod-remove-button" ng-click="removeModFromSelection(mod); $event.stopPropagation()" title="Remove from pack">
+              <span class="remove-icon">×</span>
+            </div>
+            
+            <!-- Stats section -->
+            <div class="mod-stats-section" ng-if="mod.tagid">
+              <div class="mod-status repo-mod-stats">
+                <span class="downloads" ng-if="mod.downTxt">{{ mod.downTxt }} downloads</span>
+                <span class="rating" ng-if="mod.rating_avg > 0">★ {{ mod.rating_avg }}</span>
+                <span class="filesize" ng-if="mod.filesize_display">{{ mod.filesize_display }}</span>
+              </div>
+            </div>
+            
+
+          </div>
+        </div>
+
+        <!-- Bottom Pagination for Selected Mods -->
+        <div class="pagination-controls" ng-show="selectedModsTotalPages > 1">
+          <button class="page-btn" ng-click="previousSelectedModsPage()" ng-disabled="selectedModsCurrentPage === 1">
+            ← Previous
+          </button>
+          
+          <span class="page-info">Page {{ selectedModsCurrentPage }} of {{ selectedModsTotalPages }}</span>
+          
+          <button class="page-btn" ng-click="nextSelectedModsPage()" ng-disabled="selectedModsCurrentPage === selectedModsTotalPages">
+            Next →
+          </button>
+        </div>
+
+        <!-- No Selected Mods -->
+        <div class="no-mods-found" ng-show="getSelectedModCount() === 0">
+          <p>No mods selected yet.</p>
+          <p>Switch to the "Local Mods" or "Repository" tabs to select mods for your pack.</p>
+        </div>
+
+        <!-- Clear All Button -->
+        <div class="selected-mods-actions" ng-show="getSelectedModCount() > 0">
+          <button class="clear-selection-btn" ng-click="clearAllSelectedMods()">
+            Clear All Selected Mods
+          </button>
         </div>
       </div>
     </div>

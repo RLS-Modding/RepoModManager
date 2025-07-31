@@ -3,6 +3,12 @@
 <div class="repomanager-container">
   <div class="repomanager-header">
     <h2>Repo Manager</h2>
+    <div class="metadata-status" ng-if="fetchingRepoMetadata">
+      <small>
+        <span class="loading-dot"></span>
+        Updating repository metadata...
+      </small>
+    </div>
     <p>Manage your dependency packs and mods</p>
 
     <!-- Bulk action buttons in header -->
@@ -661,9 +667,7 @@
               
               <div class="mod-stats-section">
                 <div class="mod-status repo-mod-stats">
-                  <span class="downloads">{{ mod.downTxt }} downloads</span>
-                  <span class="rating" ng-if="mod.rating_avg > 0">★ {{ mod.rating_avg }}</span>
-                  <span class="filesize">{{ mod.filesize_display }}</span>
+                  <span class="rating" ng-if="mod.rating_avg > 0">★ {{ parseFloat(mod.rating_avg).toFixed(1) }}</span>
                 </div>
               </div>
               
@@ -741,6 +745,8 @@
           </div>
         </div>
 
+        <!-- Individual mod cards handle their own loading states -->
+
         <!-- Pagination for Selected Mods -->
         <div class="pagination-controls" ng-show="selectedModsTotalPages > 1">
           <button class="page-btn" ng-click="previousSelectedModsPage()" ng-disabled="selectedModsCurrentPage === 1">
@@ -756,7 +762,7 @@
 
         <!-- Selected Mods Grid -->
         <div class="create-pack-mods-grid">
-          <div class="create-pack-mod-card selected-mod-card" ng-repeat="mod in getPagedSelectedMods()" ng-click="removeModFromSelection(mod)">
+          <div class="create-pack-mod-card selected-mod-card" ng-class="{'loading-mod': mod.isLoading}" ng-repeat="mod in getPagedSelectedMods()" ng-click="!mod.isLoading && removeModFromSelection(mod)">
             <div class="mod-selection-checkbox selected">
               <input type="checkbox" checked disabled>
             </div>
@@ -770,21 +776,30 @@
             <div class="mod-basic-info">
               <div class="mod-name">{{ mod.title || mod.name || mod.modname }}</div>
               <div class="mod-author" ng-if="mod.author">By: {{ mod.author }}</div>
-              <div class="mod-source-info">
-                <span class="mod-source-badge" ng-class="{'local-source': !mod.tagid, 'repo-source': mod.tagid}">
-                  {{ mod.tagid ? 'Repository' : 'Local' }}
-                </span>
+              <!-- Loading progress for individual mods -->
+              <div class="mod-loading-progress" ng-if="mod.isLoading && mod.loadingProgress">
+                <small>{{ mod.loadingProgress }}</small>
+              </div>
+              <!-- Mod source badge back on the left -->
+              <div class="mod-source-badge" ng-class="{'local-source': !mod.tagid && !mod.isLoading, 'repo-source': mod.tagid && !mod.isLoading}" ng-if="!mod.isLoading">
+                {{ mod.tagid ? 'REPOSITORY' : 'LOCAL' }}
+              </div>
+              <div class="mod-source-badge loading-badge" ng-if="mod.isLoading">
+                LOADING
               </div>
             </div>
             
             <!-- Remove button -->
-            <div class="mod-remove-button" ng-click="removeModFromSelection(mod); $event.stopPropagation()" title="Remove from pack">
+            <div class="mod-remove-button" 
+                 ng-click="!mod.isLoading && (removeModFromSelection(mod), $event.stopPropagation())" 
+                 ng-class="{'disabled': mod.isLoading}"
+                 title="{{ mod.isLoading ? 'Loading mod data...' : 'Remove from pack' }}">
               <span class="remove-icon">×</span>
             </div>
             
-            <!-- Stats section -->
-            <div class="mod-stats-section" ng-if="mod.tagid">
-              <div class="mod-status repo-mod-stats">
+            <!-- Repository stats positioned below remove button -->
+            <div class="mod-stats-below-remove" ng-if="!mod.isLoading && mod.tagid && (mod.downTxt || mod.rating_avg || mod.filesize_display)">
+              <div class="mod-stats repo-mod-stats">
                 <span class="downloads" ng-if="mod.downTxt">{{ mod.downTxt }} downloads</span>
                 <span class="rating" ng-if="mod.rating_avg > 0">★ {{ mod.rating_avg }}</span>
                 <span class="filesize" ng-if="mod.filesize_display">{{ mod.filesize_display }}</span>

@@ -10,32 +10,25 @@ angular.module('beamng.stuff')
 }])
 
 .controller('RepoManagerController', ['$scope', '$state', '$sanitize', function($scope, $state, $sanitize) {
-  // Core State
   $scope.dependencies = [];
   $scope.loading = true;
   $scope.enabledPacks = {};
   $scope.packStatuses = {};
   
-  // Pack queue state
   $scope.packQueue = [];
   $scope.currentPack = null;
   $scope.packModCount = 0;
   $scope.packModDone = 0;
   
-  // Download states
   $scope.currentDownloadStates = [];
   
-  // Rate limiting state
   $scope.isRateLimited = false;
   
-  // Current download pack
   $scope.currentDownloadPack = null;
   
-  // Cancel download state
   $scope.cancelRequestedForPack = null;
   $scope.cancelAllRequested = false;
   
-  // Modal state
   $scope.selectedPack = null;
   $scope.packModDetails = [];
   $scope.loadingPackDetails = false;
@@ -46,7 +39,6 @@ angular.module('beamng.stuff')
   $scope.requestedMods = [];
   $scope.loadedModsCount = 0;
   
-  // Custom pack creation state
   $scope.showCreatePackModal = false;
   $scope.createPackForm = {
     name: '',
@@ -61,39 +53,36 @@ angular.module('beamng.stuff')
   $scope.createPackTotalPages = 1;
   $scope.createPackFilter = '';
   $scope.filteredMods = [];
-  $scope.editingPack = null; // Track if we're editing an existing pack
+  $scope.editingPack = null;
   
-  // Repository browsing state
-  $scope.createPackActiveTab = 'local'; // 'local', 'repo', or 'selected'
+  $scope.createPackActiveTab = 'local';
   $scope.repoMods = [];
   $scope.loadingRepoMods = false;
   $scope.repoCurrentPage = 1;
   $scope.repoTotalPages = 1;
   $scope.repoModsPerPage = 12;
   
-  // Selected mods tab state
   $scope.selectedModsFilter = '';
   $scope.filteredSelectedMods = [];
   $scope.selectedModsPerPage = 10;
   $scope.selectedModsCurrentPage = 1;
   $scope.selectedModsTotalPages = 1;
+  $scope.requestedSelectedMods = [];
   
-  // Pack exclusion state for local mods
   $scope.showPackExclusionFilter = false;
   $scope.excludedPacks = [];
   $scope.availablePacksForExclusion = [];
   
-  // Mod type filter state for local mods
   $scope.modTypeFilters = {
-    local: true,      // Local mods without tagid
-    unpacked: true,   // Unpacked mods 
-    repo: true        // Repository mods with tagid
+    local: true,
+    unpacked: true,
+    repo: true
   };
   $scope.repoFilter = {
     query: '',
     orderBy: 'update',
     order: 'desc',
-    categories: [3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15], // All categories by default
+    categories: [3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15],
     subscribedOnly: false
   };
   $scope.repoCategories = [
@@ -112,33 +101,32 @@ angular.module('beamng.stuff')
   ];
   $scope.showCategoryFilter = false;
   
-  // Custom dropdown states
   $scope.showSortByDropdown = false;
   $scope.showOrderDropdown = false;
   $scope.showLocalModsPerPageDropdown = false;
   $scope.showSelectedModsPerPageDropdown = false;
   
-  // Mod info modal states
   $scope.showModInfoModal = false;
   $scope.loadingModInfo = false;
   $scope.selectedModInfo = null;
   $scope.modInfoFromPackCreator = false;
   
-  // Delete confirmation modal
   $scope.showDeleteConfirmModal = false;
   $scope.packToDelete = null;
   
-  // Mod association data
   $scope.packToMod = {};
   $scope.baseMod = null;
   $scope.modToPacks = {};
   $scope.modSections = [];
   $scope.expandedSections = {};
   
+  $scope.fetchingRepoMetadata = false;
+  $scope.repoMetadataQueue = [];
+  $scope.requestedRepoMetadata = [];
+  
   $scope._intervals = [];
   $scope._timeouts = [];
 
-  // Utility Functions
   $scope.loadEnabledState = function() {
     const saved = localStorage.getItem('repoManager_enabledPacks');
     if (saved) {
@@ -178,7 +166,6 @@ angular.module('beamng.stuff')
     return $scope.getShortModId(modData.modId);
   };
 
-  // Mod Section Functions
   $scope.buildModSections = function() {
     const sections = {};
     
@@ -314,14 +301,12 @@ angular.module('beamng.stuff')
   $scope.deactivateAllPacksInSection = function(section) {
     if (!section.packs || section.packs.length === 0) return;
     
-    // Filter out the Create Pack card
     const realPacks = section.packs.filter(function(pack) {
       return !pack.isCreatePack;
     });
     
     if (realPacks.length === 0) return;
     
-    // Update local state
     realPacks.forEach(function(pack) {
       $scope.enabledPacks[pack.id] = false;
     });
@@ -400,7 +385,6 @@ angular.module('beamng.stuff')
     return realPacks.some(pack => $scope.enabledPacks[pack.id]);
   };
 
-  // Pack Status Functions
   $scope.isPackDownloading = function(pack) {
     return $scope.currentPack === pack.packName;
   };
@@ -420,7 +404,6 @@ angular.module('beamng.stuff')
     });
   };
 
-  // Progress Functions
   $scope.getCurrentProgressCount = function() {
     return $scope.packModDone || 0;
   };
@@ -460,7 +443,6 @@ angular.module('beamng.stuff')
       return [];
     }
     
-    // Get only working download states to improve performance
     const workingStates = $scope.currentDownloadStates.filter(function(state) {
       return state && state.state === 'working';
     });
@@ -470,9 +452,8 @@ angular.module('beamng.stuff')
     }
     
     const downloadingMods = [];
-    const addedModIds = new Set(); // Prevent duplicates
+    const addedModIds = new Set();
     
-    // First, try exact ID matches (most reliable)
     workingStates.forEach(function(state) {
       if (state.id && pack.modIds.includes(state.id) && !addedModIds.has(state.id)) {
         downloadingMods.push($scope.createModProgressData(state, state.id));
@@ -480,15 +461,12 @@ angular.module('beamng.stuff')
       }
     });
     
-    // Then try broader matches for any remaining unmatched mods
     if (downloadingMods.length < workingStates.length) {
       workingStates.forEach(function(state) {
-        // Skip if we already matched this state by ID
         if (state.id && addedModIds.has(state.id)) return;
         
         let matchingModId = null;
         
-        // Try filename matching
         if (state.filename) {
           matchingModId = pack.modIds.find(function(modId) {
             const matches = !addedModIds.has(modId) && state.filename.includes(modId);
@@ -496,7 +474,6 @@ angular.module('beamng.stuff')
           });
         }
         
-        // Try URI matching if filename didn't work
         if (!matchingModId && state.uri) {
           matchingModId = pack.modIds.find(function(modId) {
             const matches = !addedModIds.has(modId) && state.uri.includes(modId);
@@ -504,12 +481,10 @@ angular.module('beamng.stuff')
           });
         }
         
-        // If still no match, try any string field that might contain mod ID
         if (!matchingModId) {
           matchingModId = pack.modIds.find(function(modId) {
             if (addedModIds.has(modId)) return false;
             
-            // Check all string properties of the state
             for (const key in state) {
               if (typeof state[key] === 'string' && state[key].includes(modId)) {
                 return true;
@@ -554,7 +529,6 @@ angular.module('beamng.stuff')
     return "Preparing downloads...";
   };
 
-  // Button State Functions
   $scope.getPackButtonState = function(pack) {
     if (!pack) {
       return { text: 'Invalid Pack', disabled: true, class: 'disabled-btn' };
@@ -612,7 +586,6 @@ angular.module('beamng.stuff')
     return { text: 'DISABLED', class: 'disabled' };
   };
 
-  // Pack Actions
   $scope.togglePack = function(pack) {
     if ((!$scope.allAvailableMods || $scope.allAvailableMods.length === 0) && !$scope.loadingAllMods) {
       $scope.loadAllAvailableMods();
@@ -626,6 +599,14 @@ angular.module('beamng.stuff')
       $scope.selectedModsTotalPages = 1;
       $scope.showCreatePackModal = true;
       $scope.loadAllAvailableMods();
+      
+      setTimeout(function() {
+        if ($scope.createPackActiveTab === 'local') {
+          const displayedMods = $scope.getPagedMods();
+          $scope.fetchRepositoryMetadataForDisplayed(displayedMods, 'Create Pack modal open');
+        }
+      }, 500);
+      
       return;
     }
     
@@ -678,7 +659,6 @@ angular.module('beamng.stuff')
   };
 
   $scope.cancelCurrentDownload = function() {
-    // Track which pack we're canceling
     $scope.cancelRequestedForPack = $scope.currentPack;
     bngApi.engineLua('extensions.requiredMods.cancelDownload()');
   };
@@ -729,7 +709,6 @@ angular.module('beamng.stuff')
     }
   };
 
-  // Lua Communication
   $scope.loadDependencies = function() {
     bngApi.engineLua('extensions.repoManager.loadDependencies()');
   };
@@ -742,7 +721,6 @@ angular.module('beamng.stuff')
     bngApi.engineLua('extensions.repoManager.sendSubscriptionStatus()');
   };
 
-  // Event Handlers
   $scope.$on('downloadStatesChanged', function(event, progressData) {
     $scope.$apply(function() {
       $scope.currentDownloadStates = Array.isArray(progressData) ? progressData : [];
@@ -759,7 +737,6 @@ angular.module('beamng.stuff')
   
   $scope.$on('UpdateFinished', function(event) {
     $scope.$apply(function() {
-      // Update finished
     });
   });
   
@@ -796,7 +773,6 @@ angular.module('beamng.stuff')
               return pack;
     });
     
-    // Sort dependencies by order field
     $scope.dependencies.sort(function(a, b) {
       return a.order - b.order;
     });
@@ -806,12 +782,10 @@ angular.module('beamng.stuff')
       
       $scope.updateCurrentDownloadPack();
       
-      // Build mod sections if we have mod association data
       if ($scope.packToMod && Object.keys($scope.packToMod).length > 0) {
         $scope.buildModSections();
       }
       
-      // Initialize available packs for exclusion
       $scope.initializeAvailablePacksForExclusion();
       
       setTimeout(function() {
@@ -836,6 +810,10 @@ angular.module('beamng.stuff')
       
       $scope.saveEnabledState();
       $scope.requestQueueUpdate();
+      
+      if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0) {
+        bngApi.engineLua('extensions.repoManager.getAllAvailableMods()');
+      }
     });
   });
   
@@ -846,11 +824,9 @@ angular.module('beamng.stuff')
         $scope.baseMod = data.baseMod;
         $scope.modToPacks = data.modToPacks || {};
         
-        // Load all mod data so we can use proper titles in section headers
         $scope.loadingAllMods = true;
         bngApi.engineLua('extensions.repoManager.getAllAvailableMods()');
         
-        // Build mod sections if we have dependencies loaded
         if ($scope.dependencies && $scope.dependencies.length > 0) {
           $scope.buildModSections();
         }
@@ -863,7 +839,6 @@ angular.module('beamng.stuff')
       const previousPack = $scope.currentPack;
       
       if (queueData && queueData.packQueue !== undefined && (Array.isArray(queueData.packQueue) || typeof queueData.packQueue === 'object')) {
-        // Convert Lua table (object) to array if needed
         $scope.packQueue = Array.isArray(queueData.packQueue) ? queueData.packQueue : Object.values(queueData.packQueue);
         $scope.currentPack = queueData.currentPack || null;
         $scope.packModCount = queueData.packModCount || 0;
@@ -875,12 +850,10 @@ angular.module('beamng.stuff')
         $scope.packModDone = 0;
       }
       
-      // Clear cancel state if pack changed or downloads completed
       if (previousPack !== $scope.currentPack || !$scope.currentPack) {
         $scope.cancelRequestedForPack = null;
       }
       
-      // Clear cancel all state if downloads completed
       if (!$scope.currentPack) {
         $scope.cancelAllRequested = false;
       }
@@ -920,6 +893,8 @@ angular.module('beamng.stuff')
       });
       $scope.loadingAllMods = false;
       
+      $scope.loadRepositoryMetadataCache();
+      
       const currentModCount = $scope.allAvailableMods.length;
       if ($scope.dependencies && $scope.dependencies.length > 0 && 
           (previousModCount === 0 || currentModCount !== previousModCount || !$scope.modSections || $scope.modSections.length === 0)) {
@@ -929,6 +904,7 @@ angular.module('beamng.stuff')
       if ($scope.showCreatePackModal) {
         $scope.filterMods();
       }
+      
     });
   });
   
@@ -936,8 +912,7 @@ angular.module('beamng.stuff')
     $scope.$apply(function() {
       if (data.success) {
         $scope.cancelCreatePack();
-        $scope.loadDependencies(); // Reload to show the new pack
-        // Refresh available packs for exclusion to include the new custom pack
+        $scope.loadDependencies();
         setTimeout(function() {
           $scope.initializeAvailablePacksForExclusion();
         }, 100);
@@ -950,27 +925,21 @@ angular.module('beamng.stuff')
   
   $scope.$on('PackLoadedForEdit', function(event, data) {
     $scope.$apply(function() {
-
       if (data.success) {
-        // Populate form with existing pack data
         $scope.createPackForm.name = data.pack.name;
         $scope.createPackForm.description = data.pack.description;
         $scope.createPackForm.order = data.pack.order || 999;
 
-        // Pre-select mods that are in this pack
         $scope.createPackForm.selectedMods = {};
         
-        // Wait for mods to load, then select the appropriate ones
         if ($scope.allAvailableMods.length === 0) {
-          // Mods are still loading, wait for them
           const unwatch = $scope.$watch('allAvailableMods', function(newVal) {
             if (newVal && newVal.length > 0) {
               $scope.preselectPackMods(data.pack);
-              unwatch(); // Stop watching
+              unwatch();
             }
           });
         } else {
-          // Mods are already loaded
           $scope.preselectPackMods(data.pack);
         }
       } else {
@@ -983,8 +952,7 @@ angular.module('beamng.stuff')
   $scope.$on('CustomPackDeleted', function(event, data) {
     $scope.$apply(function() {
       if (data.success) {
-        $scope.loadDependencies(); // Reload to remove the deleted pack
-        // Refresh available packs for exclusion to remove the deleted custom pack
+        $scope.loadDependencies();
         setTimeout(function() {
           $scope.initializeAvailablePacksForExclusion();
         }, 100);
@@ -995,14 +963,12 @@ angular.module('beamng.stuff')
     });
   });
   
-  // Repository mod list event handler
   $scope.$on('ModListReceived', function(event, data) {
     $scope.$apply(function() {
       $scope.loadingRepoMods = false;
       
       if (data && data.data) {
         $scope.repoMods = data.data.map(function(mod) {
-          // Process mod data similar to base game repository
           mod.icon = "https://api.beamng.com/s1/v4/download/mods/" + mod.path + "icon.jpg";
           mod.downTxt = mod.download_count > 1000 ? 
             (mod.download_count / 1000).toFixed(0) + "K" : 
@@ -1010,7 +976,6 @@ angular.module('beamng.stuff')
           mod.rating_avg = parseFloat(mod.rating_avg || 0).toFixed(0);
           mod.filesize_display = $scope.formatFileSize(mod.filesize);
           
-          // Ensure author field is set (check multiple possible field names)
           if (!mod.author) {
             mod.author = mod.username || mod.creator || mod.user_name || null;
           }
@@ -1027,13 +992,13 @@ angular.module('beamng.stuff')
   });
   
   $scope.preselectPackMods = function(pack) {
-    // Clear existing selections first
     $scope.createPackForm.selectedMods = {};
     
-    // Select mods that were in the original pack
-    // Ensure we always have arrays, even if Lua sends objects
     const modIdsToSelect = Array.isArray(pack.modIds) ? pack.modIds : (pack.modIds ? Object.values(pack.modIds) : []);
     const modNamesToSelect = Array.isArray(pack.modNames) ? pack.modNames : (pack.modNames ? Object.values(pack.modNames) : []);
+    
+    const missingModIds = [];
+    
     $scope.allAvailableMods.forEach(function(mod) {
       if ((mod.tagid && modIdsToSelect.includes(mod.tagid)) ||
           (mod.modname && modNamesToSelect.includes(mod.modname))) {
@@ -1042,12 +1007,75 @@ angular.module('beamng.stuff')
       }
     });
     
+    modIdsToSelect.forEach(function(modId) {
+      if (!$scope.createPackForm.selectedMods[modId]) {
+        missingModIds.push(modId);
+      }
+    });
     
-    $scope.filterMods(); // Update filtered view
-    $scope.filterSelectedMods(); // Update selected mods display
+    modNamesToSelect.forEach(function(modName) {
+      if (!$scope.createPackForm.selectedMods[modName]) {
+        const localMod = $scope.allAvailableMods.find(mod => mod.modname === modName);
+        if (!localMod) {
+          missingModIds.push(modName);
+        }
+      }
+    });
+    
+    if (missingModIds.length > 0) {
+      console.log(`Pack editing: Found ${Object.keys($scope.createPackForm.selectedMods).length} mods locally, fetching ${missingModIds.length} from repository`);
+    }
+    
+    if (missingModIds.length > 0) {
+      missingModIds.forEach(function(modId, index) {
+        $scope.createPackForm.selectedMods[modId] = {
+          tagid: modId,
+          title: `Loading Mod ${index + 1}...`,
+          author: 'Fetching from repository...',
+          isLoading: true,
+          loadingProgress: 'Requesting mod data...',
+          icon: '/ui/modModules/repoManager/icons/default-mod-icon.png'
+        };
+      });
+      
+      $scope.fetchMissingPackMods(missingModIds);
+    }
+    
+    $scope.filterMods();
+    $scope.filterSelectedMods();
   };
 
-  // Navigation
+  $scope.fetchMissingPackMods = function(missingModIds) {
+    if (!missingModIds || missingModIds.length === 0) return;
+    
+    console.log('Starting to fetch missing pack mods:', missingModIds);
+    $scope.requestedSelectedMods = [...missingModIds];
+    
+    const fetchModWithDelay = function(index) {
+      if (index >= missingModIds.length) {
+        console.log('Finished fetching all missing pack mods');
+        return;
+      }
+      
+      const modId = missingModIds[index];
+      console.log(`Fetching mod ${index + 1}/${missingModIds.length}: ${modId}`);
+      
+      if ($scope.createPackForm.selectedMods[modId] && $scope.createPackForm.selectedMods[modId].isLoading) {
+        $scope.createPackForm.selectedMods[modId].loadingProgress = `Fetching mod ${index + 1} of ${missingModIds.length}...`;
+        $scope.createPackForm.selectedMods[modId].title = `Loading: ${modId}`;
+        $scope.$apply();
+      }
+      
+      bngApi.engineLua(`extensions.core_repository.requestMod('${modId}')`);
+      
+      setTimeout(function() {
+        fetchModWithDelay(index + 1);
+      }, 500);
+    };
+    
+    fetchModWithDelay(0);
+  };
+
   $scope.goBack = function() {
     $state.go('menu.mainmenu');
   };
@@ -1056,7 +1084,6 @@ angular.module('beamng.stuff')
     $state.go('menu.mods.repository', {}, { reload: true });
   };
 
-  // Pack Details Modal
   $scope.showPackDetails = function(pack) {
     $scope.selectedPack = pack;
     $scope.packModDetails = [];
@@ -1066,7 +1093,6 @@ angular.module('beamng.stuff')
     $scope.totalPages = Math.ceil(pack.modIds.length / $scope.modsPerPage);
     $scope.requestedMods = [];
     
-    // Load available mods if not already loaded for mod status checking
     if (!$scope.allAvailableMods || $scope.allAvailableMods.length === 0) {
       $scope.loadAllAvailableMods();
     }
@@ -1132,15 +1158,12 @@ angular.module('beamng.stuff')
   };
   
   $scope.openModInRepo = function(mod) {
-    // Open mod info modal instead of navigating away
     $scope.openModInfo(mod);
   };
   
-  // Mod Status Functions
   $scope.isModInstalledLocally = function(mod) {
     if (!mod || !mod.tagid) return false;
     
-    // Check if mod exists in our local mods list
     if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0) {
       return $scope.allAvailableMods.some(function(localMod) {
         return localMod.tagid === mod.tagid;
@@ -1153,7 +1176,6 @@ angular.module('beamng.stuff')
   $scope.isModActive = function(mod) {
     if (!mod || !mod.tagid) return false;
     
-    // Check if mod is active in our local mods list
     if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0) {
       const localMod = $scope.allAvailableMods.find(function(localMod) {
         return localMod.tagid === mod.tagid;
@@ -1164,11 +1186,9 @@ angular.module('beamng.stuff')
     return false;
   };
 
-  // Get the best available icon for a mod (prefer local, fallback to repository)
   $scope.getModIcon = function(mod) {
     if (!mod) return '/ui/modModules/repoManager/icons/default-mod-icon.png';
     
-    // First check if there's a local version with an icon
     if ($scope.allAvailableMods && mod.tagid) {
       const localMod = $scope.allAvailableMods.find(function(localMod) {
         return localMod.tagid === mod.tagid;
@@ -1178,7 +1198,6 @@ angular.module('beamng.stuff')
       }
     }
     
-    // Fall back to repository icon or default
     return mod.icon || '/ui/modModules/repoManager/icons/default-mod-icon.png';
   };
   
@@ -1194,7 +1213,6 @@ angular.module('beamng.stuff')
     return null;
   };
 
-  // Mod Actions
   $scope.subscribeToMod = function(mod) {
     if (!mod || !mod.tagid) {
       console.error('Cannot subscribe to mod: missing mod or tagid');
@@ -1215,7 +1233,6 @@ angular.module('beamng.stuff')
     mod.sub = false;
     mod.subscribed = false;
     
-    // Update local mod status if it exists
     const localMod = $scope.getLocalMod(mod);
     if (localMod) {
       localMod.active = false;
@@ -1228,7 +1245,6 @@ angular.module('beamng.stuff')
       bngApi.engineLua(`core_modmanager.activateMod('${localMod.modname}')`);
       localMod.active = true;
       
-      // Trigger pack status update
       setTimeout(function() {
         bngApi.engineLua('extensions.repoManager.sendPackStatuses()');
       }, 100);
@@ -1241,7 +1257,6 @@ angular.module('beamng.stuff')
       bngApi.engineLua(`core_modmanager.deactivateMod('${localMod.modname}')`);
       localMod.active = false;
       
-      // Trigger pack status update
       setTimeout(function() {
         bngApi.engineLua('extensions.repoManager.sendPackStatuses()');
       }, 100);
@@ -1256,13 +1271,34 @@ angular.module('beamng.stuff')
     bngApi.engineLua('extensions.repoManager.clearModCache()');
   };
 
-  // Repository Browsing
+  $scope.fetchRepositoryMetadata = function() {
+    const displayedMods = $scope.getPagedMods();
+    $scope.fetchRepositoryMetadataForDisplayed(displayedMods, 'manual refresh');
+  };
+
+  $scope.refreshRepositoryMetadata = function() {
+    console.log('Manual repository metadata refresh triggered');
+    
+    localStorage.removeItem('repoManager_metadataCache');
+    
+    $scope.fetchingRepoMetadata = false;
+    $scope.requestedRepoMetadata = [];
+    $scope.repoMetadataQueue = [];
+    
+    $scope.fetchRepositoryMetadata();
+  };
+
   $scope.switchCreatePackTab = function(tab) {
     $scope.createPackActiveTab = tab;
     if (tab === 'repo' && $scope.repoMods.length === 0) {
       $scope.loadRepoMods();
     } else if (tab === 'selected') {
       $scope.filterSelectedMods();
+    } else if (tab === 'local') {
+      setTimeout(function() {
+        const displayedMods = $scope.getPagedMods();
+        $scope.fetchRepositoryMetadataForDisplayed(displayedMods, 'Local Mods tab switch');
+      }, 100);
     }
   };
   
@@ -1287,7 +1323,6 @@ angular.module('beamng.stuff')
   };
   
   $scope.isOnlineEnabled = function() {
-    // This will be set by the online state check
     return $scope.onlineFeatures === 'enable' && $scope.onlineState;
   };
   
@@ -1342,7 +1377,6 @@ angular.module('beamng.stuff')
     }
   };
   
-  // Function to toggle repository mod selection
   $scope.toggleRepoModSelection = function(mod) {
     if (!mod) {
       console.error('Cannot toggle mod selection: missing mod');
@@ -1358,12 +1392,15 @@ angular.module('beamng.stuff')
     } else {
       $scope.createPackForm.selectedMods[modId] = mod;
     }
+    
+    if ($scope.createPackActiveTab === 'selected') {
+      $scope.filterSelectedMods();
+    }
   };
   
-  // Function to open mod info in native BeamNG repository interface
   $scope.openModInfo = function(mod, event, fromPackCreator) {
     if (event) {
-      event.stopPropagation(); // Prevent card selection
+      event.stopPropagation();
     }
     
     if (!mod || !mod.tagid) {
@@ -1371,17 +1408,14 @@ angular.module('beamng.stuff')
       return;
     }
     
-    // Show custom modal instead of native interface
     $scope.showModInfoModal = true;
     $scope.loadingModInfo = true;
     $scope.selectedModInfo = null;
     $scope.modInfoFromPackCreator = fromPackCreator || false;
     
-    // Request detailed mod information
     bngApi.engineLua('extensions.core_repository.requestMod("' + mod.tagid + '")');
   };
   
-  // Function to close mod info modal
   $scope.closeModInfo = function() {
     $scope.showModInfoModal = false;
     $scope.loadingModInfo = false;
@@ -1389,14 +1423,12 @@ angular.module('beamng.stuff')
     $scope.modInfoFromPackCreator = false;
   };
   
-  // Function to select/deselect mod from info modal
   $scope.selectModFromInfo = function() {
     if ($scope.selectedModInfo) {
       $scope.toggleRepoModSelection($scope.selectedModInfo);
     }
   };
   
-  // Helper function to generate star array for rating display
   $scope.getStarArray = function(rating) {
     var stars = [];
     var fullStars = Math.floor(rating);
@@ -1406,44 +1438,34 @@ angular.module('beamng.stuff')
     return stars;
   };
   
-  // Listen for mod info response
   $scope.$on('ModReceived', function(event, data) {
     if (data && data.data && $scope.showModInfoModal) {
       $scope.$apply(function() {
         $scope.loadingModInfo = false;
         $scope.selectedModInfo = data.data;
         
-        // Ensure we have the icon URL
         if (!$scope.selectedModInfo.icon && $scope.selectedModInfo.path) {
           $scope.selectedModInfo.icon = "https://api.beamng.com/s1/v4/download/mods/" + $scope.selectedModInfo.path + "icon.jpg";
         }
         
-        // Format file size
         if ($scope.selectedModInfo.filesize && !$scope.selectedModInfo.filesize_display) {
           $scope.selectedModInfo.filesize_display = $scope.formatFileSize($scope.selectedModInfo.filesize);
         }
         
-        // Fix date formatting (convert Unix timestamp to proper date)
         if ($scope.selectedModInfo.last_update) {
-          // Check if it's a Unix timestamp (number) and convert to Date
           var timestamp = parseInt($scope.selectedModInfo.last_update);
           if (!isNaN(timestamp) && timestamp > 0) {
-            // If it looks like a Unix timestamp, convert it
             $scope.selectedModInfo.last_update_formatted = new Date(timestamp * 1000);
           } else {
-            // Otherwise try to parse as date string
             $scope.selectedModInfo.last_update_formatted = new Date($scope.selectedModInfo.last_update);
           }
         }
         
-        // Process description using BeamNG's BBCode parser (same as main repository)
         if ($scope.selectedModInfo.message) {
           try {
-            // Use the actual BeamNG BBCode parser - same as Utils.parseBBCode
             if (typeof window.angularParseBBCode !== 'undefined') {
               $scope.selectedModInfo.message_parsed = window.angularParseBBCode($scope.selectedModInfo.message);
             } else if (typeof Utils !== 'undefined' && Utils && Utils.parseBBCode) {
-              // Fallback to Utils.parseBBCode if available
               $scope.selectedModInfo.message_parsed = Utils.parseBBCode($scope.selectedModInfo.message);
             }
           } catch (error) {
@@ -1456,7 +1478,6 @@ angular.module('beamng.stuff')
     }
   });
 
-  // Function to check if repository mod is selected
   $scope.isRepoModSelected = function(mod) {
     if (!mod) return false;
     const modId = mod.tagid || mod.modname || mod.id;
@@ -1464,7 +1485,6 @@ angular.module('beamng.stuff')
     return !!$scope.createPackForm.selectedMods[modId];
   };
   
-  // Helper function to format file sizes
   $scope.formatFileSize = function(bytes) {
     if (!bytes || bytes === 0) return '0 B';
     const sizes = ['B', 'KB', 'MB', 'GB'];
@@ -1472,7 +1492,6 @@ angular.module('beamng.stuff')
     return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
   };
   
-  // Custom Pack Creation
   $scope.loadAllAvailableMods = function() {
     if (!$scope.allAvailableMods || $scope.allAvailableMods.length === 0) {
       $scope.loadingAllMods = true;
@@ -1489,22 +1508,18 @@ angular.module('beamng.stuff')
   $scope.filterMods = function() {
     let modsToFilter = $scope.allAvailableMods;
     
-    // First, exclude mods from selected packs
     if ($scope.excludedPacks.length > 0) {
       const excludedModIds = new Set();
       
-      // Collect all mod IDs and names from excluded packs
       $scope.excludedPacks.forEach(function(excludedPackName) {
         const pack = $scope.dependencies.find(p => p.packName === excludedPackName);
         if (pack) {
-          // Add mod IDs if they exist - ensure we have an array
           if (pack.modIds) {
             const modIdsArray = Array.isArray(pack.modIds) ? pack.modIds : Object.values(pack.modIds || {});
             modIdsArray.forEach(function(modId) {
               if (modId) excludedModIds.add(modId);
             });
           }
-          // Add mod names if they exist - ensure we have an array
           if (pack.modNames) {
             const modNamesArray = Array.isArray(pack.modNames) ? pack.modNames : Object.values(pack.modNames || {});
             modNamesArray.forEach(function(modName) {
@@ -1514,20 +1529,17 @@ angular.module('beamng.stuff')
         }
       });
       
-      // Filter out excluded mods
       modsToFilter = $scope.allAvailableMods.filter(function(mod) {
         const modId = mod.tagid || mod.modname;
         return !excludedModIds.has(modId);
       });
     }
     
-    // Apply mod type filters
     modsToFilter = modsToFilter.filter(function(mod) {
       const modType = $scope.getModType(mod);
       return $scope.modTypeFilters[modType];
     });
     
-    // Then apply text filter
     if (!$scope.createPackFilter) {
       $scope.filteredMods = modsToFilter;
     } else {
@@ -1542,16 +1554,19 @@ angular.module('beamng.stuff')
     }
     $scope.createPackTotalPages = Math.ceil($scope.filteredMods.length / $scope.createPackModsPerPage);
     $scope.createPackCurrentPage = 1;
+
+    setTimeout(function() {
+      const displayedMods = $scope.getPagedMods();
+      $scope.fetchRepositoryMetadataForDisplayed(displayedMods, 'Local Mods tab');
+    }, 100);
   };
   
-  // Pack Exclusion
   $scope.calculatePackModCount = function(requiredMods) {
     if (!requiredMods) return 0;
     
     let modIdsCount = 0;
     let modNamesCount = 0;
     
-    // Handle modIds (could be array or object from Lua)
     if (requiredMods.modIds) {
       if (Array.isArray(requiredMods.modIds)) {
         modIdsCount = requiredMods.modIds.length;
@@ -1560,7 +1575,6 @@ angular.module('beamng.stuff')
       }
     }
     
-    // Handle modNames (could be array or object from Lua)
     if (requiredMods.modNames) {
       if (Array.isArray(requiredMods.modNames)) {
         modNamesCount = requiredMods.modNames.length;
@@ -1575,7 +1589,6 @@ angular.module('beamng.stuff')
   $scope.initializeAvailablePacksForExclusion = function() {
     if ($scope.dependencies && $scope.dependencies.length > 0) {
       $scope.availablePacksForExclusion = $scope.dependencies.filter(function(pack) {
-        // Include packs that have mods (either modIds OR modNames), excluding the Create Pack pseudo-card
         const hasModIds = pack.modIds && (
           (Array.isArray(pack.modIds) && pack.modIds.length > 0) ||
           (typeof pack.modIds === 'object' && Object.keys(pack.modIds).length > 0)
@@ -1587,10 +1600,8 @@ angular.module('beamng.stuff')
         const hasMods = hasModIds || hasModNames;
         const notCreatePack = !pack.isCreatePack;
         
-        // Exclude the pack currently being edited
         const notCurrentPack = !$scope.editingPack || pack.packName !== $scope.editingPack.packName;
         
-        // Recalculate count to fix any NaN issues
         pack.count = $scope.calculatePackModCount({
           modIds: pack.modIds,
           modNames: pack.modNames
@@ -1627,31 +1638,26 @@ angular.module('beamng.stuff')
   $scope.togglePackExclusionFilter = function() {
     $scope.showPackExclusionFilter = !$scope.showPackExclusionFilter;
     
-    // Refresh available packs every time we open the exclusion filter
     if ($scope.showPackExclusionFilter) {
       $scope.initializeAvailablePacksForExclusion();
     }
   };
   
   $scope.applyPackExclusionFilter = function() {
-    $scope.filterMods(); // Re-filter mods with new exclusions
+    $scope.filterMods();
   };
   
-  // Mod Type Filtering Functions
   $scope.getModType = function(mod) {
     if (!mod) return 'local';
     
-    // If mod has tagid, it's from the repository
     if (mod.tagid) {
       return 'repo';
     }
     
-    // Check if mod is unpacked using the unpacked flag from Lua or fullpath analysis
     if (mod.unpacked === true || (mod.fullpath && !mod.fullpath.toLowerCase().endsWith('.zip'))) {
       return 'unpacked';
     }
     
-    // Default to local
     return 'local';
   };
   
@@ -1674,7 +1680,6 @@ angular.module('beamng.stuff')
     }).length;
   };
   
-  // Function to get repository information for local mods with tagid
   $scope.hasRepoInfo = function(mod) {
     return mod && mod.tagid && (mod.download_count || mod.rating_avg || mod.filesize);
   };
@@ -1684,22 +1689,122 @@ angular.module('beamng.stuff')
     
     const info = [];
     
-    if (mod.download_count) {
-      const downTxt = mod.download_count > 1000 ? 
-        (mod.download_count / 1000).toFixed(0) + "K" : 
-        mod.download_count;
-      info.push(downTxt + " downloads");
-    }
-    
     if (mod.rating_avg && mod.rating_avg > 0) {
       info.push("★ " + parseFloat(mod.rating_avg).toFixed(1));
     }
     
-    if (mod.filesize) {
-      info.push($scope.formatFileSize(mod.filesize));
+    return info.length > 0 ? info : null;
+  };
+
+  $scope.identifyDisplayedModsNeedingMetadata = function(modList) {
+    if (!modList || modList.length === 0) return [];
+    
+    const modsNeedingMetadata = [];
+    
+    modList.forEach(function(mod) {
+      if (mod.tagid && !$scope.hasRepoInfo(mod)) {
+        if (!$scope.requestedRepoMetadata.includes(mod.tagid)) {
+          modsNeedingMetadata.push(mod.tagid);
+        }
+      }
+    });
+    
+    return modsNeedingMetadata;
+  };
+
+  $scope.fetchRepositoryMetadataForDisplayed = function(modList, context) {
+    const modsToFetch = $scope.identifyDisplayedModsNeedingMetadata(modList);
+    
+    if (modsToFetch.length === 0) {
+      return;
     }
     
-    return info.length > 0 ? info : null;
+    console.log(`Fetching metadata for ${modsToFetch.length} displayed mods in ${context}`);
+    
+    if (!$scope.fetchingRepoMetadata) {
+      $scope.fetchingRepoMetadata = true;
+      $scope.repoMetadataQueue = [...modsToFetch];
+      $scope.requestedRepoMetadata.push(...modsToFetch);
+      
+      $scope.fetchNextRepoMetadata();
+    } else {
+      modsToFetch.forEach(function(modId) {
+        if (!$scope.requestedRepoMetadata.includes(modId)) {
+          $scope.repoMetadataQueue.push(modId);
+          $scope.requestedRepoMetadata.push(modId);
+        }
+      });
+    }
+  };
+
+  $scope.fetchNextRepoMetadata = function() {
+    if ($scope.repoMetadataQueue.length === 0) {
+      console.log('Finished fetching repository metadata for all mods');
+      $scope.fetchingRepoMetadata = false;
+      $scope.cacheRepositoryMetadata();
+      return;
+    }
+    
+    const modId = $scope.repoMetadataQueue.shift();
+    console.log(`Fetching repository metadata for ${modId} (${$scope.repoMetadataQueue.length + 1} remaining)`);
+    
+    bngApi.engineLua(`extensions.core_repository.requestMod('${modId}')`);
+    
+    setTimeout(function() {
+      $scope.fetchNextRepoMetadata();
+    }, 750);
+  };
+
+  $scope.cacheRepositoryMetadata = function() {
+    if (!$scope.allAvailableMods) return;
+    
+    const metadataCache = {};
+    
+    $scope.allAvailableMods.forEach(function(mod) {
+      if (mod.tagid && $scope.hasRepoInfo(mod)) {
+        metadataCache[mod.tagid] = {
+          download_count: mod.download_count,
+          rating_avg: mod.rating_avg,
+          filesize: mod.filesize,
+          cached_at: Date.now()
+        };
+      }
+    });
+    
+    localStorage.setItem('repoManager_metadataCache', JSON.stringify(metadataCache));
+    console.log(`Cached repository metadata for ${Object.keys(metadataCache).length} mods`);
+  };
+
+  $scope.loadRepositoryMetadataCache = function() {
+    const cached = localStorage.getItem('repoManager_metadataCache');
+    if (!cached) return;
+    
+    try {
+      const metadataCache = JSON.parse(cached);
+      let appliedCount = 0;
+      
+      if ($scope.allAvailableMods) {
+        $scope.allAvailableMods.forEach(function(mod) {
+          if (mod.tagid && metadataCache[mod.tagid] && !$scope.hasRepoInfo(mod)) {
+            const cached = metadataCache[mod.tagid];
+            
+            const cacheAge = Date.now() - (cached.cached_at || 0);
+            if (cacheAge < 24 * 60 * 60 * 1000) {
+              mod.download_count = cached.download_count;
+              mod.rating_avg = cached.rating_avg;
+              mod.filesize = cached.filesize;
+              appliedCount++;
+            }
+          }
+        });
+      }
+      
+      if (appliedCount > 0) {
+        console.log(`Applied cached repository metadata to ${appliedCount} mods`);
+      }
+    } catch (error) {
+      console.error('Failed to load repository metadata cache:', error);
+    }
   };
   
   $scope.getPagedMods = function() {
@@ -1717,6 +1822,10 @@ angular.module('beamng.stuff')
       delete $scope.createPackForm.selectedMods[modId];
     } else {
       $scope.createPackForm.selectedMods[modId] = mod;
+    }
+    
+    if ($scope.createPackActiveTab === 'selected') {
+      $scope.filterSelectedMods();
     }
   };
   
@@ -1781,12 +1890,20 @@ angular.module('beamng.stuff')
     $scope.filteredMods = [];
     $scope.createPackFilter = '';
     $scope.createPackCurrentPage = 1;
-    $scope.editingPack = null; // Reset editing state
+    $scope.editingPack = null;
+    
+    $scope.requestedSelectedMods = [];
+    $scope.filteredSelectedMods = [];
   };
   
   $scope.goToCreatePackPage = function(pageNumber) {
     if (pageNumber >= 1 && pageNumber <= $scope.createPackTotalPages) {
       $scope.createPackCurrentPage = pageNumber;
+      
+      setTimeout(function() {
+        const displayedMods = $scope.getPagedMods();
+        $scope.fetchRepositoryMetadataForDisplayed(displayedMods, 'Local Mods pagination');
+      }, 100);
     }
   };
   
@@ -1803,24 +1920,24 @@ angular.module('beamng.stuff')
   };
   
   $scope.updateModsPagination = function() {
-    // Convert to number to ensure proper calculation
     $scope.createPackModsPerPage = parseInt($scope.createPackModsPerPage);
     
-    // Recalculate total pages
     $scope.createPackTotalPages = Math.ceil($scope.filteredMods.length / $scope.createPackModsPerPage);
     
-    // Reset to first page if current page is now invalid
     if ($scope.createPackCurrentPage > $scope.createPackTotalPages) {
       $scope.createPackCurrentPage = 1;
     }
     
-    // Ensure we're on at least page 1
     if ($scope.createPackCurrentPage < 1) {
       $scope.createPackCurrentPage = 1;
     }
+    
+    setTimeout(function() {
+      const displayedMods = $scope.getPagedMods();
+      $scope.fetchRepositoryMetadataForDisplayed(displayedMods, 'Local Mods page size change');
+    }, 100);
   };
   
-  // Selected Mods Tab
   $scope.filterSelectedMods = function() {
     const selectedMods = Object.values($scope.createPackForm.selectedMods);
     
@@ -1836,23 +1953,42 @@ angular.module('beamng.stuff')
                (mod.tagid && mod.tagid.toLowerCase().includes(filter));
       });
     }
+    
     $scope.selectedModsTotalPages = Math.ceil($scope.filteredSelectedMods.length / $scope.selectedModsPerPage);
     $scope.selectedModsCurrentPage = 1;
+    
+    $scope.requestSelectedModDetails();
+  };
+  
+  $scope.requestSelectedModDetails = function() {
+    const selectedMods = Object.values($scope.createPackForm.selectedMods);
+    const repoModsNeedingDetails = [];
+    
+    selectedMods.forEach(function(mod) {
+      if (mod.tagid && !mod.filesize_display && !mod.downTxt && !mod.tag_line) {
+        repoModsNeedingDetails.push(mod.tagid);
+      }
+    });
+    
+    if (repoModsNeedingDetails.length > 0) {
+      $scope.requestedSelectedMods = [...repoModsNeedingDetails];
+      
+      const luaTable = '{' + repoModsNeedingDetails.map(modId => `'${modId}'`).join(',') + '}';
+      bngApi.engineLua(`extensions.repoManager.requestMultipleMods(${luaTable})`);
+    } else {
+      $scope.requestedSelectedMods = [];
+    }
   };
   
   $scope.updateSelectedModsPagination = function() {
-    // Convert to number to ensure proper calculation
     $scope.selectedModsPerPage = parseInt($scope.selectedModsPerPage);
     
-    // Recalculate total pages
     $scope.selectedModsTotalPages = Math.ceil($scope.filteredSelectedMods.length / $scope.selectedModsPerPage);
     
-    // Reset to first page if current page is now invalid
     if ($scope.selectedModsCurrentPage > $scope.selectedModsTotalPages) {
       $scope.selectedModsCurrentPage = 1;
     }
     
-    // Ensure we're on at least page 1
     if ($scope.selectedModsCurrentPage < 1) {
       $scope.selectedModsCurrentPage = 1;
     }
@@ -1889,20 +2025,18 @@ angular.module('beamng.stuff')
     const modId = mod.tagid || mod.modname;
     if ($scope.createPackForm.selectedMods[modId]) {
       delete $scope.createPackForm.selectedMods[modId];
-      $scope.filterSelectedMods(); // Refresh the filtered list
+      $scope.filterSelectedMods();
     }
   };
   
   $scope.clearAllSelectedMods = function() {
     if (confirm('Are you sure you want to clear all selected mods?')) {
       $scope.createPackForm.selectedMods = {};
-      $scope.filterSelectedMods(); // Refresh the filtered list
+      $scope.filterSelectedMods();
     }
   };
   
-  // Custom Pack Management
   $scope.isCustomPack = function(pack) {
-    // Custom packs are those without a source mod
     const section = $scope.modSections.find(s => s.isCustom);
     return section && section.packs.includes(pack) && !pack.isCreatePack;
   };
@@ -1914,7 +2048,6 @@ angular.module('beamng.stuff')
     $scope.showCreatePackModal = true;
     $scope.loadAllAvailableMods();
     
-    // Load the pack data first, then the UI will be updated with the pack's mods
     bngApi.engineLua(`extensions.repoManager.loadPackForEdit('${pack.packName}')`);
   };
   
@@ -1982,7 +2115,6 @@ angular.module('beamng.stuff')
       if (data && data.data && data.data.tagid && $scope.requestedMods.includes(data.data.tagid)) {
         const modData = data.data;
         
-        // First check if there's a local version of this mod with an icon
         let localIcon = null;
         if ($scope.allAvailableMods && modData.tagid) {
           const localMod = $scope.allAvailableMods.find(mod => mod.tagid === modData.tagid);
@@ -1991,7 +2123,6 @@ angular.module('beamng.stuff')
           }
         }
         
-        // Use local icon if available, otherwise fall back to original logic
         if (localIcon) {
           modData.icon = localIcon;
         } else if (modData.isLocal && modData.localIconPath) {
@@ -2032,12 +2163,102 @@ angular.module('beamng.stuff')
     });
   });
 
-  // Initialization
+  $scope.$on('ModReceived', function(event, data) {
+    $scope.$apply(function() {
+      if (data && data.data && data.data.tagid && $scope.requestedSelectedMods.includes(data.data.tagid)) {
+        const modData = data.data;
+        
+        if (modData.path && !modData.icon) {
+          modData.icon = `https://api.beamng.com/s1/v4/download/mods/${modData.path}icon.jpg`;
+        }
+        
+        modData.downTxt = modData.download_count > 1000 ? 
+          (modData.download_count / 1000).toFixed(0) + "K" : 
+          modData.download_count;
+        modData.rating_avg = parseFloat(modData.rating_avg || 0).toFixed(1);
+        modData.filesize_display = $scope.formatFileSize(modData.filesize);
+        
+        if (!modData.author && modData.creator) {
+          modData.author = modData.creator;
+        } else if (!modData.author && modData.username) {
+          modData.author = modData.username;
+        } else if (!modData.author && modData.user_name) {
+          modData.author = modData.user_name;
+        }
+        
+        const modId = modData.tagid;
+        if ($scope.createPackForm.selectedMods[modId]) {
+          if ($scope.createPackForm.selectedMods[modId].isLoading) {
+            $scope.createPackForm.selectedMods[modId] = modData;
+            console.log('Updated loading placeholder with real data:', modData.title || modData.name || modId);
+          } else {
+            Object.assign($scope.createPackForm.selectedMods[modId], modData);
+          }
+        } else {
+          $scope.createPackForm.selectedMods[modId] = modData;
+          console.log('Added missing pack mod to selection:', modData.title || modData.name || modId);
+        }
+        
+        const index = $scope.requestedSelectedMods.indexOf(modData.tagid);
+        if (index > -1) {
+          $scope.requestedSelectedMods.splice(index, 1);
+        }
+        
+        if ($scope.requestedSelectedMods.length === 0) {
+          console.log('All missing pack mods have been loaded successfully');
+        }
+        
+        const selectedMods = Object.values($scope.createPackForm.selectedMods);
+        
+        if (!$scope.selectedModsFilter) {
+          $scope.filteredSelectedMods = selectedMods;
+        } else {
+          const filter = $scope.selectedModsFilter.toLowerCase();
+          $scope.filteredSelectedMods = selectedMods.filter(function(mod) {
+            return (mod.title && mod.title.toLowerCase().includes(filter)) ||
+                   (mod.name && mod.name.toLowerCase().includes(filter)) ||
+                   (mod.modname && mod.modname.toLowerCase().includes(filter)) ||
+                   (mod.author && mod.author.toLowerCase().includes(filter)) ||
+                   (mod.tagid && mod.tagid.toLowerCase().includes(filter));
+          });
+        }
+        $scope.selectedModsTotalPages = Math.ceil($scope.filteredSelectedMods.length / $scope.selectedModsPerPage);
+      }
+    });
+  });
+
+  $scope.$on('ModReceived', function(event, data) {
+    $scope.$apply(function() {
+      if (data && data.data && data.data.tagid && $scope.requestedRepoMetadata.includes(data.data.tagid)) {
+        const modData = data.data;
+        
+        if ($scope.allAvailableMods) {
+          const localMod = $scope.allAvailableMods.find(function(mod) {
+            return mod.tagid === modData.tagid;
+          });
+          
+          if (localMod) {
+            localMod.download_count = modData.download_count;
+            localMod.rating_avg = modData.rating_avg;
+            localMod.filesize = modData.filesize;
+            localMod.tag_line = modData.tag_line;
+            
+            console.log(`Updated repository metadata for ${localMod.title || localMod.name || modData.tagid}`);
+          }
+        }
+        
+        const index = $scope.requestedRepoMetadata.indexOf(modData.tagid);
+        if (index > -1) {
+          $scope.requestedRepoMetadata.splice(index, 1);
+        }
+      }
+    });
+  });
+
   $scope.loadEnabledState();
   $scope.loadExpandedState();
   $scope.loadDependencies();
   
-  // Check online features state
   bngApi.engineLua('settings.getValue("onlineFeatures")', function(data) {
     $scope.$apply(function() {
       $scope.onlineFeatures = data;
@@ -2050,7 +2271,6 @@ angular.module('beamng.stuff')
     });
   });
   
-  // Safety timeout
   const safetyTimeout = setTimeout(function() {
     if ($scope.loading) {
       $scope.$apply(function() {
@@ -2063,7 +2283,6 @@ angular.module('beamng.stuff')
   }, 3000);
   $scope._timeouts.push(safetyTimeout);
   
-  // Loading check interval
   const mainInterval = setInterval(function() {
     if ($scope.loading && ($scope.dependencies && $scope.dependencies.length > 0)) {
       $scope.$apply(function() {
@@ -2073,13 +2292,11 @@ angular.module('beamng.stuff')
   }, 2000);
   $scope._intervals.push(mainInterval);
   
-  // Subscription status check interval
   const statusInterval = setInterval(function() {
     $scope.requestSubscriptionStatus();
   }, 5000);
   $scope._intervals.push(statusInterval);
   
-  // Cleanup
   $scope.$on('$destroy', function() {
     $scope._intervals.forEach(function(interval) {
       clearInterval(interval);

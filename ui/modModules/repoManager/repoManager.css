@@ -1680,6 +1680,10 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  display: inline-block;
+  width: auto;
+  max-width: fit-content;
+  flex-shrink: 0;
 }
 
 .mod-source-badge.local-source {
@@ -1692,6 +1696,94 @@
   background: rgba(59, 130, 246, 0.2);
   color: #3b82f6;
   border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Selected mod cards specific styling */
+.selected-mod-card .mod-basic-info .mod-source-badge {
+  margin-top: 4px;
+  padding: 2px 6px;
+  font-size: 10px;
+  max-width: fit-content;
+}
+
+.mod-stats-below-remove {
+  position: absolute;
+  top: 42px; /* Position 10px further down from the remove button */
+  right: 8px;
+  z-index: 1;
+}
+
+.mod-stats-below-remove .repo-mod-stats {
+  padding: 3px 6px;
+  font-size: 9px;
+}
+
+/* Loading state for mods being fetched */
+.selected-mod-card.loading-mod {
+  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.selected-mod-card.loading-mod .mod-name {
+  color: #888;
+  font-style: italic;
+}
+
+.selected-mod-card.loading-mod .mod-author {
+  color: #666;
+  font-size: 11px;
+}
+
+.selected-mod-card.loading-mod .mod-icon {
+  opacity: 0.5;
+  filter: grayscale(100%);
+}
+
+.mod-remove-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.mod-source-badge.loading-badge {
+  background: rgba(128, 128, 128, 0.2);
+  color: #888;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  animation: pulse 1.5s infinite;
+  max-width: fit-content;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.mod-loading-progress {
+  margin-top: 2px;
+  color: #888;
+  font-style: italic;
+}
+
+.mod-loading-progress small {
+  font-size: 10px;
+  color: #aaa;
+  animation: pulse 2s infinite;
+}
+
+.metadata-status {
+  margin-top: 5px;
+  color: #888;
+  font-style: italic;
+}
+
+.loading-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4a9eff;
+  margin-right: 6px;
+  animation: pulse 1.5s infinite;
 }
 
 
@@ -2458,6 +2550,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   justify-content: flex-start;
   min-height: 60px;
   margin-bottom: 0.75rem; /* Smaller gap above buttons */

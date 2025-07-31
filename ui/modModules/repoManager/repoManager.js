@@ -360,6 +360,25 @@ angular.module('beamng.stuff')
     }
   };
   
+  // Helper function to get author information for a section
+  $scope.getSectionAuthor = function(section) {
+    if (!section.sourceMod || section.isCustom || section.isBase) return null;
+    
+    if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0) {
+      const modData = $scope.allAvailableMods.find(function(mod) {
+        return mod.modname === section.sourceMod;
+      });
+      if (modData) {
+        // Check for username in multiple possible locations
+        const username = modData.username || (modData.modData && modData.modData.username);
+        if (username && username.trim() !== '') {
+          return username;
+        }
+      }
+    }
+    return null;
+  };
+  
   $scope.canQueueSection = function(section) {
     if (!section.packs) return false;
     const realPacks = section.packs.filter(pack => !pack.isCreatePack);
@@ -759,6 +778,10 @@ angular.module('beamng.stuff')
         $scope.baseMod = data.baseMod;
         $scope.modToPacks = data.modToPacks || {};
         
+        // Load all mod data so we can use proper titles in section headers
+        $scope.loadingAllMods = true;
+        bngApi.engineLua('extensions.repoManager.getAllAvailableMods()');
+        
         // Build mod sections if we have dependencies loaded
         if ($scope.dependencies && $scope.dependencies.length > 0) {
           $scope.buildModSections();
@@ -806,9 +829,21 @@ angular.module('beamng.stuff')
         if (!mod.author) {
           mod.author = mod.username || mod.creator || mod.user_name || mod.modAuthor || null;
         }
+        
+        // Extract username from nested modData structure if available
+        if (mod.modData && mod.modData.username && !mod.username) {
+          mod.username = mod.modData.username;
+        }
+        
         return mod;
       });
       $scope.loadingAllMods = false;
+      
+      // Rebuild sections now that we have mod data with proper titles
+      if ($scope.dependencies && $scope.dependencies.length > 0) {
+        $scope.buildModSections();
+      }
+      
       $scope.filterMods();
     });
   });
@@ -843,7 +878,6 @@ angular.module('beamng.stuff')
         
         // Wait for mods to load, then select the appropriate ones
         if ($scope.allAvailableMods.length === 0) {
-          console.log('Mods not loaded yet, setting up watcher');
           // Mods are still loading, wait for them
           const unwatch = $scope.$watch('allAvailableMods', function(newVal) {
             if (newVal && newVal.length > 0) {

@@ -1388,6 +1388,17 @@
   font-size: 1.3rem;
   font-weight: 500;
   color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.section-author {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #4a9eff;
+  opacity: 0.8;
 }
 
 .pack-count {

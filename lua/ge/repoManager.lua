@@ -562,7 +562,7 @@ local function getAllAvailableMods()
                 name = modData.modData.name or modName,
                 title = modData.modData.title,
                 tagid = modData.modData.tagid,
-                author = modData.modData.author or modData.modData.creator,
+                username = modData.modData.username,
                 version = modData.modData.version,
                 description = modData.modData.description,
                 active = modData.active or false,

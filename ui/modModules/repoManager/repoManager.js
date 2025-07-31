@@ -31,6 +31,10 @@ angular.module('beamng.stuff')
   // Current download pack
   $scope.currentDownloadPack = null;
   
+  // Cancel download state
+  $scope.cancelRequestedForPack = null;
+  $scope.cancelAllRequested = false;
+  
   // Modal state
   $scope.selectedPack = null;
   $scope.packModDetails = [];
@@ -118,6 +122,7 @@ angular.module('beamng.stuff')
   $scope.showModInfoModal = false;
   $scope.loadingModInfo = false;
   $scope.selectedModInfo = null;
+  $scope.modInfoFromPackCreator = false;
   
   // Delete confirmation modal
   $scope.showDeleteConfirmModal = false;
@@ -177,25 +182,21 @@ angular.module('beamng.stuff')
   $scope.buildModSections = function() {
     const sections = {};
     
-    // Process existing dependencies
     if ($scope.dependencies && $scope.dependencies.length > 0) {
       $scope.dependencies.forEach(function(pack) {
         const sourceMod = $scope.packToMod[pack.packName];
         let modName = sourceMod;
         
-        // Use "Base" for the base mod
         if (sourceMod === $scope.baseMod) {
           modName = 'Base';
         } else if (!sourceMod) {
           modName = 'Custom';
         } else {
-          // Try to find the actual mod data to get a better display name
           if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0) {
             const modData = $scope.allAvailableMods.find(function(mod) {
               return mod.modname === sourceMod;
             });
             if (modData) {
-              // Prioritize title from mod data, then fallback to name, then sourceMod
               if (modData.title && modData.title.trim() !== '') {
                 modName = modData.title;
               } else if (modData.name && modData.name.trim() !== '') {
@@ -216,7 +217,6 @@ angular.module('beamng.stuff')
             isCustom: modName === 'Custom'
           };
           
-          // Pre-populate author information if available
           if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0 && sourceMod) {
             const modData = $scope.allAvailableMods.find(function(mod) {
               return mod.modname === sourceMod;
@@ -234,7 +234,6 @@ angular.module('beamng.stuff')
       });
     }
     
-    // Always ensure Custom section exists with Create Pack option
     if (!sections['Custom']) {
       sections['Custom'] = {
         modName: 'Custom',
@@ -245,7 +244,6 @@ angular.module('beamng.stuff')
       };
     }
     
-    // Add the Create Pack pseudo-pack to Custom section
     const createPackCard = {
       id: '__create_pack__',
       packName: '__create_pack__',
@@ -259,7 +257,6 @@ angular.module('beamng.stuff')
     
     sections['Custom'].packs.push(createPackCard);
     
-    // Convert to array and sort (Custom first, then Base, then alphabetically)
     $scope.modSections = Object.values(sections).sort(function(a, b) {
       if (a.isCustom) return -1;
       if (b.isCustom) return 1;
@@ -268,14 +265,12 @@ angular.module('beamng.stuff')
       return a.modName.localeCompare(b.modName);
     });
     
-    // Initialize expanded state for sections
     $scope.modSections.forEach(function(section) {
       if ($scope.expandedSections[section.modName] === undefined) {
-        $scope.expandedSections[section.modName] = section.isBase || section.isCustom; // Base and Custom expanded by default
+        $scope.expandedSections[section.modName] = section.isBase || section.isCustom;
       }
     });
     
-    // Refresh available packs for exclusion after building sections
     $scope.initializeAvailablePacksForExclusion();
   };
   
@@ -302,7 +297,6 @@ angular.module('beamng.stuff')
   $scope.queueAllPacksInSection = function(section) {
     if (!section.packs || section.packs.length === 0) return;
     
-    // Filter out the Create Pack card
     const realPacks = section.packs.filter(function(pack) {
       return !pack.isCreatePack;
     });
@@ -345,7 +339,6 @@ angular.module('beamng.stuff')
   $scope.getSectionStatus = function(section) {
     if (!section.packs || section.packs.length === 0) return { text: 'EMPTY', class: 'empty' };
     
-    // Filter out the Create Pack card from status calculations
     const realPacks = section.packs.filter(pack => !pack.isCreatePack);
     
     if (realPacks.length === 0) return { text: 'EMPTY', class: 'empty' };
@@ -373,11 +366,9 @@ angular.module('beamng.stuff')
     }
   };
   
-  // Helper function to get author information for a section
   $scope.getSectionAuthor = function(section) {
     if (!section.sourceMod || section.isCustom || section.isBase) return null;
     
-    // Store author info in the section object to persist across state changes
     if (section.authorUsername) {
       return section.authorUsername;
     }
@@ -387,10 +378,8 @@ angular.module('beamng.stuff')
         return mod.modname === section.sourceMod;
       });
       if (modData) {
-        // Check for username in multiple possible locations
         const username = modData.username || (modData.modData && modData.modData.username);
         if (username && username.trim() !== '') {
-          // Cache the username in the section object
           section.authorUsername = username;
           return username;
         }
@@ -560,7 +549,7 @@ angular.module('beamng.stuff')
 
   $scope.getPreparingDownloadsMessage = function() {
     if ($scope.isRateLimited) {
-      return "Rate limiting due to Repo requirements";
+      return "Rate limiting due to Repo requirements, Downloads will continue shortly";
     }
     return "Preparing downloads...";
   };
@@ -625,17 +614,14 @@ angular.module('beamng.stuff')
 
   // Pack Actions
   $scope.togglePack = function(pack) {
-    // Ensure mod data is available for author information
     if ((!$scope.allAvailableMods || $scope.allAvailableMods.length === 0) && !$scope.loadingAllMods) {
       $scope.loadAllAvailableMods();
     }
     
-    // Handle Create Pack card
     if (pack.isCreatePack) {
-      // Clear selected mods when opening create pack modal
       $scope.createPackForm.selectedMods = {};
-      $scope.selectedModsFilter = ''; // Clear any filter
-      $scope.filteredSelectedMods = []; // Directly clear the display array
+      $scope.selectedModsFilter = '';
+      $scope.filteredSelectedMods = [];
       $scope.selectedModsCurrentPage = 1;
       $scope.selectedModsTotalPages = 1;
       $scope.showCreatePackModal = true;
@@ -684,6 +670,63 @@ angular.module('beamng.stuff')
     bngApi.engineLua('extensions.requiredMods.clearPackQueue()');
     bngApi.engineLua('extensions.requiredMods.disableAllMods()');
     bngApi.engineLua('extensions.repoManager.sendPackStatuses()');
+  };
+
+  $scope.cancelAllDownloads = function() {
+    $scope.cancelAllRequested = true;
+    bngApi.engineLua('extensions.requiredMods.cancelAllDownloads()');
+  };
+
+  $scope.cancelCurrentDownload = function() {
+    // Track which pack we're canceling
+    $scope.cancelRequestedForPack = $scope.currentPack;
+    bngApi.engineLua('extensions.requiredMods.cancelDownload()');
+  };
+
+  $scope.isCancellingCurrentPack = function() {
+    return $scope.cancelRequestedForPack && 
+           $scope.currentPack && 
+           $scope.cancelRequestedForPack === $scope.currentPack;
+  };
+
+  $scope.getCancelStatusMessage = function() {
+    if ($scope.cancelAllRequested && $scope.isAnyPackDownloading()) {
+      return "Completing final downloads and canceling all packs...";
+    }
+    if ($scope.isCancellingCurrentPack()) {
+      return "Completing final downloads and canceling...";
+    }
+    return null;
+  };
+
+  $scope.getDeactivateAllButtonText = function() {
+    if ($scope.cancelAllRequested && $scope.isAnyPackDownloading()) {
+      return 'Canceling All Downloads...';
+    }
+    if ($scope.isAnyPackDownloading()) {
+      return 'Cancel All Downloads';
+    }
+    return 'Deactivate All Packs';
+  };
+
+  $scope.getDeactivateAllButtonSubText = function() {
+    if ($scope.cancelAllRequested && $scope.isAnyPackDownloading()) {
+      return 'Stopping all downloads in progress';
+    }
+    if ($scope.isAnyPackDownloading()) {
+      return 'Stop all pending downloads';
+    }
+    return 'Disable all dependency packs';
+  };
+
+  $scope.handleDeactivateAllAction = function() {
+    if ($scope.isAnyPackDownloading()) {
+      if (!$scope.cancelAllRequested) {
+        $scope.cancelAllDownloads();
+      }
+    } else {
+      $scope.uninstallAllPacks();
+    }
   };
 
   // Lua Communication
@@ -817,6 +860,8 @@ angular.module('beamng.stuff')
   
   $scope.$on('packQueueUpdate', function(event, queueData) {
     $scope.$apply(function() {
+      const previousPack = $scope.currentPack;
+      
       if (queueData && queueData.packQueue !== undefined && (Array.isArray(queueData.packQueue) || typeof queueData.packQueue === 'object')) {
         // Convert Lua table (object) to array if needed
         $scope.packQueue = Array.isArray(queueData.packQueue) ? queueData.packQueue : Object.values(queueData.packQueue);
@@ -829,6 +874,17 @@ angular.module('beamng.stuff')
         $scope.packModCount = 0;
         $scope.packModDone = 0;
       }
+      
+      // Clear cancel state if pack changed or downloads completed
+      if (previousPack !== $scope.currentPack || !$scope.currentPack) {
+        $scope.cancelRequestedForPack = null;
+      }
+      
+      // Clear cancel all state if downloads completed
+      if (!$scope.currentPack) {
+        $scope.cancelAllRequested = false;
+      }
+      
       $scope.updateCurrentDownloadPack();
     });
   });
@@ -852,12 +908,10 @@ angular.module('beamng.stuff')
       const previousModCount = $scope.allAvailableMods ? $scope.allAvailableMods.length : 0;
       
       $scope.allAvailableMods = (data || []).map(function(mod) {
-        // Ensure author field is set for local mods (check multiple possible field names)
         if (!mod.author) {
           mod.author = mod.username || mod.creator || mod.user_name || mod.modAuthor || null;
         }
         
-        // Extract username from nested modData structure if available
         if (mod.modData && mod.modData.username && !mod.username) {
           mod.username = mod.modData.username;
         }
@@ -866,14 +920,12 @@ angular.module('beamng.stuff')
       });
       $scope.loadingAllMods = false;
       
-      // Only rebuild sections if we actually got new data or if sections haven't been built yet
       const currentModCount = $scope.allAvailableMods.length;
       if ($scope.dependencies && $scope.dependencies.length > 0 && 
           (previousModCount === 0 || currentModCount !== previousModCount || !$scope.modSections || $scope.modSections.length === 0)) {
         $scope.buildModSections();
       }
       
-      // Only filter mods if we're in the pack creator (showCreatePackModal is true)
       if ($scope.showCreatePackModal) {
         $scope.filterMods();
       }
@@ -1309,7 +1361,7 @@ angular.module('beamng.stuff')
   };
   
   // Function to open mod info in native BeamNG repository interface
-  $scope.openModInfo = function(mod, event) {
+  $scope.openModInfo = function(mod, event, fromPackCreator) {
     if (event) {
       event.stopPropagation(); // Prevent card selection
     }
@@ -1323,6 +1375,7 @@ angular.module('beamng.stuff')
     $scope.showModInfoModal = true;
     $scope.loadingModInfo = true;
     $scope.selectedModInfo = null;
+    $scope.modInfoFromPackCreator = fromPackCreator || false;
     
     // Request detailed mod information
     bngApi.engineLua('extensions.core_repository.requestMod("' + mod.tagid + '")');
@@ -1333,6 +1386,7 @@ angular.module('beamng.stuff')
     $scope.showModInfoModal = false;
     $scope.loadingModInfo = false;
     $scope.selectedModInfo = null;
+    $scope.modInfoFromPackCreator = false;
   };
   
   // Function to select/deselect mod from info modal
@@ -1420,13 +1474,11 @@ angular.module('beamng.stuff')
   
   // Custom Pack Creation
   $scope.loadAllAvailableMods = function() {
-    // Only set loading state if we don't already have mod data
     if (!$scope.allAvailableMods || $scope.allAvailableMods.length === 0) {
       $scope.loadingAllMods = true;
       $scope.allAvailableMods = [];
     }
     
-    // Initialize available packs for exclusion if not already done
     if ($scope.availablePacksForExclusion.length === 0) {
       $scope.initializeAvailablePacksForExclusion();
     }

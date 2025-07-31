@@ -1324,6 +1324,17 @@ local function onModDeactivated(modData)
     end
 end
 
+local function cancelDownload()
+    subscriptionQueue = {}
+    M.sendPackProgress()
+end
+
+local function cancelAllDownloads()
+    subscriptionQueue = {}
+    packQueue = {}
+    M.sendPackProgress()
+end
+
 M.removePackFromQueue = function(packName)
     for i, pack in ipairs(packQueue) do
         if pack == packName then
@@ -1362,6 +1373,8 @@ M.subscribeToAllMods = subscribeToAllRequiredMods
 M.disableAllMods = disableAllMods
 M.getParentMod = function() return ourParentMod end
 M.onUpdate = onUpdate
+M.cancelDownload = cancelDownload
+M.cancelAllDownloads = cancelAllDownloads
 
 M.getSubscriptionStatus = function() 
     return {

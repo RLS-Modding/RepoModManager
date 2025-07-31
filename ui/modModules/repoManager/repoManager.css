@@ -237,6 +237,36 @@
   font-size: 1.1rem;
 }
 
+/* Cancel Status Message */
+.cancel-status-message {
+  background: rgba(255, 152, 0, 0.15);
+  border: 2px solid rgba(255, 152, 0, 0.4);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.cancel-status-text {
+  color: #ff9800;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.cancel-icon {
+  font-size: 1.2rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
 .queue-display {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
@@ -344,7 +374,7 @@
   margin-top: 1.5rem;
 }
 
-.header-install-btn, .header-uninstall-btn {
+.header-install-btn, .header-uninstall-btn, .header-cancel-btn {
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 8px;
@@ -357,12 +387,12 @@
   min-width: 180px;
 }
 
-.header-install-btn span, .header-uninstall-btn span {
+.header-install-btn span, .header-uninstall-btn span, .header-cancel-btn span {
   font-size: 1rem;
   margin-bottom: 0.25rem;
 }
 
-.header-install-btn small, .header-uninstall-btn small {
+.header-install-btn small, .header-uninstall-btn small, .header-cancel-btn small {
   font-size: 0.8rem;
   opacity: 0.8;
 }
@@ -395,10 +425,45 @@
   color: white;
 }
 
-.header-uninstall-btn:hover {
+.header-uninstall-btn:hover:not(:disabled) {
   background: linear-gradient(145deg, #dc2626, #ef4444);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+.header-uninstall-btn:disabled {
+  background: linear-gradient(145deg, #7f8c8d, #95a5a6);
+  color: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.header-uninstall-btn:disabled small {
+  color: #bdc3c7;
+}
+
+.header-cancel-btn {
+  background: linear-gradient(145deg, #f59e0b, #fbbf24);
+  color: white;
+}
+
+.header-cancel-btn:hover:not(:disabled) {
+  background: linear-gradient(145deg, #d97706, #f59e0b);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+}
+
+.header-cancel-btn:disabled {
+  background: linear-gradient(145deg, #7f8c8d, #95a5a6);
+  color: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.header-cancel-btn:disabled small {
+  color: #bdc3c7;
 }
 
 .repomanager-content {

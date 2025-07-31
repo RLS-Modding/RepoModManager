@@ -11,9 +11,17 @@
         <span>Queue All Packs</span>
         <small>Start first pack and queue the rest</small>
       </button>
-      <button class="header-uninstall-btn" ng-click="uninstallAllPacks()">
-        <span>Deactivate All Packs</span>
-        <small>Disable all dependency packs</small>
+      <button class="header-uninstall-btn" ng-click="handleDeactivateAllAction()" 
+              ng-disabled="cancelAllRequested && isAnyPackDownloading()">
+        <span>{{ getDeactivateAllButtonText() }}</span>
+        <small>{{ getDeactivateAllButtonSubText() }}</small>
+      </button>
+      <button class="header-cancel-btn" ng-if="isAnyPackDownloading()" ng-click="cancelCurrentDownload()" 
+              ng-disabled="isCancellingCurrentPack()">
+        <span ng-if="!isCancellingCurrentPack()">Cancel Current</span>
+        <span ng-if="isCancellingCurrentPack()">Canceling...</span>
+        <small ng-if="!isCancellingCurrentPack()">Stop current pack download</small>
+        <small ng-if="isCancellingCurrentPack()">Stopping current download</small>
       </button>
     </div>
   </div>
@@ -62,7 +70,13 @@
           <p>{{getPreparingDownloadsMessage()}}</p>
         </div>
 
-
+        <!-- Cancel Status Message -->
+        <div class="cancel-status-message" ng-if="getCancelStatusMessage()">
+          <div class="cancel-status-text">
+            <span class="cancel-icon">⏸</span>
+            {{getCancelStatusMessage()}}
+          </div>
+        </div>
 
         <!-- Queue Display -->
         <div class="queue-display" ng-if="packQueue.length > 0">
@@ -257,7 +271,7 @@
             </div>
             
             <!-- Info Button for detailed mod information -->
-            <div class="mod-info-button" ng-click="openModInfo(mod, $event)" title="View detailed mod information">
+            <div class="mod-info-button" ng-click="openModInfo(mod, $event, false)" title="View detailed mod information">
               <span class="info-icon">ⓘ</span>
             </div>
             
@@ -491,7 +505,7 @@
             </div>
             
             <!-- Info Button for mods with repository data -->
-            <div class="mod-info-button" ng-if="mod.tagid" ng-click="openModInfo(mod, $event)" title="View detailed mod information">
+            <div class="mod-info-button" ng-if="mod.tagid" ng-click="openModInfo(mod, $event, true)" title="View detailed mod information">
               <span class="info-icon">ⓘ</span>
             </div>
             
@@ -641,7 +655,7 @@
               </div>
               
               <!-- Info Button with stats positioned underneath -->
-              <div class="mod-info-button" ng-click="openModInfo(mod, $event)" title="View detailed mod information">
+              <div class="mod-info-button" ng-click="openModInfo(mod, $event, true)" title="View detailed mod information">
                 <span class="info-icon">ⓘ</span>
               </div>
               
@@ -930,7 +944,7 @@
       
       <!-- Action Buttons -->
       <div class="mod-info-actions">
-        <button class="action-btn primary" ng-click="selectModFromInfo()">
+        <button class="action-btn primary" ng-if="modInfoFromPackCreator" ng-click="selectModFromInfo()">
           {{ isRepoModSelected(selectedModInfo) ? 'Remove from Pack' : 'Add to Pack' }}
         </button>
         <button class="action-btn secondary" ng-click="closeModInfo()">Close</button>

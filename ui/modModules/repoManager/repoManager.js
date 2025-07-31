@@ -215,6 +215,19 @@ angular.module('beamng.stuff')
             isBase: sourceMod === $scope.baseMod,
             isCustom: modName === 'Custom'
           };
+          
+          // Pre-populate author information if available
+          if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0 && sourceMod) {
+            const modData = $scope.allAvailableMods.find(function(mod) {
+              return mod.modname === sourceMod;
+            });
+            if (modData) {
+              const username = modData.username || (modData.modData && modData.modData.username);
+              if (username && username.trim() !== '') {
+                sections[modName].authorUsername = username;
+              }
+            }
+          }
         }
         
         sections[modName].packs.push(pack);
@@ -364,6 +377,11 @@ angular.module('beamng.stuff')
   $scope.getSectionAuthor = function(section) {
     if (!section.sourceMod || section.isCustom || section.isBase) return null;
     
+    // Store author info in the section object to persist across state changes
+    if (section.authorUsername) {
+      return section.authorUsername;
+    }
+    
     if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0) {
       const modData = $scope.allAvailableMods.find(function(mod) {
         return mod.modname === section.sourceMod;
@@ -372,6 +390,8 @@ angular.module('beamng.stuff')
         // Check for username in multiple possible locations
         const username = modData.username || (modData.modData && modData.modData.username);
         if (username && username.trim() !== '') {
+          // Cache the username in the section object
+          section.authorUsername = username;
           return username;
         }
       }
@@ -605,6 +625,11 @@ angular.module('beamng.stuff')
 
   // Pack Actions
   $scope.togglePack = function(pack) {
+    // Ensure mod data is available for author information
+    if ((!$scope.allAvailableMods || $scope.allAvailableMods.length === 0) && !$scope.loadingAllMods) {
+      $scope.loadAllAvailableMods();
+    }
+    
     // Handle Create Pack card
     if (pack.isCreatePack) {
       // Clear selected mods when opening create pack modal
@@ -824,6 +849,8 @@ angular.module('beamng.stuff')
   
   $scope.$on('AllModsLoaded', function(event, data) {
     $scope.$apply(function() {
+      const previousModCount = $scope.allAvailableMods ? $scope.allAvailableMods.length : 0;
+      
       $scope.allAvailableMods = (data || []).map(function(mod) {
         // Ensure author field is set for local mods (check multiple possible field names)
         if (!mod.author) {
@@ -839,12 +866,17 @@ angular.module('beamng.stuff')
       });
       $scope.loadingAllMods = false;
       
-      // Rebuild sections now that we have mod data with proper titles
-      if ($scope.dependencies && $scope.dependencies.length > 0) {
+      // Only rebuild sections if we actually got new data or if sections haven't been built yet
+      const currentModCount = $scope.allAvailableMods.length;
+      if ($scope.dependencies && $scope.dependencies.length > 0 && 
+          (previousModCount === 0 || currentModCount !== previousModCount || !$scope.modSections || $scope.modSections.length === 0)) {
         $scope.buildModSections();
       }
       
-      $scope.filterMods();
+      // Only filter mods if we're in the pack creator (showCreatePackModal is true)
+      if ($scope.showCreatePackModal) {
+        $scope.filterMods();
+      }
     });
   });
   
@@ -1388,8 +1420,11 @@ angular.module('beamng.stuff')
   
   // Custom Pack Creation
   $scope.loadAllAvailableMods = function() {
-    $scope.loadingAllMods = true;
-    $scope.allAvailableMods = [];
+    // Only set loading state if we don't already have mod data
+    if (!$scope.allAvailableMods || $scope.allAvailableMods.length === 0) {
+      $scope.loadingAllMods = true;
+      $scope.allAvailableMods = [];
+    }
     
     // Initialize available packs for exclusion if not already done
     if ($scope.availablePacksForExclusion.length === 0) {

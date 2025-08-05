@@ -745,6 +745,7 @@ angular.module('beamng.stuff')
       if (!data || Object.keys(data).length === 0) {
         $scope.dependencies = [];
         $scope.loading = false;
+        $scope.buildModSections();
         return;
       }
       
@@ -782,9 +783,7 @@ angular.module('beamng.stuff')
       
       $scope.updateCurrentDownloadPack();
       
-      if ($scope.packToMod && Object.keys($scope.packToMod).length > 0) {
-        $scope.buildModSections();
-      }
+      $scope.buildModSections();
       
       $scope.initializeAvailablePacksForExclusion();
       
@@ -827,9 +826,7 @@ angular.module('beamng.stuff')
         $scope.loadingAllMods = true;
         bngApi.engineLua('extensions.repoManager.getAllAvailableMods()');
         
-        if ($scope.dependencies && $scope.dependencies.length > 0) {
-          $scope.buildModSections();
-        }
+        $scope.buildModSections();
       }
     });
   });
@@ -896,8 +893,7 @@ angular.module('beamng.stuff')
       $scope.loadRepositoryMetadataCache();
       
       const currentModCount = $scope.allAvailableMods.length;
-      if ($scope.dependencies && $scope.dependencies.length > 0 && 
-          (previousModCount === 0 || currentModCount !== previousModCount || !$scope.modSections || $scope.modSections.length === 0)) {
+      if (previousModCount === 0 || currentModCount !== previousModCount || !$scope.modSections || $scope.modSections.length === 0) {
         $scope.buildModSections();
       }
       
@@ -2258,6 +2254,7 @@ angular.module('beamng.stuff')
   $scope.loadEnabledState();
   $scope.loadExpandedState();
   $scope.loadDependencies();
+  $scope.buildModSections();
   
   bngApi.engineLua('settings.getValue("onlineFeatures")', function(data) {
     $scope.$apply(function() {

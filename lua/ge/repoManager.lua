@@ -580,6 +580,25 @@ local function getAllAvailableMods()
                 else
                     modInfo.hasIcon = false
                 end
+
+                -- Try to read version info from local mod_info/info.json
+                local infoJsonPath = modData.modInfoPath .. "info.json"
+                if FS:fileExists(infoJsonPath) then
+                    local f = io.open(infoJsonPath, "r")
+                    if f then
+                        local content = f:read("*all") or ""
+                        f:close()
+                        local ok, parsed = pcall(jsonDecode, content)
+                        if ok and parsed then
+                            if not modInfo.version_string and (parsed.version_string or parsed.version) then
+                                modInfo.version_string = parsed.version_string or parsed.version
+                            end
+                            if not modInfo.username and parsed.username then
+                                modInfo.username = parsed.username
+                            end
+                        end
+                    end
+                end
             else
                 modInfo.hasIcon = false
             end
@@ -631,6 +650,25 @@ local function getAllAvailableMods()
                     modInfo.hasIcon = true
                 else
                     modInfo.hasIcon = false
+                end
+
+                -- Try to read version info from local mod_info/info.json
+                local infoJsonPath = modData.modInfoPath .. "info.json"
+                if FS:fileExists(infoJsonPath) then
+                    local f = io.open(infoJsonPath, "r")
+                    if f then
+                        local content = f:read("*all") or ""
+                        f:close()
+                        local ok, parsed = pcall(jsonDecode, content)
+                        if ok and parsed then
+                            if not modInfo.version_string and (parsed.version_string or parsed.version) then
+                                modInfo.version_string = parsed.version_string or parsed.version
+                            end
+                            if not modInfo.username and parsed.username then
+                                modInfo.username = parsed.username
+                            end
+                        end
+                    end
                 end
             else
                 modInfo.hasIcon = false

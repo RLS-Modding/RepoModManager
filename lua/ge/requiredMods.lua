@@ -33,6 +33,16 @@ local packModCount = 0
 local packModDownloaded = 0
 local packModActivated = 0
 
+local disableMounting = false
+
+local readyToMountMods = {}
+
+local function tableLength(t)
+    local count = 0
+    for _ in pairs(t) do count = count + 1 end
+    return count
+end
+
 local startNextSubscription
 
 local function downloadProgressCallback(r)
@@ -291,18 +301,23 @@ local function batchActivateMods(modNames)
         end
     end
     
-    if #mountList > 0 then
+    if #mountList > 0 and not disableMounting then
         if not FS:mountList(mountList) then
             log("E", "Required Mods", "Failed to mount mods in batch")
             return
         end
-    end
-    
-    for _, scriptPath in ipairs(allModScripts) do
-        local status, ret = pcall(dofile, scriptPath)
-        if not status then
-            log("E", "Required Mods", "Failed to execute mod script: " .. scriptPath)
+
+        for _, scriptPath in ipairs(allModScripts) do
+            local status, ret = pcall(dofile, scriptPath)
+            if not status then
+                log("E", "Required Mods", "Failed to execute mod script: " .. scriptPath)
+            end
         end
+    elseif #mountList > 0 and disableMounting then
+        allMountedFilesChange = {}
+        allModScripts = {}
+
+        guihooks.trigger('ModsActivatedNotMounted', { count = #activatedMods })
     end
     
     for _, modData in ipairs(activatedMods) do
@@ -350,7 +365,7 @@ local function batchActivateMods(modNames)
         
         extensions.hook('onModActivated', deepcopy(combinedModData))
     end
-    
+
     if #allMountedFilesChange > 0 then
         _G.onFileChanged(allMountedFilesChange)
     end
@@ -369,11 +384,17 @@ local function batchDeactivateMods(modIdentifiers)
     local allMountedFilesChange = {}
     local deactivatedMods = {}
     
-    for _, identifier in ipairs(modIdentifiers) do
+    for index, identifier in ipairs(modIdentifiers) do
         local modName = identifier
         
         if not allMods[identifier] then
             modName = core_modmanager.getModNameFromID(identifier)
+        end
+
+        if index < #modIdentifiers then
+            M.removeFromReadyToMount(modName)
+        else
+            M.removeFromReadyToMount(modName, true)
         end
         
         if modName and allMods[modName] then
@@ -445,7 +466,7 @@ local function batchDeactivateMods(modIdentifiers)
                 batch_deactivation = true
             }
         }
-        
+
         extensions.hook('onModDeactivated', deepcopy(combinedModData))
     end
     
@@ -684,6 +705,8 @@ function startModDownload(modData)
             downloadComplete = true
         }
         
+        M.addToReadyToMount(modData.id)
+        
         extensions.hook('onModDownloadCompleted', downloadData)
         
         guihooks.trigger('ModDownloaded', downloadData)
@@ -848,8 +871,10 @@ function onAllSubscriptionsComplete()
             table.remove(updateQueue, i)
         end
     end
-    
-    core_modmanager.enableAutoMount()
+
+    if not disableMounting then
+        core_modmanager.enableAutoMount()
+    end
     
     if #successfulSubs > 0 then
         local modsToActivateLater = successfulSubs
@@ -1106,6 +1131,11 @@ local function subscribeToPack(packName)
         packModCount = packModCount + 1
         if isModAlreadyActive(nil, modName) then
             packModActivated = packModActivated + 1
+            -- Track already active mods
+            local modId = nil
+            if core_modmanager.getModIDFromName then
+                modId = core_modmanager.getModIDFromName(modName)
+            end
             goto continue
         end
         
@@ -1124,6 +1154,27 @@ local function subscribeToPack(packName)
     
     if #modsToActivate > 0 then
         log("I", "Required Mods", "Activating " .. #modsToActivate .. " locally available mods from pack: " .. packName)
+
+        -- Track mods as ready-to-mount only if mounting is disabled
+        if disableMounting then
+            for i, modName in ipairs(modsToActivate) do
+                -- Try to get mod ID from name, but don't fail if function doesn't exist
+                local modId = nil
+                if core_modmanager.getModIDFromName then
+                    modId = core_modmanager.getModIDFromName(modName)
+                end
+
+                local modIdentifier = modId or modName
+                local disableUpdate = (i < #modsToActivate)
+
+                if modId then
+                    M.addToReadyToMount(modId, disableUpdate)
+                else
+                    M.addToReadyToMount(modName, disableUpdate)
+                end
+            end
+        end
+
         batchActivateMods(modsToActivate)
     end
 
@@ -1206,6 +1257,11 @@ local function deactivatePack(packName)
     end
 
     if #activePackMods > 0 then
+        for i, modId in ipairs(activePackMods) do
+            local disableUpdate = (i < #activePackMods)
+            M.removeFromReadyToMount(modId, disableUpdate)
+        end
+
         batchDeactivateMods(activePackMods)
     end
 end
@@ -1271,20 +1327,24 @@ local function onModActivated(modData)
     if not modData or not modData.modname then
         return
     end
-    
+
     if modData.modname and (modData.modname:find("BatchActivation_") or modData.modname:find("BatchDeactivation_")) then
         return
     end
-    
+
     local modId = nil
     if modData.modData and modData.modData.tagid then
         modId = modData.modData.tagid
     end
-    
+
+    if modId then
+        M.addToReadyToMount(modId)
+    end
+
     if ourParentMod then
         return
     end
-    
+
     if modId and not ourDependencyIds[modId] then
         if not ourParentMod then
             ourParentMod = modData.modname
@@ -1316,6 +1376,15 @@ end
 local function onModDeactivated(modData)
     if not modData or not modData.modname then
         return
+    end
+    
+    local modId = nil
+    if modData.modData and modData.modData.tagid then
+        modId = modData.modData.tagid
+    end
+    
+    if modId then
+        M.removeFromReadyToMount(modId)
     end
     
     if ourParentMod and modData.modname == ourParentMod then
@@ -1364,19 +1433,91 @@ M.sendPackProgress = function()
 end
 
 -- Exports
-M.onModDeactivated = onModDeactivated
+-- =============================================================================
+-- MOUNTING CONTROL
+-- =============================================================================
+
+M.disableMounting = function()
+    disableMounting = true
+    core_modmanager.disableAutoMount()
+    readyToMountMods = {}
+    M.getReadyToMountCount()
+end
+
+M.enableMounting = function()
+    disableMounting = false
+    core_modmanager.enableAutoMount()
+    M.getReadyToMountCount()
+end
+
+M.isMountingDisabled = function() return disableMounting end
+
+-- =============================================================================
+-- CORE TRACKING FUNCTIONS
+-- =============================================================================
+
+M.getReadyToMountMods = function() return readyToMountMods end
+
+M.addToReadyToMount = function(modId, disableUpdate)
+    if modId and not readyToMountMods[modId] then
+        readyToMountMods[modId] = true
+        if not disableUpdate then
+            M.getReadyToMountCount()
+        end
+    end
+end
+
+M.removeFromReadyToMount = function(modId, disableUpdate)
+    if modId and readyToMountMods[modId] then
+        readyToMountMods[modId] = nil
+        if not disableUpdate then
+            M.getReadyToMountCount()
+        end
+    end
+end
+
+M.getReadyToMountCount = function()
+    local count = tableLength(readyToMountMods)
+    guihooks.trigger('ReadyToMountCountChanged', { count = count })
+    return count
+end
+
+-- =============================================================================
+-- EVENT HANDLERS/HOOKS
+-- =============================================================================
+
 M.onModActivated = onModActivated
+M.onModDeactivated = onModDeactivated
+M.onUpdate = onUpdate
+
+-- =============================================================================
+-- BATCH OPERATIONS
+-- =============================================================================
+
 M.batchActivateMods = batchActivateMods
 M.batchDeactivateMods = batchDeactivateMods
+M.disableAllMods = disableAllMods
 M.getAllRequiredMods = collectAllRequiredMods
 M.subscribeToAllMods = subscribeToAllRequiredMods
-M.disableAllMods = disableAllMods
-M.getParentMod = function() return ourParentMod end
-M.onUpdate = onUpdate
+
+-- =============================================================================
+-- PACK MANAGEMENT
+-- =============================================================================
+
+M.getPackMods = getPackMods
+M.subscribeToPack = subscribeToPack
+M.deactivatePack = deactivatePack
+M.deactivatePacks = deactivatePacks
+M.queuePacks = queuePacks
+M.getPendingPacks = function() return pendingPacks end
+
+-- =============================================================================
+-- DOWNLOAD QUEUE MANAGEMENT
+-- =============================================================================
+
 M.cancelDownload = cancelDownload
 M.cancelAllDownloads = cancelAllDownloads
-
-M.getSubscriptionStatus = function() 
+M.getSubscriptionStatus = function()
     return {
         active = #activeSubscriptions,
         queued = #subscriptionQueue,
@@ -1392,7 +1533,11 @@ M.getProgressQueue = function() return progressQueue end
 M.isUpdatingRepo = function() return updatingRepo end
 M.uiUpdateQueue = uiUpdateQueue
 
-M.getRetryStatus = function() 
+-- =============================================================================
+-- RETRY & RATE LIMITING
+-- =============================================================================
+
+M.getRetryStatus = function()
     local retryStatus = {}
     for modId, retryData in pairs(retryTimers) do
         retryStatus[modId] = {
@@ -1413,12 +1558,11 @@ M.isRateLimited = function()
     return rateLimitFlag
 end
 
+-- =============================================================================
+-- UTILITY FUNCTIONS
+-- =============================================================================
+
 M.mountLocallyAvailableMods = mountLocallyAvailableMods
-M.getPackMods = getPackMods
-M.subscribeToPack = subscribeToPack
-M.deactivatePack = deactivatePack
-M.deactivatePacks = deactivatePacks
-M.queuePacks = queuePacks
-M.getPendingPacks = function() return pendingPacks end
+M.getParentMod = function() return ourParentMod end
 
 return M

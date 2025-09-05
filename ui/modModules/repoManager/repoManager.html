@@ -13,6 +13,12 @@
 
     <!-- Bulk action buttons in header -->
     <div class="header-buttons">
+      <button class="header-mount-btn" ng-click="toggleModMounting()" ng-class="{'mounting-disabled': !modMountingEnabled}">
+        <span ng-if="modMountingEnabled">Disable Mod Mounting</span>
+        <span ng-if="!modMountingEnabled">Enable Mod Mounting</span>
+        <small ng-if="modMountingEnabled">Prevent automatic mod mounting</small>
+        <small ng-if="!modMountingEnabled">Allow automatic mod mounting</small>
+      </button>
       <button class="header-install-btn" ng-click="installAllPacks()" ng-disabled="!hasPacksToInstall()">
         <span>Queue All Packs</span>
         <small>Start first pack and queue the rest</small>
@@ -29,6 +35,16 @@
         <small ng-if="!isCancellingCurrentPack()">Stop current pack download</small>
         <small ng-if="isCancellingCurrentPack()">Stopping current download</small>
       </button>
+    </div>
+  </div>
+
+  <!-- Mod Mounting Status Section -->
+  <div class="mounting-status-section" ng-if="!modMountingEnabled">
+    <div class="mounting-status-info">
+      <span class="mounting-status-icon">⏸</span>
+      <span class="mounting-status-text">
+        Mod mounting is disabled - {{ readyToMountCount }} mod{{ readyToMountCount !== 1 ? 's' : '' }} ready to mount
+      </span>
     </div>
   </div>
 

@@ -32,6 +32,32 @@
   margin: 0 0 1.5rem 0;
 }
 
+.mounting-status-section {
+  background: linear-gradient(145deg, #fef3c7, #fde68a);
+  border: 1px solid #f59e0b;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  box-shadow: 0 2px 4px rgba(245, 158, 11, 0.1);
+}
+
+.mounting-status-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mounting-status-icon {
+  font-size: 1.2rem;
+  color: #d97706;
+}
+
+.mounting-status-text {
+  color: #92400e;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
 /* Currently Downloading Section */
 .currently-downloading-section {
   background: linear-gradient(145deg, #1e2a3a, #2a3c4e);
@@ -374,7 +400,7 @@
   margin-top: 1.5rem;
 }
 
-.header-install-btn, .header-uninstall-btn, .header-cancel-btn {
+.header-mount-btn, .header-install-btn, .header-uninstall-btn, .header-cancel-btn {
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 8px;
@@ -387,14 +413,36 @@
   min-width: 180px;
 }
 
-.header-install-btn span, .header-uninstall-btn span, .header-cancel-btn span {
+.header-mount-btn span, .header-install-btn span, .header-uninstall-btn span, .header-cancel-btn span {
   font-size: 1rem;
   margin-bottom: 0.25rem;
 }
 
-.header-install-btn small, .header-uninstall-btn small, .header-cancel-btn small {
+.header-mount-btn small, .header-install-btn small, .header-uninstall-btn small, .header-cancel-btn small {
   font-size: 0.8rem;
   opacity: 0.8;
+}
+
+.header-mount-btn {
+  background: linear-gradient(145deg, #f59e0b, #fbbf24);
+  color: white;
+}
+
+.header-mount-btn:hover:not(:disabled) {
+  background: linear-gradient(145deg, #d97706, #f59e0b);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+}
+
+.header-mount-btn.mounting-disabled {
+  background: linear-gradient(145deg, #ef4444, #f87171);
+  color: white;
+}
+
+.header-mount-btn.mounting-disabled:hover:not(:disabled) {
+  background: linear-gradient(145deg, #dc2626, #ef4444);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
 }
 
 .header-install-btn {

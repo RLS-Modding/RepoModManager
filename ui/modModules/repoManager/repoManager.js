@@ -29,6 +29,9 @@ angular.module('beamng.stuff')
   $scope.cancelRequestedForPack = null;
   $scope.cancelAllRequested = false;
   
+  $scope.modMountingEnabled = true;
+  $scope.readyToMountCount = 0;
+  
   $scope.selectedPack = null;
   $scope.packModDetails = [];
   $scope.loadingPackDetails = false;
@@ -709,6 +712,38 @@ angular.module('beamng.stuff')
     }
   };
 
+  $scope.toggleModMounting = function() {
+    if ($scope.modMountingEnabled) {
+      bngApi.engineLua('extensions.requiredMods.disableMounting()');
+    } else {
+      bngApi.engineLua('extensions.requiredMods.enableMounting()');
+    }
+    // Update state after a short delay to allow Lua function to complete
+    setTimeout(function() {
+      $scope.updateMountingState();
+    }, 100);
+  };
+
+  $scope.updateMountingState = function() {
+    bngApi.engineLua('extensions.requiredMods.isMountingDisabled()', function(result) {
+      $scope.$apply(function() {
+        $scope.modMountingEnabled = !result;
+        if (!$scope.modMountingEnabled) {
+          $scope.updateReadyToMountCount();
+        }
+      });
+    });
+  };
+
+
+  $scope.updateReadyToMountCount = function() {
+    bngApi.engineLua('extensions.requiredMods.getReadyToMountCount()', function(count) {
+      $scope.$apply(function() {
+        $scope.readyToMountCount = count || 0;
+      });
+    });
+  };
+
   $scope.loadDependencies = function() {
     bngApi.engineLua('extensions.repoManager.loadDependencies()');
   };
@@ -732,6 +767,24 @@ angular.module('beamng.stuff')
   $scope.$on('ModDownloaded', function(event, data) {
     $scope.$apply(function() {
       if ($scope.loading) $scope.loading = false;
+
+      // Update count after download (Lua side handles tracking)
+      $scope.updateReadyToMountCount();
+    });
+  });
+
+  // Handle ready-to-mount count changes from Lua (pack operations)
+  $scope.$on('ReadyToMountCountChanged', function(event, data) {
+    $scope.$apply(function() {
+      $scope.readyToMountCount = data.count || 0;
+    });
+  });
+
+  // Handle mods activated but not mounted (when mounting is disabled)
+  $scope.$on('ModsActivatedNotMounted', function(event, data) {
+    $scope.$apply(function() {
+      $scope.readyToMountCount = data.count || 0;
+      console.log('Mods activated but not mounted due to disabled mounting:', data.count);
     });
   });
   
@@ -900,6 +953,9 @@ angular.module('beamng.stuff')
       if ($scope.showCreatePackModal) {
         $scope.filterMods();
       }
+      
+      // Update ready-to-mount count (tracking happens automatically)
+      $scope.updateReadyToMountCount();
       
     });
   });
@@ -1218,6 +1274,9 @@ angular.module('beamng.stuff')
     mod.sub = true;
     mod.subscribed = true;
     mod.pending = true;
+
+    // Don't track as downloaded yet - wait for actual download completion
+    $scope.updateReadyToMountCount();
   };
   
   $scope.unsubscribeFromMod = function(mod) {
@@ -1228,6 +1287,10 @@ angular.module('beamng.stuff')
     bngApi.engineLua(`extensions.core_repository.modUnsubscribe('${mod.tagid}')`);
     mod.sub = false;
     mod.subscribed = false;
+    
+    // Remove from tracking
+    bngApi.engineLua(`extensions.requiredMods.removeDownloadedMod('${mod.tagid}')`);
+    $scope.updateReadyToMountCount();
     
     const localMod = $scope.getLocalMod(mod);
     if (localMod) {
@@ -1241,6 +1304,13 @@ angular.module('beamng.stuff')
       bngApi.engineLua(`core_modmanager.activateMod('${localMod.modname}')`);
       localMod.active = true;
       
+      // Track as activated
+      const modId = mod.tagid || mod.modname;
+      if (modId) {
+        bngApi.engineLua(`extensions.requiredMods.addActivatedMod('${modId}')`);
+        $scope.updateReadyToMountCount();
+      }
+      
       setTimeout(function() {
         bngApi.engineLua('extensions.repoManager.sendPackStatuses()');
       }, 100);
@@ -1252,6 +1322,13 @@ angular.module('beamng.stuff')
     if (localMod && localMod.modname) {
       bngApi.engineLua(`core_modmanager.deactivateMod('${localMod.modname}')`);
       localMod.active = false;
+      
+      // Remove from activated tracking
+      const modId = mod.tagid || mod.modname;
+      if (modId) {
+        bngApi.engineLua(`extensions.requiredMods.removeActivatedMod('${modId}')`);
+        $scope.updateReadyToMountCount();
+      }
       
       setTimeout(function() {
         bngApi.engineLua('extensions.repoManager.sendPackStatuses()');
@@ -2255,6 +2332,7 @@ angular.module('beamng.stuff')
   $scope.loadExpandedState();
   $scope.loadDependencies();
   $scope.buildModSections();
+  $scope.updateMountingState();
   
   bngApi.engineLua('settings.getValue("onlineFeatures")', function(data) {
     $scope.$apply(function() {
@@ -2291,6 +2369,10 @@ angular.module('beamng.stuff')
   
   const statusInterval = setInterval(function() {
     $scope.requestSubscriptionStatus();
+    $scope.updateMountingState();
+    if (!$scope.modMountingEnabled) {
+      $scope.updateReadyToMountCount();
+    }
   }, 5000);
   $scope._intervals.push(statusInterval);
   

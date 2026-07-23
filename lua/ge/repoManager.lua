@@ -1,5 +1,48 @@
 local M = {}
 
+M.dependencies = {"ui_router_routeManager"}
+
+local routeSourceId = "repo-mod-manager"
+
+local function registerUiRoutes()
+    if not ui_router_routeManager or not ui_router_routeManager.registerModRoutes then
+        log('W', 'repoManager', 'Runtime UI route manager is unavailable')
+        return false
+    end
+
+    if ui_router_routeManager.getRoute("menu.repoManager") then
+        return true
+    end
+
+    local result = ui_router_routeManager.registerModRoutes(routeSourceId, {
+        {
+            name = "menu.repoManager",
+            meta = {
+                uiTypes = {"angular"},
+                uiTypesFilter = "only",
+                infoBar = {visible = false, showSysInfo = false},
+                topBar = {visible = false},
+                uiApps = {shown = false},
+                luaRoute = {backTarget = "menu"}
+            }
+        }
+    })
+
+    if not result or result.success ~= true then
+        log('E', 'repoManager', 'Failed to register the Repo Manager UI route')
+        return false
+    end
+
+    log('I', 'repoManager', 'Registered BeamNG 0.39 UI route: menu.repoManager')
+    return true
+end
+
+local function unregisterUiRoutes()
+    if ui_router_routeManager and ui_router_routeManager.unregisterModRoutes then
+        ui_router_routeManager.unregisterModRoutes(routeSourceId)
+    end
+end
+
 local packData = {}
 local modRequestQueue = {}
 local isProcessingQueue = false
@@ -1146,5 +1189,7 @@ M.loadPackForEdit = loadPackForEdit
 M.updateCustomPack = updateCustomPack
 M.deleteCustomPack = deleteCustomPack
 M.requestRepositoryMods = requestRepositoryMods
+M.onExtensionLoaded = registerUiRoutes
+M.onExtensionUnloaded = unregisterUiRoutes
 
 return M

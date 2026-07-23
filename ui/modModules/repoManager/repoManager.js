@@ -212,9 +212,16 @@ angular.module('beamng.stuff')
               return mod.modname === sourceMod;
             });
             if (modData) {
+              console.log('[Sections] sourceMod:', sourceMod, 'title/name:', modData.title || modData.name || modData.modname, 'version_string:', modData.version_string, 'version:', modData.version);
               const username = modData.username || (modData.modData && modData.modData.username);
               if (username && username.trim() !== '') {
                 sections[modName].authorUsername = username;
+              }
+
+              const versionStr = (modData.version_string || modData.version || (modData.modData && (modData.modData.version_string || modData.modData.version)));
+              if (versionStr && ('' + versionStr).trim() !== '') {
+                sections[modName].versionString = '' + versionStr;
+                console.log('[Sections] set version for', sourceMod, '=>', sections[modName].versionString);
               }
             }
           }
@@ -372,6 +379,32 @@ angular.module('beamng.stuff')
           return username;
         }
       }
+    }
+    return null;
+  };
+
+  $scope.getSectionVersion = function(section) {
+    if (!section.sourceMod || section.isCustom || section.isBase) return null;
+
+    if (section.versionString !== undefined) {
+      console.log('[Sections] cached version for', section.sourceMod, '=>', section.versionString);
+      return section.versionString;
+    }
+
+    if ($scope.allAvailableMods && $scope.allAvailableMods.length > 0) {
+      const modData = $scope.allAvailableMods.find(function(mod) {
+        return mod.modname === section.sourceMod;
+      });
+      if (modData) {
+        const versionStr = (modData.version_string || modData.version || (modData.modData && (modData.modData.version_string || modData.modData.version)));
+        if (versionStr && ('' + versionStr).trim() !== '') {
+          section.versionString = '' + versionStr;
+          console.log('[Sections] resolved version for', section.sourceMod, '=>', section.versionString);
+          return section.versionString;
+        }
+        console.log('[Sections] no version fields for', section.sourceMod, 'modData keys:', Object.keys(modData || {}));
+      }
+      console.log('[Sections] sourceMod not found in allAvailableMods:', section.sourceMod);
     }
     return null;
   };
@@ -2187,7 +2220,9 @@ angular.module('beamng.stuff')
     $scope.$apply(function() {
       if (data && data.data && data.data.tagid && $scope.requestedMods.includes(data.data.tagid)) {
         const modData = data.data;
-        
+
+        console.log('ModReceived for pack details:', modData.title || modData.name, 'version_string:', modData.version_string, 'tagid:', modData.tagid);
+
         let localIcon = null;
         if ($scope.allAvailableMods && modData.tagid) {
           const localMod = $scope.allAvailableMods.find(mod => mod.tagid === modData.tagid);
@@ -2221,6 +2256,7 @@ angular.module('beamng.stuff')
         }
         
         $scope.packModDetails.push(modData);
+        console.log('Added to packModDetails:', modData.title || modData.name, 'final version_string:', modData.version_string);
         
         const index = $scope.requestedMods.indexOf(data.data.tagid);
         if (index > -1) {

@@ -125,6 +125,7 @@
             <span class="section-arrow" ng-class="{'expanded': isSectionExpanded(section.modName)}">▶</span>
             <h3>
               {{ section.modName }}
+              <span class="section-version" ng-if="getSectionVersion(section)">v{{ getSectionVersion(section) }}</span>
               <span class="section-author" ng-if="getSectionAuthor(section)">By: {{ getSectionAuthor(section) }}</span>
             </h3>
             <span class="pack-count">({{ (section.packs | filter:{isCreatePack: '!true'}).length }} pack{{ (section.packs | filter:{isCreatePack: '!true'}).length !== 1 ? 's' : '' }})</span>
@@ -288,6 +289,7 @@
             
             <div class="mod-basic-info">
               <div class="mod-name">{{ mod.title }}</div>
+              <div class="mod-version" ng-if="mod.version_string">v{{ mod.version_string }}</div>
               <div class="mod-author" ng-if="mod.author">By: {{ mod.author || 'Unknown' }}</div>
               <div class="mod-description-mini">{{ mod.tag_line }}</div>
             </div>
